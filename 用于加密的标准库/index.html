@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Died line 的博客">
 <meta property="og:description" content="Hashlib 标准库123456789#  Author: Diedlineimport hashlibm = hashlib.md5()m.update(b&quot;hello&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s me&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s been a long time since we spoken..&quot;)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-24T12:35:28.641Z">
+<meta property="og:updated_time" content="2018-09-24T12:38:09.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用于加密的标准库">
 <meta name="twitter:description" content="Hashlib 标准库123456789#  Author: Diedlineimport hashlibm = hashlib.md5()m.update(b&quot;hello&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s me&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s been a long time since we spoken..&quot;)">
@@ -103,6 +103,7 @@
 <p>使用update是增加更新所以拼接起来的和更新后的两个md5值相同<br>结果<br>5d41402abc4b2a76b9719d911017c592<br>b69366eb09dc0edb6c393ae50f82048b<br>b69366eb09dc0edb6c393ae50f82048b</p>
 <p>也可以使用sha1但是不推荐加密简单的不好<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">s2= hashlib.sha1()</span><br><span class="line">s2.update(<span class="string">b"helloit's me"</span>)</span><br><span class="line">print(s2.hexdigest())</span><br></pre></td></tr></table></figure></p>
 <p>结果<br>f23fb8def5332c76a601b3af0c6180b308740052<br>网上那些能破解md5的大多是撞库数据库中有很多md5值和明文对应所有遍历就能破解一些简单的弱密码。Sha256用的比较多<br>Hmac 双重加密<br>可以用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> hmac</span><br><span class="line">h = hmac.new(<span class="string">"你号呀"</span>.encode(encoding=<span class="string">"utf-8"</span>),<span class="string">"我不好"</span>.encode(encoding=<span class="string">"utf-8"</span>))</span><br><span class="line">print(h.digest())</span><br><span class="line">print(h.hexdigest())     <span class="comment">#这是十六进制加密</span></span><br></pre></td></tr></table></figure></p>
+<p>输出：<br>b”‘\xb3;\x82[`&gt;\x81*r\xe2\x93\r5\xa6\x01”<br>27b33b825b603e812a72e2930d35a601</p>
 
       
     </div>
