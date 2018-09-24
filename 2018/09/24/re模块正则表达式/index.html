@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>用于加密的标准库 | Died line 的博客</title>
+  <title>re模块正则表达式 | Died line 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Hashlib 标准库123456789#  Author: Diedlineimport hashlibm = hashlib.md5()m.update(b&quot;hello&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s me&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s been a long time since we spoken..&quot;)">
-<meta property="og:type" content="website">
-<meta property="og:title" content="用于加密的标准库">
-<meta property="og:url" content="https://diedline.github.io/用于加密的标准库/index.html">
+  <meta name="description" content="正则表达式功能：用来匹配字符串五个方法re.match()re.search()re.split()re..findall()re.sub()三种匹配模式flag=re.Iflag=re.Mflag=re.Sread more">
+<meta name="keywords" content="python,后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="re模块正则表达式">
+<meta property="og:url" content="https://diedline.github.io/2018/09/24/re模块正则表达式/index.html">
 <meta property="og:site_name" content="Died line 的博客">
-<meta property="og:description" content="Hashlib 标准库123456789#  Author: Diedlineimport hashlibm = hashlib.md5()m.update(b&quot;hello&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s me&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s been a long time since we spoken..&quot;)">
+<meta property="og:description" content="正则表达式功能：用来匹配字符串五个方法re.match()re.search()re.split()re..findall()re.sub()三种匹配模式flag=re.Iflag=re.Mflag=re.Sread more">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-24T12:38:09.988Z">
+<meta property="og:updated_time" content="2018-09-24T17:21:36.592Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用于加密的标准库">
-<meta name="twitter:description" content="Hashlib 标准库123456789#  Author: Diedlineimport hashlibm = hashlib.md5()m.update(b&quot;hello&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s me&quot;)print(m.hexdigest())m.update(b&quot;it&apos;s been a long time since we spoken..&quot;)">
+<meta name="twitter:title" content="re模块正则表达式">
+<meta name="twitter:description" content="正则表达式功能：用来匹配字符串五个方法re.match()re.search()re.split()re..findall()re.sub()三种匹配模式flag=re.Iflag=re.Mflag=re.Sread more">
   
     <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
   
@@ -68,10 +69,10 @@
   </div>
 </div>
 
-        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-re模块正则表达式" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/用于加密的标准库/index.html" class="article-date">
-  <time class="post-time" datetime="2018-09-24T12:33:15.000Z" itemprop="datePublished">
+    <a href="/2018/09/24/re模块正则表达式/" class="article-date">
+  <time class="post-time" datetime="2018-09-24T12:55:38.000Z" itemprop="datePublished">
     <span class="post-month">9月</span><br/>
     <span class="post-day">24</span>
   </time>
@@ -85,36 +86,49 @@
         
   
     <h1 class="article-title" itemprop="name">
-      用于加密的标准库
+      re模块正则表达式
     </h1>
   
 
         <div>
           
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>,<a class="article-category-link" href="/categories/技术/python/">python</a>
+  </div>
+
+          
+              
+
           
         </div>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Hashlib 标准库<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">m = hashlib.md5()</span><br><span class="line"></span><br><span class="line">m.update(<span class="string">b"hello"</span>)</span><br><span class="line">print(m.hexdigest())</span><br><span class="line">m.update(<span class="string">b"it's me"</span>)</span><br><span class="line">print(m.hexdigest())</span><br><span class="line">m.update(<span class="string">b"it's been a long time since we spoken.."</span>)</span><br></pre></td></tr></table></figure></p>
-<p>结果生成2个md5值<br>5d41402abc4b2a76b9719d911017c592<br>b69366eb09dc0edb6c393ae50f82048b</p>
-<p>因为默认输入是unicode所以当你需要输入中文的话必须在你要输入的地方加.enconde(encoding = “utf-8”)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">m = hashlib.md5()</span><br><span class="line"></span><br><span class="line">m.update(<span class="string">b"hello"</span>)</span><br><span class="line">print(m.hexdigest())</span><br><span class="line">m.update(<span class="string">b"it's me"</span>)</span><br><span class="line">print(m.hexdigest())</span><br><span class="line">m.update(<span class="string">b"it's been a long time since we spoken.."</span>)</span><br><span class="line">m2 = hashlib.md5()</span><br><span class="line">m2.update(<span class="string">b"helloit's me"</span>)</span><br><span class="line">print(m2.hexdigest())</span><br></pre></td></tr></table></figure></p>
-<p>使用update是增加更新所以拼接起来的和更新后的两个md5值相同<br>结果<br>5d41402abc4b2a76b9719d911017c592<br>b69366eb09dc0edb6c393ae50f82048b<br>b69366eb09dc0edb6c393ae50f82048b</p>
-<p>也可以使用sha1但是不推荐加密简单的不好<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">s2= hashlib.sha1()</span><br><span class="line">s2.update(<span class="string">b"helloit's me"</span>)</span><br><span class="line">print(s2.hexdigest())</span><br></pre></td></tr></table></figure></p>
-<p>结果<br>f23fb8def5332c76a601b3af0c6180b308740052<br>网上那些能破解md5的大多是撞库数据库中有很多md5值和明文对应所有遍历就能破解一些简单的弱密码。Sha256用的比较多<br>Hmac 双重加密<br>可以用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> hmac</span><br><span class="line">h = hmac.new(<span class="string">"你号呀"</span>.encode(encoding=<span class="string">"utf-8"</span>),<span class="string">"我不好"</span>.encode(encoding=<span class="string">"utf-8"</span>))</span><br><span class="line">print(h.digest())</span><br><span class="line">print(h.hexdigest())     <span class="comment">#这是十六进制加密</span></span><br></pre></td></tr></table></figure></p>
-<p>输出：<br>b”‘\xb3;\x82[`&gt;\x81*r\xe2\x93\r5\xa6\x01”<br>27b33b825b603e812a72e2930d35a601</p>
+        <p>正则表达式<br>功能：用来匹配字符串<br>五个方法<br>re.match()<br>re.search()<br>re.split()<br>re..findall()<br>re.sub()<br>三种匹配模式<br>flag=re.I<br>flag=re.M<br>flag=re.S<br><a href="https://diedline.github.io/re模块正则表达式">read more</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/用于加密的标准库/index.html" data-id="cjmgk7pxk000vrkqilh7cfk3b" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/09/24/re模块正则表达式/" data-id="cjmgk7pvg0000rkqiue2er8r2" class="article-share-link">分享</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后端/">后端</a></li></ul>
+
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/24/用于加密的标准库/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">用于加密的标准库</div>
+    </a>
+  
+</nav>
+
   
 </article>
 
