@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>面向对象p2 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="静态方法的使用：将内部函数与类属性隔断 所有可以不需要加self参数，相当于一个独立的函数，基本用不到。12345678910111213#  Author: Diedlineclass Dog(object):    def __init__(self,name):        self.name = name    @staticmethod   #静态类   把它和类的关联截断了    d">
+<meta property="og:type" content="website">
+<meta property="og:title" content="面向对象p2">
+<meta property="og:url" content="https://diedline.github.io/面向对象p2/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="静态方法的使用：将内部函数与类属性隔断 所有可以不需要加self参数，相当于一个独立的函数，基本用不到。12345678910111213#  Author: Diedlineclass Dog(object):    def __init__(self,name):        self.name = name    @staticmethod   #静态类   把它和类的关联截断了    d">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-28T16:29:20.699Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向对象p2">
+<meta name="twitter:description" content="静态方法的使用：将内部函数与类属性隔断 所有可以不需要加self参数，相当于一个独立的函数，基本用不到。12345678910111213#  Author: Diedlineclass Dog(object):    def __init__(self,name):        self.name = name    @staticmethod   #静态类   把它和类的关联截断了    d">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>5</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>2</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>3</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/面向对象p2/index.html" class="article-date">
+  <time class="post-time" datetime="2018-09-28T16:17:00.000Z" itemprop="datePublished">
+    <span class="post-month">9月</span><br/>
+    <span class="post-day">29</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      面向对象p2
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>静态方法的使用：将内部函数与类属性隔断 所有可以不需要加self参数，相当于一个独立的函数，基本用不到。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod   #静态类   把它和类的关联截断了</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"%s is eating %s "</span>%(self.name,<span class="string">"dd"</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d = Dog(<span class="string">"李小刀"</span>)</span><br><span class="line">d.eat(d)    <span class="comment">#但是可以通过调用类对象来继续类的关联</span></span><br></pre></td></tr></table></figure></p>
+<p>类装饰器是只能访问类变量，不能访问实例变量。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    name = <span class="string">"wch"</span>              <span class="comment">#只能在此处或全局调用参数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod    #类变量是不能调用类内部方法的变量的，只能在方法外部写属性</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"%s is eating %s "</span>%(self.name,<span class="string">"dd"</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d = Dog(<span class="string">"李小刀"</span>)</span><br><span class="line">d.eat()    <span class="comment">#但是可以通过调用类对象来继续类的关联</span></span><br></pre></td></tr></table></figure></p>
+<p>属性方法：@property<br>把一个方法变成静态属性但在下面可以调用@xxx.setter 来添加属性并且可以通过@xxx.deleter来删除属性，未来很多场景不是你能通过定义一个静态属性来实现的<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    name = <span class="string">"wch"</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.__food =<span class="keyword">None</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># @classmethod    #类变量是不能调用类内部方法的变量的，只能在方法外部写属性</span></span><br><span class="line"><span class="meta">    @property     #属性方法能把方法变成一个静态属性，不能再给他赋值</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"%s is eating %s "</span>%(self.name,self.__food))</span><br><span class="line"><span class="meta">    @eat.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(self,food)</span>:</span></span><br><span class="line">        print(<span class="string">"set for %s"</span>%food)</span><br><span class="line"><span class="meta">    @eat.deleter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">del</span> self.__food</span><br><span class="line">        print(<span class="string">"删完了"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d = Dog(<span class="string">"李小刀"</span>)</span><br><span class="line">d.eat    <span class="comment">#但是可以通过调用类对象来继续类的关联</span></span><br><span class="line">d.eat = <span class="string">"包子"</span></span><br><span class="line"><span class="keyword">del</span>  d.eat</span><br></pre></td></tr></table></figure>
+<p>飞机航班使用属性方法例子<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flight</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name)</span>:</span></span><br><span class="line">        self.flight_name = name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">checking_status</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"checking flight %s status "</span> % self.flight_name)</span><br><span class="line">        <span class="keyword">return</span>  <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flight_status</span><span class="params">(self)</span>:</span></span><br><span class="line">        status = self.checking_status()</span><br><span class="line">        <span class="keyword">if</span> status == <span class="number">0</span> :</span><br><span class="line">            print(<span class="string">"flight got canceled..."</span>)</span><br><span class="line">        <span class="keyword">elif</span> status == <span class="number">1</span> :</span><br><span class="line">            print(<span class="string">"flight is arrived..."</span>)</span><br><span class="line">        <span class="keyword">elif</span> status == <span class="number">2</span>:</span><br><span class="line">            print(<span class="string">"flight has departured already..."</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">"cannot confirm the flight status...,please check later"</span>)</span><br><span class="line"><span class="meta">    @flight_status.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flight_status</span><span class="params">(self,status)</span>:</span></span><br><span class="line">        print(<span class="string">"flight %s has changed status to %s"</span> %(self.flight_name,status))</span><br><span class="line">f = Flight(<span class="string">"CA980"</span>)</span><br><span class="line">f.flight_status</span><br><span class="line">f.flight_status = <span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<p>特殊方法：<br><strong>doc</strong><br>是打印你写在类下面的注释信息的<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">''' 这个类是描述狗这个对象的'''</span></span><br><span class="line">d = Dog(<span class="string">"李小刀"</span>)</span><br><span class="line">print(d.__doc__)</span><br></pre></td></tr></table></figure></p>
+<p>输出这个类是描述狗这个对象的</p>
+<p><strong>model</strong>方法  输出模块<br><strong>class</strong>方法   输出类<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">from</span> 软件测试作业.dd <span class="keyword">import</span> c</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj = c()</span><br><span class="line">print(obj.__module__)     <span class="comment">#输出软件测试作业.dd  即： 输出模块输出</span></span><br><span class="line">print(obj.__class__)       <span class="comment">#输出&lt;class '软件测试作业.dd.c'&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Call</strong>方法     给对象加个括号就调用了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">''' 这个类是描述狗这个对象的'''</span></span><br><span class="line">    name = <span class="string">"wch"</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.__food =<span class="keyword">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        print(<span class="string">"%s is being called"</span>%args)</span><br><span class="line"> </span><br><span class="line">d = Dog(<span class="string">"wch"</span>)</span><br><span class="line">d(<span class="string">"wch"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>输出<br>wch is being called<br><strong>dict</strong>没实例化的时候以字典的形式打印类中所有的方法，实例化后以字典的形式方法显示类中所有属性<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">''' 这个类是描述狗这个对象的'''</span></span><br><span class="line">    name = <span class="string">"wch"</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.__food =<span class="keyword">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        print(<span class="string">"%s is being called"</span>%args)</span><br><span class="line">print(Dog.__dict__)     <span class="comment">#没实例化的时候</span></span><br><span class="line">d = Dog(<span class="string">"wch"</span>)</span><br><span class="line"></span><br><span class="line">print(d.__dict__)         <span class="comment"># 输出&#123;'name': 'wch', '_Dog__food': None&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>str</strong>是传返回值的<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">''' 这个类是描述狗这个对象的'''</span></span><br><span class="line">    name = <span class="string">"wch"</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.__food =<span class="keyword">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&lt;obj %s&gt;"</span>%self.name</span><br><span class="line"></span><br><span class="line">d = Dog(<span class="string">"wch"</span>)</span><br><span class="line">print(d)</span><br></pre></td></tr></table></figure></p>
+<p><strong>init</strong> , <strong>getitem</strong>,<strong>setitem</strong>,<strong>delitem</strong>  将类的实例变成字典<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">将实例变成字典</span></span><br><span class="line"><span class="string">可以封装成字典</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.data = &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        print(<span class="string">'__getitem__'</span>, key)</span><br><span class="line">        <span class="keyword">return</span> self.data.get(key)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, key, value)</span>:</span></span><br><span class="line">        print(<span class="string">'__setitem__'</span>, key, value)</span><br><span class="line">        self.data[key] =value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        print(<span class="string">'__delitem__'</span>, key)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj = Foo()</span><br><span class="line">obj[<span class="string">'name'</span>] = <span class="string">"alex"</span>   <span class="comment">#像字典一样赋值</span></span><br><span class="line"><span class="comment"># print(obj['name'])</span></span><br><span class="line"><span class="comment"># print(obj.data)</span></span><br><span class="line"><span class="keyword">del</span> obj[<span class="string">"sdfdsf"</span>]</span><br><span class="line"><span class="comment"># result = obj['k1']  # 自动触发执行 __getitem__</span></span><br><span class="line"><span class="comment"># obj['k2'] = 'alex'  # 自动触发执行 __setitem__</span></span><br><span class="line"><span class="comment"># del obj['k1']</span></span><br></pre></td></tr></table></figure></p>
+<p>神奇的类的构造方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name,age)</span>:</span></span><br><span class="line">    self.name = name</span><br><span class="line">    self.age =  age</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">coo</span><span class="params">(self)</span>:</span></span><br><span class="line">    print(<span class="string">"hello wch!"</span>)</span><br><span class="line">Peal = type(<span class="string">"Peal"</span>,(object,),&#123;<span class="string">"coo"</span>:coo,                   <span class="comment">#类生命的起源</span></span><br><span class="line">                              <span class="string">"__init__"</span>:__init__&#125;)      <span class="comment">#创建了一个类  object 里面是个元组的形式，所以必须加逗号</span></span><br><span class="line">f = Peal(<span class="string">"wch"</span>,<span class="number">55</span>)                                     <span class="comment">#对类进行实例化</span></span><br><span class="line">f.coo()</span><br><span class="line">print(type(Peal))</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/面向对象p2/index.html" data-id="cjmm8360u001bdcqi3366dysf" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>5</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>2</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>3</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
