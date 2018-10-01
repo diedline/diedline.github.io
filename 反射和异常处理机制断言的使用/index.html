@@ -8,11 +8,11 @@
   <meta name="description" content="反射 ：能有效减少if判断次数（我的理解）hasattr(obj,name_string)判断一个对象是否有对应的字符串的方法getattr(obj,name_string)根据字符串获取obj对象里对应方法的内存地址Setattr(obj,name_string，你要设置的方法名或者静态属性）任意设置你要调用的方法， 例子里输入eat输出NiuHanYang is eating。。输入bulk输">
 <meta property="og:type" content="website">
 <meta property="og:title" content="反射和异常处理机制">
-<meta property="og:url" content="https://diedline.github.io/反射和异常处理机制/index.html">
+<meta property="og:url" content="https://diedline.github.io/反射和异常处理机制断言的使用/index.html">
 <meta property="og:site_name" content="Died line 的博客">
 <meta property="og:description" content="反射 ：能有效减少if判断次数（我的理解）hasattr(obj,name_string)判断一个对象是否有对应的字符串的方法getattr(obj,name_string)根据字符串获取obj对象里对应方法的内存地址Setattr(obj,name_string，你要设置的方法名或者静态属性）任意设置你要调用的方法， 例子里输入eat输出NiuHanYang is eating。。输入bulk输">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-30T04:55:10.080Z">
+<meta property="og:updated_time" content="2018-10-01T00:07:34.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反射和异常处理机制">
 <meta name="twitter:description" content="反射 ：能有效减少if判断次数（我的理解）hasattr(obj,name_string)判断一个对象是否有对应的字符串的方法getattr(obj,name_string)根据字符串获取obj对象里对应方法的内存地址Setattr(obj,name_string，你要设置的方法名或者静态属性）任意设置你要调用的方法， 例子里输入eat输出NiuHanYang is eating。。输入bulk输">
@@ -70,7 +70,7 @@
 
         <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/反射和异常处理机制/index.html" class="article-date">
+    <a href="/反射和异常处理机制断言的使用/index.html" class="article-date">
   <time class="post-time" datetime="2018-09-30T04:49:13.000Z" itemprop="datePublished">
     <span class="post-month">9月</span><br/>
     <span class="post-day">30</span>
@@ -108,11 +108,12 @@
 <p>Exception 自动抓住大多数错误</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">"wch"</span>,<span class="string">"hcd"</span>]</span><br><span class="line">data = &#123;&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># names[3]</span></span><br><span class="line">    <span class="comment"># data["name"]</span></span><br><span class="line">    open(<span class="string">"sc.txt"</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:                   <span class="comment">#自动抓住大多数错误</span></span><br><span class="line">    print(<span class="string">"出错了 %s"</span>%e)</span><br></pre></td></tr></table></figure>
 <p>你可以自定义异常 通过raise触发<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AlexError</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, msg)</span>:</span></span><br><span class="line">        self.message = msg</span><br><span class="line">    <span class="comment"># def __str__(self):</span></span><br><span class="line">    <span class="comment">#     return 'sdfsf'</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">raise</span> AlexError(<span class="string">'数据库连不上'</span>)   <span class="comment">#raise触发</span></span><br><span class="line"><span class="keyword">except</span> AlexError <span class="keyword">as</span> e:</span><br><span class="line">    print(e)</span><br></pre></td></tr></table></figure></p>
+<p>断言<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">dog</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,food)</span>:</span></span><br><span class="line">        self.food = food</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"Dog is eating %s"</span>%self.food)</span><br><span class="line"></span><br><span class="line">obj = dog(<span class="string">"包子"</span>)</span><br><span class="line"><span class="keyword">assert</span> type(obj.food) <span class="keyword">is</span> str        </span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">断言 obj.food is str 为真继续执行，假抛出断言异常</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">print(<span class="string">"dddd"</span>)</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/反射和异常处理机制/index.html" data-id="cjmp2i6yg000fugqi5xe1owm6" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/反射和异常处理机制断言的使用/index.html" data-id="cjmpjc85n0004foqiw6h1y9t2" class="article-share-link">分享</a>
       
       
     </footer>
