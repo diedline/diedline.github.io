@@ -3,16 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>categories | Died line 的博客</title>
+  <title>paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录 | Died line 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://diedline.github.io/categories/index.html">
+  <meta name="description" content="用python 实现ssh客户端  （用于连接远程服务器）直接写用户名密码在配置文件里是不安全的，可以不用密码，用秘钥来连接ssh秘钥RSA —非对称秘钥验证 公钥 public key私钥 private key10.0.0.31   ——&amp;gt;10.0.0.41私钥               公钥rwx   rwx   rwx        r读w写x执行 用数字表示rwx—&amp;gt;421">
+<meta name="keywords" content="python,linuix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录">
+<meta property="og:url" content="https://diedline.github.io/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/index.html">
 <meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="用python 实现ssh客户端  （用于连接远程服务器）直接写用户名密码在配置文件里是不安全的，可以不用密码，用秘钥来连接ssh秘钥RSA —非对称秘钥验证 公钥 public key私钥 private key10.0.0.31   ——&amp;gt;10.0.0.41私钥               公钥rwx   rwx   rwx        r读w写x执行 用数字表示rwx—&amp;gt;421">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-16T07:34:26.000Z">
+<meta property="og:updated_time" content="2018-10-06T10:37:23.793Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录">
+<meta name="twitter:description" content="用python 实现ssh客户端  （用于连接远程服务器）直接写用户名密码在配置文件里是不安全的，可以不用密码，用秘钥来连接ssh秘钥RSA —非对称秘钥验证 公钥 public key私钥 private key10.0.0.31   ——&amp;gt;10.0.0.41私钥               公钥rwx   rwx   rwx        r读w写x执行 用数字表示rwx—&amp;gt;421">
   
     <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
   
@@ -65,16 +69,71 @@
   </div>
 </div>
 
-        <section id="main"><article  class="animated rubberBand article article-type-" >
-  <div class="article-inner">
-    <div class="categories-box">
-      <h1>分类</h1>
-      
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/后端技术/">后端技术</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/后端技术/linuix/">linuix</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/网络通信/">网络通信</a><span class="category-list-count">1</span></li></ul></li></ul>
-       
-    </div>
+        <section id="main"><article id="post-paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" class="article-date">
+  <time class="post-time" datetime="2018-10-06T10:29:40.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">06</span>
+  </time>
+</a>
+   
   </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/后端技术/">后端技术</a>,<a class="article-category-link" href="/categories/后端技术/linuix/">linuix</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>用python 实现ssh客户端  （用于连接远程服务器）<br>直接写用户名密码在配置文件里是不安全的，可以不用密码，用秘钥来连接<br>ssh秘钥<br>RSA —非对称秘钥验证</p>
+<p>公钥 public key<br>私钥 private key<br>10.0.0.31   ——&gt;10.0.0.41<br>私钥               公钥<br>rwx   rwx   rwx        r读w写x执行 用数字表示rwx—&gt;421<br>属主  属组  others<br>chmod  777  authorized_key  改变权限变成777<br>所以改变权限变成777所有人都能访问 你要自己才能读写要改成600<br>先生成一对公钥私钥<br><a href="https://diedline.github.io/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录"></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" data-id="cjmxb2vt800002gqipqse0pnz" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linuix/">linuix</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/10/02/简单的socket网络通信的实现p2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">简单的socket网络通信的实现p2</div>
+    </a>
+  
+</nav>
+
+  
 </article>
+
+
 
 </section>
         
