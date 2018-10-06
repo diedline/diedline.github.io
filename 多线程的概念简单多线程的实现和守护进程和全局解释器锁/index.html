@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>多线程的概念简单多线程的实现和守护进程和全局解释器锁 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="多线程 系统软件都是通过操作系统（os）去调用cpu进行运算。每个程序启动会分一块空间，硬盘（自行车）慢，内存（高铁）快，cpu（火箭）还要比内存快好多。cpu有一个时钟频率，代表中断多少次，每中断就能执行一次指令。每一个程序的内存是独立的线程————-》一堆指令操作系统调度cpu最小单位就是线程。线程被包含在进程之中，是进程中一个单一顺序的控制流。一个进程可以并发多个线程，每条线程执行不同的。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="多线程的概念简单多线程的实现和守护进程和全局解释器锁">
+<meta property="og:url" content="https://diedline.github.io/多线程的概念简单多线程的实现和守护进程和全局解释器锁/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="多线程 系统软件都是通过操作系统（os）去调用cpu进行运算。每个程序启动会分一块空间，硬盘（自行车）慢，内存（高铁）快，cpu（火箭）还要比内存快好多。cpu有一个时钟频率，代表中断多少次，每中断就能执行一次指令。每一个程序的内存是独立的线程————-》一堆指令操作系统调度cpu最小单位就是线程。线程被包含在进程之中，是进程中一个单一顺序的控制流。一个进程可以并发多个线程，每条线程执行不同的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-06T16:04:29.025Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程的概念简单多线程的实现和守护进程和全局解释器锁">
+<meta name="twitter:description" content="多线程 系统软件都是通过操作系统（os）去调用cpu进行运算。每个程序启动会分一块空间，硬盘（自行车）慢，内存（高铁）快，cpu（火箭）还要比内存快好多。cpu有一个时钟频率，代表中断多少次，每中断就能执行一次指令。每一个程序的内存是独立的线程————-》一堆指令操作系统调度cpu最小单位就是线程。线程被包含在进程之中，是进程中一个单一顺序的控制流。一个进程可以并发多个线程，每条线程执行不同的。">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>10</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>5</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>10</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/多线程的概念简单多线程的实现和守护进程和全局解释器锁/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-06T15:59:49.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">06</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      多线程的概念简单多线程的实现和守护进程和全局解释器锁
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>多线程</p>
+<p>系统软件都是通过操作系统（os）去调用cpu进行运算。<br>每个程序启动会分一块空间，硬盘（自行车）慢，内存（高铁）快，cpu（火箭）还要比内存快好多。cpu有一个时钟频率，代表中断多少次，每中断就能执行一次指令。<br>每一个程序的内存是独立的<br>线程————-》一堆指令<br>操作系统调度cpu最小单位就是线程。线程被包含在进程之中，是进程中一个单一顺序的控制流。一个进程可以并发多个线程，每条线程执行不同的。</p>
+<p>进程：一个程序（例如qq）要以一个整体的形式暴露给操作系统管理，里面包含对各种资源的调用，内存的管理，网络接口的调用等。对各种资源管理的集合就可以称为进程。<br>进程 要操作cpu ，必须先创建一个线程，进程不能执行它是资源的集合。所有在一个同一个进程里的线程是共享同一块内存空间的。</p>
+<p>一个cpu只能同时干一件事，但给了你能同时做多个任务的幻觉，因为它进行了上下文的切换，从停止的位置继续做。因为它太速度快了，你切换一次的任务时间能完成n次切换。一个线程就是一堆上下文在寄存器中的组合，线程和进程是不一样的，进程是一堆相关的进行运算的资源的集合，像一个屋子能做多个人和一个人，澄清一下，进程的相关资源包含内存的空间地址，所有在一个同一个进程里的线程是共享同一块内存空间的。</p>
+<p>进程，一个程序的执行实例，每一个进程提供执行这个程序所用的所有资源，虚拟的地址空间，可执行的代码，调用的操作系统的接口，安全的权限，唯一的进程标识符（pid），优先级类，最小最大工作所需要的内存空间，至少使用一个线程，当启动一个进程的时候会自动启动一个线程，进程里的第一个线程就是主线程， 子线程是通过主线程创建的，但是子线程是独立的，主线程关闭子线程不会关闭。用各个线程创建子线程。</p>
+<p>进程快还是线程快？<br>没有可比性，进程是资源集合，线程能执行，都是都一样的。<br>启动进程快还是线程快？<br>启动一个线程快，启动一个进程相当于修一个屋子，线程像拉个人过来，但是当运行后是一样的，因为进程也是靠线程运行的。<br>线程共享内存空间，进程是独立的（例qq不能访问word）。</p>
+<p>两个线程数据是共享的，而两个子进程是独立的，每创建一个子进程相当于对父进程的克隆，不能互相访问</p>
+<p>同一个进程的线程之间可以直接交流，进程是独立的，两个进程想要通信必须通过一个中级代理来实现，创建新线程很简单，创建新进程需要对其父进程进行一次克隆。<br>一个线程可以控制和操作同一个进程里的其他线程，没有实际的隶属关系，但是进程只能操作子进程。<br>对于主线程的修改可能影响其他线程的行为（他们是共享数据的），但是对父进程修改不影响子进程。</p>
+<p>单线程需要等待两秒<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(n)</span>:</span></span><br><span class="line">    print(<span class="string">"test"</span>,n)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># T1 = threading.Thread(target=run,args=("t1",))</span></span><br><span class="line"><span class="comment"># #加逗号是因为防止它看做一个参数，因为需要一个元组</span></span><br><span class="line"><span class="comment"># T2 = threading.Thread(target=run,args=("t2",))</span></span><br><span class="line"><span class="comment"># T1.start()</span></span><br><span class="line"><span class="comment"># T2.start()</span></span><br><span class="line">run(<span class="string">"t1"</span>)</span><br><span class="line">run(<span class="string">"t2"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>使用多线程执行不需要等待2s（直接调用方法）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(n)</span>:</span></span><br><span class="line">    print(<span class="string">"test"</span>,n)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">T1 = threading.Thread(target=run,args=(<span class="string">"t1"</span>,))</span><br><span class="line"><span class="comment">#加逗号是因为防止它看做一个参数，因为需要一个元组</span></span><br><span class="line">T2 = threading.Thread(target=run,args=(<span class="string">"t2"</span>,))</span><br><span class="line">T1.start()</span><br><span class="line">T2.start()</span><br><span class="line"><span class="comment"># run("t1")</span></span><br><span class="line"><span class="comment"># run("t2")</span></span><br></pre></td></tr></table></figure></p>
+<p>这就是多线程的魅力</p>
+<p>用类的形式启动多线程（继承式调用）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,n)</span>:</span></span><br><span class="line">        super(MyThread,self).__init__()</span><br><span class="line">        <span class="comment">#继承父类里的__init__</span></span><br><span class="line">        self.n =n</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"run"</span>,self.n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">t1 = MyThread(<span class="string">"T1"</span>)</span><br><span class="line">t2 = MyThread(<span class="string">"T2"</span>)</span><br><span class="line"></span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br></pre></td></tr></table></figure></p>
+<p>主线程启动子线程之后，子线程和主线程就是独立并行的，没有依赖关系。加了join之后主线程依赖子线程执行完毕之后再往下走。</p>
+<p>测量总进程所花费时间（50个进程都完成的时间）主线程是程序本身是看不到的，程序退出之前默认有一个join，让所有线程执行完毕。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(n)</span>:</span></span><br><span class="line">    print(<span class="string">"test"</span>,n)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(<span class="string">"run has done"</span>,n)</span><br><span class="line">start_time =time.time()</span><br><span class="line">t_objs = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">    t = threading.Thread(target=run,args=(<span class="string">"t%s"</span>%i,))</span><br><span class="line">    t.start()</span><br><span class="line">    t_objs.append(t)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> t_objs:</span><br><span class="line">    t.join()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">将t放入数组，然后每执行一次加1让t.join执行50次，实现50个线程都执行结束的效果</span></span><br><span class="line"><span class="string">（不想卡住下一个进程的启动）</span></span><br><span class="line"><span class="string">"""</span> </span><br><span class="line"></span><br><span class="line">print(<span class="string">"cost:"</span>,time.time()-start_time)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">测出总花费时间</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"all thread has finished...."</span>,threading.current_thread(),threading.active_count())</span><br><span class="line">threading.current_thread() 可以输出进程的属性（即是主进程还是子进程）</span><br><span class="line">threading.active_count()  输出当前活跃的进程数</span><br></pre></td></tr></table></figure>
+<p>例输出<br>all thread has finished…. &lt;_MainThread(MainThread, started 6704)&gt; 1<br>有了守护进程之后，只要主线程执行完毕，不管子线程是否执行完毕，就退出了。非守护线程退出了就全部退出了。实际应用场景socket_server没过来一个连接启动一个新线程，如果设置socket server主线程退出就全部停止了。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(n)</span>:</span></span><br><span class="line">    print(<span class="string">"test"</span>,n)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(<span class="string">"run has done"</span>,n)</span><br><span class="line">start_time =time.time()</span><br><span class="line"><span class="comment"># t_objs = []</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">    t = threading.Thread(target=run,args=(<span class="string">"t%s"</span>%i,))</span><br><span class="line">    t.setDaemon(<span class="keyword">True</span>)  <span class="comment">#把当前线程设置为守护线程，一定要在start 之前</span></span><br><span class="line">    t.start()</span><br><span class="line"><span class="comment">#     t_objs.append(t)</span></span><br><span class="line"><span class="comment"># for t in t_objs:</span></span><br><span class="line"><span class="comment">#     t.join()</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">将t放入数组，然后每执行一次加1让t.join执行50次，实现50个线程都执行结束的效果</span></span><br><span class="line"><span class="string">（不想卡主下一个进程的启动）</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"cost:"</span>,time.time()-start_time)</span><br><span class="line">print(<span class="string">"all thread has finished...."</span>,threading.current_thread(),threading.active_count())</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">测出总花费时间</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure></p>
+<p>全局解释器锁<br>cpython 的缺陷<br>在python 中无论有多少核心都是假象，假的多线程（不停进行上下文切换），python的一个设计缺陷（涉及到线程之间数据共享的问题），其实调用的C语言写的操作系统的原生线程接口。调用它的接口必须知道上下文的关系，所以变成了，python的四个线程确实在4个cpu中，虽然执行只能一个核心上，但是所有执行可能不在同一个核心上，为了避免数据出错python自己加了一个全局锁，同一时间只有一个线程能拿到数据，只有一个线程能实现修改。Java等语言是自己实现的线程，所以没有这种限制。<br>python的未来pypy:<br>运行速度特别快，去掉了全局解释器锁只是pypy的一个顺带的功能，主要功能让它变快是加入了一个即时编译器JIT<br>JIT就是想通过编译技术提升脚本解释器系统的速度。<br>例如, 被JIT（及时编译）采用的通用方法:<br>标识被经常执行的字节码。<br>把其编译成本地的机器码。<br>缓存该结果。<br>当同样的的字节码再次被执行的时候，会取预编译的机器码，得到好处（例如速度提升）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/多线程的概念简单多线程的实现和守护进程和全局解释器锁/index.html" data-id="cjmxmqh8u0010iwqiypj8xe21" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>10</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>5</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>10</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -14,11 +14,11 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://diedline.github.io/img/1JHY5F1O8PVSD%7DR9TYJY%7B[B.png">
 <meta property="og:image" content="https://diedline.github.io/img/K6KW%7B]6%7DBREIJG%60]80G@Z2L.png">
-<meta property="og:image" content="https://diedline.github.io/img/TOKO@5ZMHN%7D%7BQ5O(XDZ">
+<meta property="og:image" content="https://diedline.github.io/img/323.png">
 <meta property="og:image" content="https://diedline.github.io/img/TZ4UT%7BY%7BB%7BRH6MQD_5I@C~N.png">
 <meta property="og:image" content="https://diedline.github.io/img/123.png">
 <meta property="og:image" content="https://diedline.github.io/img/ppp.png">
-<meta property="og:updated_time" content="2018-10-06T11:02:39.295Z">
+<meta property="og:updated_time" content="2018-10-06T15:23:59.217Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录">
 <meta name="twitter:description" content="Paramiko 模块用python 实现ssh客户端  （用于连接远程服务器）1234567891011121314151617181920212223242526272829#  Author: Diedline&quot;&quot;&quot;最简单的ssh执行命令&quot;&quot;&quot;import paramiko# 创建SSH对象ssh = paramiko.SSHClient()# 允许连接不在know_hosts文件中的主机s">
@@ -49,9 +49,9 @@
     <h2 class="author">Died line</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>9</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>6</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>9</strong><br>标签</div></a>
+      <a href="/archives"><div><strong>10</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>5</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>10</strong><br>标签</div></a>
     </div>
     <ul class="blog-link">
      
@@ -110,7 +110,7 @@
 <p>成功上传到linuix<br><img src="/img/K6KW{]6}BREIJG`]80G@Z2L.png" alt=""></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line">transport = paramiko.Transport((<span class="string">'192.168.167.128'</span>, <span class="number">22</span>))</span><br><span class="line">transport.connect(username=<span class="string">"root"</span>,password=<span class="string">"dljyxx225"</span>)</span><br><span class="line">sftp = paramiko.SFTPClient.from_transport(transport)</span><br><span class="line"><span class="comment">#将location.py 上传至本地服务器 /tmp/test.py</span></span><br><span class="line"><span class="comment"># sftp.put("test.txt","/tmp/test.txt")</span></span><br><span class="line"><span class="comment">#将remove_path 下载到本地 local_path</span></span><br><span class="line">sftp.get(<span class="string">"/root/test.py"</span>,<span class="string">"test.py"</span>)</span><br><span class="line"> </span><br><span class="line">transport.close()</span><br></pre></td></tr></table></figure>
 <p>成功下载linuix上文件</p>
-<p><img src="/img/TOKO@5ZMHN}{Q5O(XDZ" alt="">GNI.png)</p>
+<p><img src="/img/323.png" alt=""></p>
 <p>直接写用户名密码在配置文件里是不安全的，可以不用密码，用秘钥来连接<br>ssh秘钥<br>RSA —非对称秘钥验证</p>
 <p>公钥 public key<br>私钥 private key<br>10.0.0.31   ——&gt;10.0.0.41<br>私钥               公钥<br>rwx   rwx   rwx        r读w写x执行 用数字表示rwx—&gt;421<br>属主  属组  others<br>chmod  777  authorized_key  改变权限变成777<br>所以改变权限变成777所有人都能访问 你要自己才能读写要改成600<br>先生成一对公钥私钥</p>
 <p><img src="/img/TZ4UT{Y{B{RH6MQD_5I@C~N.png" alt=""><br>生成公钥私钥  上面是私钥不能给别人看到<br>下面公钥<br>打开的类似Md5的私钥<br><img src="/img/123.png" alt=""><br>生成的公钥<br><img src="/img/ppp.png" alt=""><br>你把公钥放到root目录就是管理员权限，放到其他目录就是能登录其他的权限，当你发现复制过去的公钥无效的时候并且dd只能删除一行的时候，可能是因为你的公钥有多行自动换行了，你需要把它变成一行复制进去（这只是一个单项的，登录不需要密码）<br>ssh-copy-id “-p20 <a href="mailto:root@192.168.167.128" target="_blank" rel="noopener">root@192.168.167.128</a>”<br>用秘钥登录 不需要密码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"><span class="comment"># 创建SSH对象</span></span><br><span class="line">private_key = paramiko.RSAKey.from_private_key_file(<span class="string">"id_rsa"</span>)</span><br><span class="line">ssh = paramiko.SSHClient()</span><br><span class="line"><span class="comment"># 允许连接不在know_hosts文件中的主机</span></span><br><span class="line"></span><br><span class="line">ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"><span class="comment"># 连接服务器</span></span><br><span class="line">ssh.connect(hostname=<span class="string">'192.168.167.128'</span>, port=<span class="number">22</span>, username=<span class="string">'root'</span>, pkey= private_key)</span><br><span class="line"><span class="comment"># 执行命令</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行命令</span></span><br><span class="line">stdin, stdout, stderr = ssh.exec_command(<span class="string">'df'</span>)</span><br><span class="line">result = stdout.read()</span><br><span class="line">print(result.decode())</span><br><span class="line">stdin, stdout2, stderr = ssh.exec_command(<span class="string">'ifconfig'</span>)</span><br><span class="line"><span class="comment"># 获取命令结果</span></span><br><span class="line">result2 = stdout2.read()</span><br><span class="line">print(result2.decode())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭连接</span></span><br><span class="line">ssh.close()</span><br></pre></td></tr></table></figure></p>
@@ -118,7 +118,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/index.html" data-id="cjmxb2vwx000i2gqixttr0x90" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/index.html" data-id="cjmxmqh920014iwqilq5okpjz" class="article-share-link">分享</a>
       
       
     </footer>
@@ -169,9 +169,9 @@
     <h2 class="author">Died line</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>9</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>6</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>9</strong><br>标签</div></a>
+      <a href="/archives"><div><strong>10</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>5</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>10</strong><br>标签</div></a>
     </div>
 
 

@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>简单的socket网络通信的实现p2 | Died line 的博客</title>
+  <title>多线程的概念简单多线程的实现和守护进程和全局解释器锁 | Died line 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
-<meta name="keywords" content="python,网络,文件传输">
+  <meta name="description" content="多线程 系统软件都是通过操作系统（os）去调用cpu进行运算。每个程序启动会分一块空间，硬盘（自行车）慢，内存（高铁）快，cpu（火箭）还要比内存快好多。cpu有一个时钟频率，代表中断多少次，每中断就能执行一次指令。每一个程序的内存是独立的线程————-》一堆指令操作系统调度cpu最小单位就是线程。线程被包含在进程之中，是进程中一个单一顺序的控制流。一个进程可以并发多个线程，每条线程执行不同的。">
+<meta name="keywords" content="python,多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单的socket网络通信的实现p2">
-<meta property="og:url" content="https://diedline.github.io/2018/10/02/简单的socket网络通信的实现p2/index.html">
+<meta property="og:title" content="多线程的概念简单多线程的实现和守护进程和全局解释器锁">
+<meta property="og:url" content="https://diedline.github.io/2018/10/07/多线程的概念简单多线程的实现和守护进程和全局解释器锁/index.html">
 <meta property="og:site_name" content="Died line 的博客">
-<meta property="og:description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
+<meta property="og:description" content="多线程 系统软件都是通过操作系统（os）去调用cpu进行运算。每个程序启动会分一块空间，硬盘（自行车）慢，内存（高铁）快，cpu（火箭）还要比内存快好多。cpu有一个时钟频率，代表中断多少次，每中断就能执行一次指令。每一个程序的内存是独立的线程————-》一堆指令操作系统调度cpu最小单位就是线程。线程被包含在进程之中，是进程中一个单一顺序的控制流。一个进程可以并发多个线程，每条线程执行不同的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-02T13:49:13.700Z">
+<meta property="og:updated_time" content="2018-10-06T16:04:26.059Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简单的socket网络通信的实现p2">
-<meta name="twitter:description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
+<meta name="twitter:title" content="多线程的概念简单多线程的实现和守护进程和全局解释器锁">
+<meta name="twitter:description" content="多线程 系统软件都是通过操作系统（os）去调用cpu进行运算。每个程序启动会分一块空间，硬盘（自行车）慢，内存（高铁）快，cpu（火箭）还要比内存快好多。cpu有一个时钟频率，代表中断多少次，每中断就能执行一次指令。每一个程序的内存是独立的线程————-》一堆指令操作系统调度cpu最小单位就是线程。线程被包含在进程之中，是进程中一个单一顺序的控制流。一个进程可以并发多个线程，每条线程执行不同的。">
   
     <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
   
@@ -69,12 +69,12 @@
   </div>
 </div>
 
-        <section id="main"><article id="post-简单的socket网络通信的实现p2" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-多线程的概念简单多线程的实现和守护进程和全局解释器锁" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/10/02/简单的socket网络通信的实现p2/" class="article-date">
-  <time class="post-time" datetime="2018-10-02T13:43:27.000Z" itemprop="datePublished">
+    <a href="/2018/10/07/多线程的概念简单多线程的实现和守护进程和全局解释器锁/" class="article-date">
+  <time class="post-time" datetime="2018-10-06T16:00:09.000Z" itemprop="datePublished">
     <span class="post-month">10月</span><br/>
-    <span class="post-day">02</span>
+    <span class="post-day">07</span>
   </time>
 </a>
    
@@ -86,12 +86,16 @@
         
   
     <h1 class="article-title" itemprop="name">
-      简单的socket网络通信的实现p2
+      多线程的概念简单多线程的实现和守护进程和全局解释器锁
     </h1>
   
 
         <div>
           
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>,<a class="article-category-link" href="/categories/技术/操作系统/">操作系统</a>
+  </div>
+
           
               
 
@@ -101,18 +105,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1.实现简单的ssh服务端<br>客户端输入 命令行命令，服务器端返回数据传送到客户端。</p>
-<p>2.ftp server<br>步骤<br>1.读取文件名<br>2.检测文件是否存在<br>3.打开文件<br>4.检测文件大小<br>5.发送文件大小给客户端<br>6.等客户端确认（防止粘包）<br>7.开始边读边发数据<br>8.发送 Md5值 </p>
-<p>实现文件的传输，通过md5值校对来判断文件是否丢包</p>
-<p><a href="https://diedline.github.io/简单的socket网络通信的实现p2">read more</a></p>
+        <p>多线程</p>
+<p>系统软件都是通过操作系统（os）去调用cpu进行运算。<br>每个程序启动会分一块空间，硬盘（自行车）慢，内存（高铁）快，cpu（火箭）还要比内存快好多。cpu有一个时钟频率，代表中断多少次，每中断就能执行一次指令。<br>每一个程序的内存是独立的<br>线程————-》一堆指令<br>操作系统调度cpu最小单位就是线程。线程被包含在进程之中，是进程中一个单一顺序的控制流。一个进程可以并发多个线程，每条线程执行不同的。</p>
+<p>进程：一个程序（例如qq）要以一个整体的形式暴露给操作系统管理，里面包含对各种资源的调用，内存的管理，网络接口的调用等。对各种资源管理的集合就可以称为进程。<br>进程 要操作cpu ，必须先创建一个线程，进程不能执行它是资源的集合。所有在一个同一个进程里的线程是共享同一块内存空间的。</p>
+<p>一个cpu只能同时干一件事，但给了你能同时做多个任务的幻觉，因为它进行了上下文的切换，从停止的位置继续做。因为它太速度快了，你切换一次的任务时间能完成n次切换。一个线程就是一堆上下文在寄存器中的组合，线程和进程是不一样的，进程是一堆相关的进行运算的资源的集合，像一个屋子能做多个人和一个人，澄清一下，进程的相关资源包含内存的空间地址，所有在一个同一个进程里的线程是共享同一块内存空间的。</p>
+<p>进程，一个程序的执行实例，每一个进程提供执行这个程序所用的所有资源，虚拟的地址空间，可执行的代码，调用的操作系统的接口，安全的权限，唯一的进程标识符（pid），优先级类，最小最大工作所需要的内存空间，至少使用一个线程，当启动一个进程的时候会自动启动一个线程，进程里的第一个线程就是主线程， 子线程是通过主线程创建的，但是子线程是独立的，主线程关闭子线程不会关闭。用各个线程创建子线程。<br><a href="https://diedline.github.io/多线程的概念简单多线程的实现和守护进程和全局解释器锁"></a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/02/简单的socket网络通信的实现p2/" data-id="cjmxmqh9f001ciwqijrqzs078" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/10/07/多线程的概念简单多线程的实现和守护进程和全局解释器锁/" data-id="cjmxmqh6p0004iwqijmpw0arg" class="article-share-link">分享</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件传输/">文件传输</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
 
     </footer>
   </div>
@@ -120,19 +125,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/10/01/简单的socket网络通信的实现p1/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">简单的socket网络通信的实现p1</div>
+      <div class="article-nav-title">paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录</div>
     </a>
   
 </nav>
