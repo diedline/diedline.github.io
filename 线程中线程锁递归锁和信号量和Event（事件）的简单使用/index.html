@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>线程中线程锁递归锁和信号量和Event（事件）的简单使用 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="线程锁：保证同一数据同时只修改一次，避免出错，虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。123456789101112131415161718192021222324252627282930313233#  Author: Diedlineimport threadingimport time&quot;&quot;&quot;python 3版本自带这个锁（不需要），python2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="线程中线程锁递归锁和信号量和Event（事件）的简单使用">
+<meta property="og:url" content="https://diedline.github.io/线程中线程锁递归锁和信号量和Event（事件）的简单使用/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="线程锁：保证同一数据同时只修改一次，避免出错，虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。123456789101112131415161718192021222324252627282930313233#  Author: Diedlineimport threadingimport time&quot;&quot;&quot;python 3版本自带这个锁（不需要），python2">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-08T13:10:02.226Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线程中线程锁递归锁和信号量和Event（事件）的简单使用">
+<meta name="twitter:description" content="线程锁：保证同一数据同时只修改一次，避免出错，虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。123456789101112131415161718192021222324252627282930313233#  Author: Diedlineimport threadingimport time&quot;&quot;&quot;python 3版本自带这个锁（不需要），python2">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>11</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>5</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>10</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/线程中线程锁递归锁和信号量和Event（事件）的简单使用/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-08T13:02:53.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">08</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      线程中线程锁递归锁和信号量和Event（事件）的简单使用
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>线程锁：<br>保证同一数据同时只修改一次，避免出错，虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">python 3版本自带这个锁（不需要），python2版本需要自己加这个锁</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(n)</span>:</span></span><br><span class="line">    lock.acquire()          <span class="comment">#获取一把锁</span></span><br><span class="line">    <span class="keyword">global</span>  num</span><br><span class="line">    num +=<span class="number">1</span></span><br><span class="line">    time.sleep(<span class="number">1</span>)           <span class="comment">#因为你sleep的时候锁没释放 所以50个线程变成了串行等待50S</span></span><br><span class="line">    lock.release()          <span class="comment">#释放这把锁</span></span><br><span class="line">lock = threading.Lock()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">全局变量生成一把锁</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">num = <span class="number">0</span></span><br><span class="line">t_objs = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">    t = threading.Thread(target=run,args=(<span class="string">"t%s"</span>%i,))</span><br><span class="line">    <span class="comment"># t.setDaemon(True)  #把当前线程设置为守护线程，一定要在start 之前</span></span><br><span class="line">    t.start()</span><br><span class="line">    t_objs.append(t)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> t_objs:</span><br><span class="line">    t.join()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">将t放入数组，然后每执行一次加1让t.join执行50次，实现50个线程都执行结束的效果</span></span><br><span class="line"><span class="string">（不想卡住下一个进程的启动）</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">"all thread has finished...."</span>,threading.current_thread(),threading.active_count())</span><br><span class="line">print(<span class="string">"number:"</span>,num)</span><br></pre></td></tr></table></figure></p>
+<p>递归锁：<br>一把大锁中还包含一把子锁。<br>Locks = {<br>Door1:key1<br>Door2:key2<br>}<br>类似这样的原理实现的<br>生成了三把锁同时只有两把锁在进行<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading, time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run1</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"grab the first part data"</span>)</span><br><span class="line">    lock.acquire()</span><br><span class="line">    <span class="keyword">global</span> num</span><br><span class="line">    num += <span class="number">1</span></span><br><span class="line">    lock.release()</span><br><span class="line">    <span class="keyword">return</span> num</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run2</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"grab the second part data"</span>)</span><br><span class="line">    lock.acquire()</span><br><span class="line">    <span class="keyword">global</span> num2</span><br><span class="line">    num2 += <span class="number">1</span></span><br><span class="line">    lock.release()</span><br><span class="line">    <span class="keyword">return</span> num2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run3</span><span class="params">()</span>:</span></span><br><span class="line">    lock.acquire()</span><br><span class="line">    res = run1()</span><br><span class="line">    print(<span class="string">'--------between run1 and run2-----'</span>)</span><br><span class="line">    res2 = run2()</span><br><span class="line">    lock.release()</span><br><span class="line">    print(res, res2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">num, num2 = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">lock = threading.RLock()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>):</span><br><span class="line">    t = threading.Thread(target=run3)</span><br><span class="line">    t.start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> threading.active_count() != <span class="number">1</span>:</span><br><span class="line">    print(threading.active_count())</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'----all threads done---'</span>)</span><br><span class="line">    print(num, num2)</span><br></pre></td></tr></table></figure></p>
+<p>信号量：<br>互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。如下面的程序同时运行5个线程更改数据。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading, time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(n)</span>:</span></span><br><span class="line">    semaphore.acquire()</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    print(<span class="string">"run the thread: %s\n"</span> % n)</span><br><span class="line">    semaphore.release()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    semaphore = threading.BoundedSemaphore(<span class="number">5</span>)  <span class="comment"># 最多允许5个线程同时运行</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实际效果是如果这五个线程有三个完成了就会立刻再放进三个线程</span></span><br><span class="line"><span class="string">    不会等5个都完成才一起放进去</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">22</span>):</span><br><span class="line">        t = threading.Thread(target=run, args=(i,))</span><br><span class="line">        t.start()</span><br><span class="line"><span class="keyword">while</span> threading.active_count() != <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">pass</span>  <span class="comment"># print threading.active_count()</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'----all threads done---'</span>)</span><br><span class="line">    <span class="comment">#print(num)</span></span><br></pre></td></tr></table></figure></p>
+<p>Events  事件<br>其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。<br>event = threading.Event()  初始化事件<br>event.wait()    设置等待<br>event.set()        设置标志位<br>event.clear()      清除标志位<br>event.is_set()   判断是否设置了标准位</p>
+<p>标志位被设定，代表绿灯直接通行。Wait()不会阻塞。<br>标志位被清空，代表红灯，wait()等待变绿灯<br>例子使用events来模拟红绿灯<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line">event = threading.Event()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lighter</span><span class="params">()</span>:</span></span><br><span class="line">    count =<span class="number">0</span></span><br><span class="line">    event.set()</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        <span class="keyword">if</span> count &gt;<span class="number">20</span> <span class="keyword">and</span> count&lt;<span class="number">30</span>:    <span class="comment">#改成红灯</span></span><br><span class="line">            event.clear()      <span class="comment">#把标准位清除</span></span><br><span class="line">            print(<span class="string">"\033[41;1mred light is on\033[0m"</span>)</span><br><span class="line">        <span class="keyword">elif</span> count&gt;<span class="number">30</span>:</span><br><span class="line">            event.set()        <span class="comment">#设置标志位，变绿灯</span></span><br><span class="line">            count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">"\033[42;1mgreen light is on\033[0m"</span>)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        count+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">car</span><span class="params">(name)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        <span class="keyword">if</span> event.is_set():               <span class="comment">#代表绿灯</span></span><br><span class="line">            print(<span class="string">"%s is running ..."</span>%name )</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">"%s is waiting..."</span>%name)</span><br><span class="line">            event.wait()</span><br><span class="line">            print(<span class="string">"\033[34;1m%s green light is start going\033[0m"</span>%name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">light = threading.Thread(target=lighter,)</span><br><span class="line">light.start()</span><br><span class="line">car1 = threading.Thread(target=car,args=(<span class="string">"Tesla"</span>,))</span><br><span class="line">car1.start()</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/线程中线程锁递归锁和信号量和Event（事件）的简单使用/index.html" data-id="cjn0bf5k1002bg4qi5ldx3nao" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>11</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>5</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>10</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
