@@ -5,18 +5,18 @@
   
   <title>线程中线程锁递归锁和信号量和Event（事件）的简单使用 | Died line 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="线程锁：保证同一数据同时只修改一次，避免出错.虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。递归锁：一把大锁中还包含一把子锁。Locks = {Door1:key1Door2:key2}信号量：互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。Events  事件其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。">
+  <meta name="description" content="线程锁：保证同一数据同时只修改一次，避免出错.虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。递归锁：一把大锁中还包含一把子锁。Locks = {Door1:key1Door2:key2}信号量：互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。Events  事件其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。read m">
 <meta name="keywords" content="python,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线程中线程锁递归锁和信号量和Event（事件）的简单使用">
 <meta property="og:url" content="https://diedline.github.io/2018/10/08/线程中线程锁递归锁和信号量和Event（事件）的简单使用/index.html">
 <meta property="og:site_name" content="Died line 的博客">
-<meta property="og:description" content="线程锁：保证同一数据同时只修改一次，避免出错.虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。递归锁：一把大锁中还包含一把子锁。Locks = {Door1:key1Door2:key2}信号量：互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。Events  事件其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。">
+<meta property="og:description" content="线程锁：保证同一数据同时只修改一次，避免出错.虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。递归锁：一把大锁中还包含一把子锁。Locks = {Door1:key1Door2:key2}信号量：互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。Events  事件其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。read m">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-08T13:11:04.651Z">
+<meta property="og:updated_time" content="2018-10-08T13:13:37.931Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程中线程锁递归锁和信号量和Event（事件）的简单使用">
-<meta name="twitter:description" content="线程锁：保证同一数据同时只修改一次，避免出错.虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。递归锁：一把大锁中还包含一把子锁。Locks = {Door1:key1Door2:key2}信号量：互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。Events  事件其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。">
+<meta name="twitter:description" content="线程锁：保证同一数据同时只修改一次，避免出错.虽然python3自带这个锁，但是你还是需要添加这个锁，因为官方并没有声明它带这个锁。递归锁：一把大锁中还包含一把子锁。Locks = {Door1:key1Door2:key2}信号量：互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。Events  事件其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。read m">
   
     <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
   
@@ -105,7 +105,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>线程锁：<br>保证同一数据同时只修改一次，避免出错.<br>虽然python3自带这个锁，但是你还是需要添加这个锁，<br>因为官方并没有声明它带这个锁。<br>递归锁：<br>一把大锁中还包含一把子锁。<br>Locks = {<br>Door1:key1<br>Door2:key2<br>}<br>信号量：<br>互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。<br>Events  事件<br>其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。<br><a href="https://diedline.github.io/线程中线程锁递归锁和信号量和Event（事件）的简单使用"></a></p>
+        <p>线程锁：<br>保证同一数据同时只修改一次，避免出错.<br>虽然python3自带这个锁，但是你还是需要添加这个锁，<br>因为官方并没有声明它带这个锁。<br>递归锁：<br>一把大锁中还包含一把子锁。<br>Locks = {<br>Door1:key1<br>Door2:key2<br>}<br>信号量：<br>互斥锁同时只允许一个线程更改数据，而信号量同时允许一定数量的线程更改数据。<br>Events  事件<br>其实就是在对全局变量不断的修改，只不过是在上面 封装了一层。<br><a href="https://diedline.github.io/线程中线程锁递归锁和信号量和Event（事件）的简单使用">read more</a></p>
 
       
     </div>
