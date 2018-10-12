@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>多进程queue·pipe·manager·进程锁 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Queue (队列)作用1：解耦，使程序实现松耦合。2：提高运行效率相当于一个有顺序的容器。数据只有一份，取出就没了。 判断队列为空的方法汇总123456789101112131415161718#  Author: Diedlineimport queueq = queue.Queue()q.put(&quot;d1&quot;)q.put(&quot;d2&quot;)q.put(&quot;d3&quot;)print(q.qsize())print">
+<meta property="og:type" content="website">
+<meta property="og:title" content="多进程queue·pipe·manager·进程锁">
+<meta property="og:url" content="https://diedline.github.io/多进程queue·pipe·manager·进程锁/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="Queue (队列)作用1：解耦，使程序实现松耦合。2：提高运行效率相当于一个有顺序的容器。数据只有一份，取出就没了。 判断队列为空的方法汇总123456789101112131415161718#  Author: Diedlineimport queueq = queue.Queue()q.put(&quot;d1&quot;)q.put(&quot;d2&quot;)q.put(&quot;d3&quot;)print(q.qsize())print">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-12T11:31:25.808Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多进程queue·pipe·manager·进程锁">
+<meta name="twitter:description" content="Queue (队列)作用1：解耦，使程序实现松耦合。2：提高运行效率相当于一个有顺序的容器。数据只有一份，取出就没了。 判断队列为空的方法汇总123456789101112131415161718#  Author: Diedlineimport queueq = queue.Queue()q.put(&quot;d1&quot;)q.put(&quot;d2&quot;)q.put(&quot;d3&quot;)print(q.qsize())print">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>13</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>6</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>14</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/多进程queue·pipe·manager·进程锁/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-12T11:24:16.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">12</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      多进程queue·pipe·manager·进程锁
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Queue (队列)<br>作用<br>1：解耦，使程序实现松耦合。<br>2：提高运行效率<br>相当于一个有顺序的容器。<br>数据只有一份，取出就没了。</p>
+<p>判断队列为空的方法汇总<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line">q = queue.Queue()</span><br><span class="line">q.put(<span class="string">"d1"</span>)</span><br><span class="line">q.put(<span class="string">"d2"</span>)</span><br><span class="line">q.put(<span class="string">"d3"</span>)</span><br><span class="line">print(q.qsize())</span><br><span class="line">print(q.get())</span><br><span class="line">print(q.get())</span><br><span class="line">print(q.get())</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">这些方法都可以用来判断队列是否为空了</span></span><br><span class="line"><span class="string">print(q.get())      #使用get 获取空队列时会卡死</span></span><br><span class="line"><span class="string">print(q.get_nowait())          #抛出queue.Empty的异常 用try 获取</span></span><br><span class="line"><span class="string">print(q.qsize())                # 可以 当q,size等于0 时放弃继续取值</span></span><br><span class="line"><span class="string">print(q.get(block= False))      #同样抛出 queue.Empty的异常</span></span><br><span class="line"><span class="string">print(q.get(timeout = 1))       #等待一秒结束卡死状态 抛出 queue.Empty的异常</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure></p>
+<p>后进先出队列<br>q = queue.LifoQueue()<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line">q = queue.LifoQueue()</span><br><span class="line">q.put(<span class="string">"d1"</span>)</span><br><span class="line">q.put(<span class="string">"d2"</span>)</span><br><span class="line">q.put(<span class="string">"d3"</span>)</span><br><span class="line">print(q.get())</span><br><span class="line">print(q.get())</span><br><span class="line">print(q.get())</span><br></pre></td></tr></table></figure></p>
+<p>能设定优先级的队列<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line">q= queue.PriorityQueue()</span><br><span class="line">q.put((<span class="number">10</span>,<span class="string">"wch"</span>))</span><br><span class="line">q.put((<span class="number">2</span>,<span class="string">"hxd"</span>))</span><br><span class="line">q.put((<span class="number">4</span>,<span class="string">"111"</span>))</span><br><span class="line">q.put((<span class="number">20</span>,<span class="string">"lss"</span>))</span><br><span class="line">print(q.get())</span><br><span class="line">print(q.get())</span><br><span class="line">print(q.get())</span><br><span class="line">print(q.get())</span><br></pre></td></tr></table></figure></p>
+<p>生产消费模型：<br>在并发编程中通过生产者消费者模型解决大多数并发问题。该模式通过平衡生产线程和消费线程的工作能力来提高程序的整体数据的处理速度<br>生产者消费者模型：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line">q = queue.Queue(maxsize=<span class="number">10</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Producer</span><span class="params">(name)</span>:</span></span><br><span class="line">    count =<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        q.put(<span class="string">"骨头%s"</span>%count)</span><br><span class="line">        print(<span class="string">"生产了骨头%s"</span>%count)</span><br><span class="line">        count+=<span class="number">1</span></span><br><span class="line">        time.sleep(<span class="number">0.4</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Comsumer</span><span class="params">(name)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        print(<span class="string">"%s 取到了%s并吃了它"</span>%(name,q.get()))</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">p = threading.Thread(target=Producer,args=(<span class="string">"王某某"</span>,))</span><br><span class="line">c = threading.Thread(target=Comsumer,args=(<span class="string">"李某某"</span>,))</span><br><span class="line">wh = threading.Thread(target=Comsumer,args=(<span class="string">"湖某某"</span>,))</span><br><span class="line">p.start()</span><br><span class="line">c.start()</span><br><span class="line">wh.start()</span><br></pre></td></tr></table></figure></p>
+<p>Io 操作不占用cpu<br>计算占用cpu<br>上下文切换也需要消耗资源，所以大量的计算如果使用多线程可能不一定快，不一定会比单线程快。所以python的多线程不适合cpu密集操作型的任务，适合io密集型的任务。<br>两个进程都是独立的，无法互相访问，必须找一个中级件。</p>
+<p>两个进程数据的传递实现：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Pipe</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(conn)</span>:</span></span><br><span class="line">    conn.send([<span class="number">42</span>, <span class="keyword">None</span>, <span class="string">'hello from child'</span>])</span><br><span class="line">    conn.send([<span class="number">42</span>, <span class="keyword">None</span>, <span class="string">'hello from child2'</span>])</span><br><span class="line">    print(<span class="string">"from parent:"</span>,conn.recv())</span><br><span class="line">    conn.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    parent_conn, child_conn = Pipe()</span><br><span class="line">    p = Process(target=f, args=(child_conn,))</span><br><span class="line">    p.start()</span><br><span class="line">    print(parent_conn.recv())  <span class="comment"># prints "[42, None, 'hello']"</span></span><br><span class="line">    print(parent_conn.recv())  <span class="comment"># prints "[42, None, 'hello']"</span></span><br><span class="line">    parent_conn.send(<span class="string">"张洋可好"</span>) <span class="comment"># prints "[42, None, 'hello']"</span></span><br><span class="line">    p.join()</span><br></pre></td></tr></table></figure></p>
+<p>实现进程真正的数据共享，manager已经帮你加锁了，无法两个进程同时修改一个数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line">__author__ = <span class="string">"Alex Li"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, Manager</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(d, l)</span>:</span></span><br><span class="line">    d[os.getpid()] =os.getpid()</span><br><span class="line">    l.append(os.getpid())</span><br><span class="line">    print(l)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">with</span> Manager() <span class="keyword">as</span> manager:</span><br><span class="line">        d = manager.dict() <span class="comment">#&#123;&#125; #生成一个字典，可在多个进程间共享和传递</span></span><br><span class="line"></span><br><span class="line">        l = manager.list(range(<span class="number">5</span>))<span class="comment">#生成一个列表，可在多个进程间共享和传递</span></span><br><span class="line">        p_list = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">            p = Process(target=f, args=(d, l))</span><br><span class="line">            p.start()</span><br><span class="line">            p_list.append(p)</span><br><span class="line">        <span class="keyword">for</span> res <span class="keyword">in</span> p_list: <span class="comment">#等待结果</span></span><br><span class="line">            res.join()</span><br><span class="line"></span><br><span class="line">        print(d)</span><br><span class="line">        print(l)</span><br></pre></td></tr></table></figure></p>
+<p><strong>name</strong> =’<strong>main</strong>’ 作用<br>意思就是说让你写的脚本模块既可以导入到别的模块中用，另外该模块自己也可执行。就是导入到其他模块中的时候，<br>不会执行 if <strong>name</strong> =’<strong>main</strong>’:下面的内容<br>进程池中有两个方法<br>apply              同步执行<br>apply_async        并行</p>
+<p>callback参数 回调即执行完前面的进程之后执行callback中的参数 注意回调是主进程的回调，不是子进程。<br>进程里也有锁<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">from</span>  multiprocessing <span class="keyword">import</span> Process, Pool,freeze_support</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Foo</span><span class="params">(i)</span>:</span></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    print(<span class="string">"in process"</span>,os.getpid())</span><br><span class="line">    <span class="keyword">return</span> i + <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Bar</span><span class="params">(arg)</span>:</span></span><br><span class="line">    print(<span class="string">'--&gt;exec done:'</span>, arg,os.getpid())</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment">#freeze_support()</span></span><br><span class="line">    pool = Pool(processes=<span class="number">3</span>) <span class="comment">#允许进程池同时放入5个进程</span></span><br><span class="line">    print(<span class="string">"主进程"</span>,os.getpid())</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        pool.apply_async(func=Foo, args=(i,), callback=Bar) <span class="comment">#callback=回调</span></span><br><span class="line">        <span class="comment">#pool.apply(func=Foo, args=(i,)) #串行</span></span><br><span class="line">        <span class="comment">#pool.apply_async(func=Foo, args=(i,)) #串行</span></span><br><span class="line">    print(<span class="string">'end'</span>)</span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join() <span class="comment">#进程池中进程执行完毕后再关闭，如果注释，那么程序直接关闭。.join()</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/多进程queue·pipe·manager·进程锁/index.html" data-id="cjn5xmx37001dtoqibd0d28t7" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>13</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>6</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>14</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
