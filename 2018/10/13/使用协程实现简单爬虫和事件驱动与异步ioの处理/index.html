@@ -3,15 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>归档: 2018/10 | Died line 的博客</title>
+  <title>使用协程实现简单爬虫和事件驱动与异步ioの处理 | Died line 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Died line 的博客">
-<meta property="og:url" content="https://diedline.github.io/archives/2018/10/index.html">
+  <meta name="description" content="协程（微线程）一种用户态的轻量线程。拥有自己的寄存器和上下文栈。协程调度切换的时候，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器的上下文和栈。因此协程能调用上一次调用时的状态（即所有的一个局部状态的一个特定组合），每次过程重入时，相当于进入上一次调用的状态，就是进入上一次离开所处的逻辑流的位置。协程的好处1.无需线程上下文切换的开销2.无需原子操作锁定及切换的开销3.方便">
+<meta name="keywords" content="python,协程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用协程实现简单爬虫和事件驱动与异步ioの处理">
+<meta property="og:url" content="https://diedline.github.io/2018/10/13/使用协程实现简单爬虫和事件驱动与异步ioの处理/index.html">
 <meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="协程（微线程）一种用户态的轻量线程。拥有自己的寄存器和上下文栈。协程调度切换的时候，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器的上下文和栈。因此协程能调用上一次调用时的状态（即所有的一个局部状态的一个特定组合），每次过程重入时，相当于进入上一次调用的状态，就是进入上一次离开所处的逻辑流的位置。协程的好处1.无需线程上下文切换的开销2.无需原子操作锁定及切换的开销3.方便">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://diedline.github.io/img/20161012022913536.jpg">
+<meta property="og:updated_time" content="2018-10-13T08:38:58.066Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Died line 的博客">
+<meta name="twitter:title" content="使用协程实现简单爬虫和事件驱动与异步ioの处理">
+<meta name="twitter:description" content="协程（微线程）一种用户态的轻量线程。拥有自己的寄存器和上下文栈。协程调度切换的时候，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器的上下文和栈。因此协程能调用上一次调用时的状态（即所有的一个局部状态的一个特定组合），每次过程重入时，相当于进入上一次调用的状态，就是进入上一次离开所处的逻辑流的位置。协程的好处1.无需线程上下文切换的开销2.无需原子操作锁定及切换的开销3.方便">
+<meta name="twitter:image" content="https://diedline.github.io/img/20161012022913536.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
   
@@ -64,196 +71,69 @@
   </div>
 </div>
 
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap animated rubberBand">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/10/13/使用协程实现简单爬虫和事件驱动与异步ioの处理/" class="archive-article-date">
+        <section id="main"><article id="post-使用协程实现简单爬虫和事件驱动与异步ioの处理" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/13/使用协程实现简单爬虫和事件驱动与异步ioの处理/" class="article-date">
   <time class="post-time" datetime="2018-10-13T08:32:00.000Z" itemprop="datePublished">
     <span class="post-month">10月</span><br/>
     <span class="post-day">13</span>
   </time>
 </a>
-      
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/13/使用协程实现简单爬虫和事件驱动与异步ioの处理/">使用协程实现简单爬虫和事件驱动与异步ioの处理</a>
+    <h1 class="article-title" itemprop="name">
+      使用协程实现简单爬虫和事件驱动与异步ioの处理
     </h1>
   
 
-    </header>
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>,<a class="article-category-link" href="/categories/技术/操作系统/">操作系统</a>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/10/12/多进程queue·pipe·manager·进程锁/" class="archive-article-date">
-  <time class="post-time" datetime="2018-10-12T11:23:53.000Z" itemprop="datePublished">
-    <span class="post-month">10月</span><br/>
-    <span class="post-day">12</span>
-  </time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/12/多进程queue·pipe·manager·进程锁/">多进程queue·pipe·manager·进程锁</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/10/09/互联网公司的七大定律（浪潮之巅）/" class="archive-article-date">
-  <time class="post-time" datetime="2018-10-09T14:54:59.000Z" itemprop="datePublished">
-    <span class="post-month">10月</span><br/>
-    <span class="post-day">09</span>
-  </time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/09/互联网公司的七大定律（浪潮之巅）/">互联网公司的七大定律（浪潮之巅）</a>
-    </h1>
-  
+          
+              
 
-    </header>
-  </div>
-</article>
-  
+          
+        </div>
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/10/08/线程中线程锁递归锁和信号量和Event（事件）的简单使用/" class="archive-article-date">
-  <time class="post-time" datetime="2018-10-08T13:03:19.000Z" itemprop="datePublished">
-    <span class="post-month">10月</span><br/>
-    <span class="post-day">08</span>
-  </time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/08/线程中线程锁递归锁和信号量和Event（事件）的简单使用/">线程锁和递归锁和信号量和Event的简单使用</a>
-    </h1>
-  
+        <p>协程（微线程）<br>一种用户态的轻量线程。<br>拥有自己的寄存器和上下文栈。协程调度切换的时候，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器的上下文和栈。因此协程能调用上一次调用时的状态（即所有的一个局部状态的一个特定组合），每次过程重入时，相当于进入上一次调用的状态，就是进入上一次离开所处的逻辑流的位置。<br>协程的好处<br>1.无需线程上下文切换的开销<br>2.无需原子操作锁定及切换的开销<br>3.方便切换控制流，简化编程模型<br>4.高并发+高扩展性+低成本：一个cpu支持上万的协程都没有问题，所以很适用与高并发处理。<br>事件驱动与异步io<br><img src="\img\20161012022913536.jpg" alt=""><br><a href="https://diedline.github.io/使用协程实现简单爬虫和事件驱动与异步ioの处理">read more</a></p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/10/07/多线程的概念简单多线程的实现和守护进程和全局解释器锁/" class="archive-article-date">
-  <time class="post-time" datetime="2018-10-06T16:00:09.000Z" itemprop="datePublished">
-    <span class="post-month">10月</span><br/>
-    <span class="post-day">07</span>
-  </time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/07/多线程的概念简单多线程的实现和守护进程和全局解释器锁/">多线程的概念简单多线程的实现和守护进程和全局解释器锁</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" class="archive-article-date">
-  <time class="post-time" datetime="2018-10-06T10:29:40.000Z" itemprop="datePublished">
-    <span class="post-month">10月</span><br/>
-    <span class="post-day">06</span>
-  </time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/2018/10/13/使用协程实现简单爬虫和事件驱动与异步ioの处理/" data-id="cjn772z29000438qit64zry91" class="article-share-link">分享</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/">paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/10/02/简单的socket网络通信的实现p2/" class="archive-article-date">
-  <time class="post-time" datetime="2018-10-02T13:43:27.000Z" itemprop="datePublished">
-    <span class="post-month">10月</span><br/>
-    <span class="post-day">02</span>
-  </time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/02/简单的socket网络通信的实现p2/">简单的socket网络通信的实现p2</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/协程/">协程</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/10/01/简单的socket网络通信的实现p1/" class="archive-article-date">
-  <time class="post-time" datetime="2018-09-30T16:09:40.000Z" itemprop="datePublished">
-    <span class="post-month">10月</span><br/>
-    <span class="post-day">01</span>
-  </time>
-</a>
-      
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/01/简单的socket网络通信的实现p1/">简单的socket网络通信的实现p1</a>
-    </h1>
   
+    <a href="/2018/10/12/多进程queue·pipe·manager·进程锁/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">多进程queue·pipe·manager·进程锁</div>
+    </a>
+  
+</nav>
 
-    </header>
-  </div>
+  
 </article>
-  
-  
-    </div></section>
-  
+
 
 
 </section>
