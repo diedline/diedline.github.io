@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RabbitMQ轮询接受消息和消息的持久化 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="RabbitMQ消息队列  Py       Threading     QUEUE 不同线程之间进行交互。（不能跨进程）进程    QUEUE    （仅用于父进程与子进程进行交互，或者同属于同一父进程下的多个子进程进行交互。） RabbitMQ是用语言erlang开发的Linux上用rabbitmq-server start 来启动 使用rabbitmq pika轮询接受消息no_ack=Tr">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RabbitMQ轮询接受消息和消息的持久化">
+<meta property="og:url" content="https://diedline.github.io/RabbitMQ轮询接受消息和消息的持久化/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="RabbitMQ消息队列  Py       Threading     QUEUE 不同线程之间进行交互。（不能跨进程）进程    QUEUE    （仅用于父进程与子进程进行交互，或者同属于同一父进程下的多个子进程进行交互。） RabbitMQ是用语言erlang开发的Linux上用rabbitmq-server start 来启动 使用rabbitmq pika轮询接受消息no_ack=Tr">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://diedline.github.io/img/图片1.png">
+<meta property="og:updated_time" content="2018-10-14T15:10:30.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RabbitMQ轮询接受消息和消息的持久化">
+<meta name="twitter:description" content="RabbitMQ消息队列  Py       Threading     QUEUE 不同线程之间进行交互。（不能跨进程）进程    QUEUE    （仅用于父进程与子进程进行交互，或者同属于同一父进程下的多个子进程进行交互。） RabbitMQ是用语言erlang开发的Linux上用rabbitmq-server start 来启动 使用rabbitmq pika轮询接受消息no_ack=Tr">
+<meta name="twitter:image" content="https://diedline.github.io/img/图片1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>16</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>6</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>18</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/RabbitMQ轮询接受消息和消息的持久化/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-14T14:59:40.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">14</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RabbitMQ轮询接受消息和消息的持久化
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>RabbitMQ消息队列<br>  Py<br>       Threading     QUEUE 不同线程之间进行交互。（不能跨进程）<br>进程    QUEUE    （仅用于父进程与子进程进行交互，或者同属于同一父进程下的多个子进程进行交互。）</p>
+<p>RabbitMQ是用语言erlang开发的<br>Linux上用rabbitmq-server start 来启动</p>
+<p>使用rabbitmq pika轮询接受消息<br>no_ack=True<br>代表不管对方是否收到消息都结束了<br>默认不加这个no_ack<br>就能使当消息传个一个消费者的的时候那个消费者宕机了自动传给下一个人。</p>
+<p>Producer<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> pika</span><br><span class="line"></span><br><span class="line">connection = pika.BlockingConnection(</span><br><span class="line">    pika.ConnectionParameters(<span class="string">"localhost"</span>))</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">连接一个socket 可以在里面设置参数</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">channel = connection.channel()    <span class="comment">#声明一个管道</span></span><br><span class="line">channel.queue_declare(queue=<span class="string">"hello"</span>)   <span class="comment">#在管道里单独声明一个队列</span></span><br><span class="line">channel.basic_publish(</span><br><span class="line">    exchange=<span class="string">""</span>,</span><br><span class="line">    routing_key=<span class="string">"hello"</span>,   <span class="comment">#routring_key 就是你的queue名字</span></span><br><span class="line">    body=<span class="string">"hello,world!"</span>     <span class="comment">#body你的消息内容</span></span><br><span class="line"></span><br><span class="line">)</span><br><span class="line">print(<span class="string">"[x] Sent 'hello world!'"</span>)</span><br><span class="line">connection.close()</span><br></pre></td></tr></table></figure></p>
+<p>consumer<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> pika</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">所有的socket类似的数据传输都是用byte格式的</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">connection = pika.BlockingConnection(</span><br><span class="line">    pika.ConnectionParameters(<span class="string">"localhost"</span>))   <span class="comment">#创立连接和参数</span></span><br><span class="line">channel = connection.channel()                 <span class="comment">#创建管道</span></span><br><span class="line"></span><br><span class="line">channel.queue_declare(queue=<span class="string">"hello"</span>)           <span class="comment">#声明hello队列</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">producer 已经声明过hello队列了</span></span><br><span class="line"><span class="string">但是为什么还要声明？</span></span><br><span class="line"><span class="string">你要确认这个queue是否被声明过了，</span></span><br><span class="line"><span class="string">因为你无法确认是生产者还是消费者先运行这个queue，不然会报错</span></span><br><span class="line"><span class="string">所以就要声明这个queue</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">callback</span><span class="params">(ch, method, properties, body)</span>:</span></span><br><span class="line">    print(<span class="string">"----&gt;"</span>,ch, method, properties)</span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    ch 管道内存对象的地址</span></span><br><span class="line"><span class="string">    method包含你要把消息发给谁信息</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    print(<span class="string">" [x] receive %r"</span> %body)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">channel.basic_consume(</span><br><span class="line">    callback,         <span class="comment">#如果收到消息就调用callback 函数来处理消息</span></span><br><span class="line">    queue=<span class="string">"hello"</span>,    <span class="comment">#从hello队列中收取消息</span></span><br><span class="line">    no_ack=<span class="keyword">True</span>        <span class="comment">#代表不确认消息对方是否收到都结束了</span></span><br><span class="line"></span><br><span class="line">)</span><br><span class="line">print(<span class="string">" [*] Waiting for messages. TO exit press CTRL+C"</span>)</span><br><span class="line">channel.start_consuming()         <span class="comment">#开始收消息 一启动就一直运行了</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="\img\图片1.png" alt=""><br>可以通过 rabbitmqctl.bat list_queues 来看当前有多少队列每个队列的消息有多少</p>
+<p>RabbitMQ实现消息持久化<br>即使服务器宕机队列中的数据也不会丢失<br>加一个durable= True参数和<br>在channel.basic_publish中增加一个<br>properties = pike.BasicProperties(<br>delivery_mode =2,<br>)<br>producer<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> pika</span><br><span class="line"></span><br><span class="line">connection = pika.BlockingConnection(</span><br><span class="line">    pika.ConnectionParameters(<span class="string">"localhost"</span>))</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">连接一个socket 可以在里面设置参数</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">channel = connection.channel()    <span class="comment">#声明一个管道</span></span><br><span class="line">channel.queue_declare(queue=<span class="string">"hello"</span>,durable=<span class="keyword">True</span>)   <span class="comment">#在管道里单独声明一个队列</span></span><br><span class="line">channel.basic_publish(</span><br><span class="line">    exchange=<span class="string">""</span>,</span><br><span class="line">    routing_key=<span class="string">"hello"</span>,   <span class="comment">#routring_key 就是你的queue名字</span></span><br><span class="line">    body=<span class="string">"hello,world!"</span> ,    <span class="comment">#body你的消息内容</span></span><br><span class="line">    properties = pika.BasicProperties(</span><br><span class="line">        delivery_mode=<span class="number">2</span>,</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line">print(<span class="string">"[x] Sent 'hello world!'"</span>)</span><br><span class="line">connection.close()</span><br></pre></td></tr></table></figure></p>
+<p>consumer<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> pika</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">所有的socket类似的数据传输都是用byte格式的</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">connection = pika.BlockingConnection(</span><br><span class="line">    pika.ConnectionParameters(<span class="string">"localhost"</span>))   <span class="comment">#创立连接和参数</span></span><br><span class="line">channel = connection.channel()                 <span class="comment">#创建管道</span></span><br><span class="line"></span><br><span class="line">channel.queue_declare(queue=<span class="string">"hello"</span>,durable=<span class="keyword">True</span>)           <span class="comment">#声明hello队列</span></span><br><span class="line"><span class="comment">#  durable=True 只把队列持久化了</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">producer 已经声明过hello队列了</span></span><br><span class="line"><span class="string">但是为什么还要声明？</span></span><br><span class="line"><span class="string">你要确认这个queue是否被声明过了，</span></span><br><span class="line"><span class="string">因为你无法确认是生产者还是消费者先运行这个queue，不然会报错</span></span><br><span class="line"><span class="string">所以就要声明这个queue</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">callback</span><span class="params">(ch, method, properties, body)</span>:</span>   <span class="comment">#回调函数</span></span><br><span class="line">    print(<span class="string">"----&gt;"</span>,ch, method, properties)</span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    ch 管道内存对象的地址</span></span><br><span class="line"><span class="string">    method包含你要把消息发给谁信息</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    time.sleep(<span class="number">30</span>)</span><br><span class="line">    print(<span class="string">" [x] receive %r"</span> %body)</span><br><span class="line">    ch.basic_ack(delivery_tag=method.delivery_tag)</span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    必须手动确认才能将消息从队列中移除</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">channel.basic_consume(</span><br><span class="line">    callback,         <span class="comment">#如果收到消息就调用callback 函数来处理消息</span></span><br><span class="line">    queue=<span class="string">"hello"</span>,    <span class="comment">#从hello队列中收取消息</span></span><br><span class="line">    <span class="comment"># no_ack=True       #代表不确认消息对方是否收到都结束了</span></span><br><span class="line">    <span class="comment">#当socket断了的时候自动回把消息给下一个消费者，就代表它还是一个新消息</span></span><br><span class="line">    properties=pika.BasicProperties(</span><br><span class="line">        delivery_mode=<span class="number">2</span>,</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line">print(<span class="string">" [*] Waiting for messages. TO exit press CTRL+C"</span>)</span><br><span class="line">channel.start_consuming()         <span class="comment">#开始收消息 一启动就一直运行了</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/RabbitMQ轮询接受消息和消息的持久化/index.html" data-id="cjn90bomg0000icqijyr2enrj" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>16</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>6</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>18</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
