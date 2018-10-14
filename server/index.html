@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>io多路复用使用select模拟多并发socket | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Io 多路复用同步io，异步io，阻塞io,非阻塞io，分别是什么，到底有什么区别？不同的人在不同的上下文中给出的答案是不同的。所以先限定一下本文的上下文。本文讨论的是linux环境下的的network IO。在进行解释之前，先说明几个概念：  用户空间和内核空间 进程切换 进程的阻塞 文件描述符 缓存I/O  用户空间与内核空间现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空">
+<meta property="og:type" content="website">
+<meta property="og:title" content="io多路复用使用select模拟多并发socket">
+<meta property="og:url" content="https://diedline.github.io/server/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="Io 多路复用同步io，异步io，阻塞io,非阻塞io，分别是什么，到底有什么区别？不同的人在不同的上下文中给出的答案是不同的。所以先限定一下本文的上下文。本文讨论的是linux环境下的的network IO。在进行解释之前，先说明几个概念：  用户空间和内核空间 进程切换 进程的阻塞 文件描述符 缓存I/O  用户空间与内核空间现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://diedline.github.io/img/20161012023154829.jpg">
+<meta property="og:image" content="https://diedline.github.io/img/20161012023141876.jpg">
+<meta property="og:image" content="https://diedline.github.io/img/20161012023127750.jpg">
+<meta property="og:image" content="https://diedline.github.io/img/20161012023208017.jpg">
+<meta property="og:updated_time" content="2018-10-14T13:40:58.974Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="io多路复用使用select模拟多并发socket">
+<meta name="twitter:description" content="Io 多路复用同步io，异步io，阻塞io,非阻塞io，分别是什么，到底有什么区别？不同的人在不同的上下文中给出的答案是不同的。所以先限定一下本文的上下文。本文讨论的是linux环境下的的network IO。在进行解释之前，先说明几个概念：  用户空间和内核空间 进程切换 进程的阻塞 文件描述符 缓存I/O  用户空间与内核空间现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空">
+<meta name="twitter:image" content="https://diedline.github.io/img/20161012023154829.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>15</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>6</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>17</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/server/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-14T13:31:02.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">14</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      io多路复用使用select模拟多并发socket
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Io 多路复用<br>同步io，异步io，阻塞io,非阻塞io，分别是什么，到底有什么区别？<br>不同的人在不同的上下文中给出的答案是不同的。所以先限定一下本文的上下文。<br>本文讨论的是linux环境下的的network IO。<br>在进行解释之前，先说明几个概念：</p>
+<ul>
+<li>用户空间和内核空间</li>
+<li>进程切换</li>
+<li>进程的阻塞</li>
+<li>文件描述符</li>
+<li>缓存I/O</li>
+</ul>
+<p>用户空间与内核空间<br>现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空间（虚拟存储空间）为4G（2的32次方）。<br>操作系统的核心是内核，独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。<br>为了保证用户进程不能直接操作内核（kernel），保证内核的安全，操心系统将虚拟空间划分为两部分，一部分为内核空间，一部分为用户空间。<br>针对linux操作系统而言，将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为内核空间，而将较低的3G字节（从虚拟地址0x00000000到0xBFFFFFFF），供各个进程使用，称为用户空间。</p>
+<p>进程切换<br>为了控制进程的执行，内核必须有能力挂起正在CPU上运行的进程，并恢复以前挂起的某个进程的执行。这种行为被称为进程切换。因此可以说，任何进程都是在操作系统内核的支持下运行的，是与内核紧密相关的。<br>　<br>从一个进程的运行转到另一个进程上运行，这个过程中经过下面这些变化：</p>
+<p>保存处理机上下文，包括程序计数器和其他寄存器。<br>更新PCB信息。<br>把进程的PCB移入相应的队列，如就绪、在某事件阻塞等队列。<br>选择另一个进程执行，并更新其PCB。<br>更新内存管理的数据结构。<br>恢复处理机上下文。<br>注：总而言之就是很耗资源<br>进程的阻塞<br>正在执行的进程，由于期待的某些事件未发生，如请求系统资源失败、等待某种操作的完成、新数据尚未到达或无新工作做等，则由系统自动执行阻塞原语(Block)，使自己由运行状态变为阻塞状态。可见，进程的阻塞是进程自身的一种主动行为，也因此只有处于运行态的进程（获得CPU），才可能将其转为阻塞状态。当进程进入阻塞状态，是不占用CPU资源的。</p>
+<p>文件描述符fd<br>文件描述符（File descriptor）是计算机科学中的一个术语，是一个用于表述指向文件的引用的抽象化概念。<br>文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于UNIX、Linux这样的操作系统。</p>
+<p>缓存 I/O<br>缓存 I/O 又被称作标准 I/O，大多数文件系统的默认 I/O 操作都是缓存 I/O。在 Linux 的缓存 I/O 机制中，操作系统会将 I/O 的数据缓存在文件系统的页缓存（ page cache ）中，也就是说，数据会先被拷贝到操作系统内核的缓冲区中，然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间。用户空间没法直接访问内核空间的，内核态到用户态的数据拷贝<br>　<br>缓存 I/O 的缺点：<br>数据在传输过程中需要在应用程序地址空间和内核进行多次数据拷贝操作，这些数据拷贝操作所带来的 CPU 以及内存开销是非常大的。</p>
+<p>2、IO模式<br>刚才说了，对于一次IO访问（以read举例），数据会先被拷贝到操作系统内核的缓冲区中，然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间。所以说，当一个read操作发生时，它会经历两个阶段：</p>
+<p>等待数据准备 (Waiting for the data to be ready)<br>将数据从内核拷贝到进程中 (Copying the data from the kernel to the process)<br>正式因为这两个阶段，linux系统产生了下面五种网络模式的方案。</p>
+<p>阻塞 I/O（blocking IO）<br>非阻塞 I/O（nonblocking IO）<br>I/O 多路复用（ IO multiplexing）<br>信号驱动 I/O（ signal driven IO）<br>异步 I/O（asynchronous IO）<br>注：由于signal driven IO在实际中并不常用，所以我这只提及剩下的四种IO Model。</p>
+<p>1）阻塞 I/O（blocking IO）<br><img src="\img\20161012023154829.jpg" alt=""><br>在linux中，默认情况下所有的socket都是blocking，一个典型的读操作流程大概是这样： </p>
+<p>当用户进程调用了recvfrom这个系统调用，kernel就开始了IO的第一个阶段：准备数据（对于网络IO来说，很多时候数据在一开始还没有到达。比如，还没有收到一个完整的UDP包。这个时候kernel就要等待足够的数据到来）。这个过程需要等待，也就是说数据被拷贝到操作系统内核的缓冲区中是需要一个过程的。而在用户进程这边，整个进程会被阻塞（当然，是进程自己选择的阻塞）。当kernel一直等到数据准备好了，它就会将数据从kernel中拷贝到用户内存，然后kernel返回结果，用户进程才解除block的状态，重新运行起来。</p>
+<p>所以，阻塞 IO的特点就是在IO执行的两个阶段都被阻塞了。</p>
+<p>2）非阻塞 I/O（nonblocking IO）</p>
+<p><img src="\img\20161012023141876.jpg" alt=""><br>linux下，可以通过设置socket使其变为non-blocking。当对一个non-blocking socket执行读操作时，流程是这个样子： </p>
+<p>当用户进程发出read操作时，如果kernel中的数据还没有准备好，那么它并不会block用户进程，而是立刻返回一个error。从用户进程角度讲 ，它发起一个read操作后，并不需要等待，而是马上就得到了一个结果。用户进程判断结果是一个error时，它就知道数据还没有准备好，于是它可以再次发送read操作。一旦kernel中的数据准备好了，并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。</p>
+<p>所以，nonblocking IO的特点是用户进程需要不断的主动询问kernel数据好了没有。<br>已经可以实现多并发，从内核态拷贝到用户态还有堵塞</p>
+<p>3）I/O 多路复用（ IO multiplexing）<br><img src="\img\20161012023127750.jpg" alt=""><br>IO multiplexing就是我们说的select，poll，epoll，有些地方也称这种IO方式为 事件驱动 IO。select/epoll的好处就在于单个process就可以同时处理多个网络连接的IO。它的基本原理就是select，poll，epoll这个function会不断的轮询所负责的所有socket，当某个socket有数据到达了，就通知用户进程。 </p>
+<p>当用户进程调用了select，那么整个进程会被block，而同时，kernel会“监视”所有select负责的socket，当任何一个socket中的数据准备好了，select就会返回。这个时候用户进程再调用read操作，将数据从kernel拷贝到用户进程。</p>
+<p>所以，I/O 多路复用的特点是通过一种机制一个进程能同时等待多个文件描述符，而这些文件描述符（套接字描述符）其中的任意一个进入读就绪状态，select()函数就可以返回。</p>
+<p>4）异步 I/O（asynchronous IO）<br><img src="\img\20161012023208017.jpg" alt=""><br>inux下的asynchronous IO其实用得很少。先看一下它的流程： </p>
+<p>用户进程发起read操作之后，立刻就可以开始去做其它的事。而另一方面，从kernel的角度，当它受到一个asynchronous read之后，首先它会立刻返回，所以不会对用户进程产生任何block。然后，kernel会等待数据准备完成，然后将数据拷贝到用户内存，当这一切都完成之后，kernel会给用户进程发送一个signal，告诉它read操作完成了。<br>如同：网购之后，直接可以干别的了，之后快递就送到家门口了。</p>
+<p>3、总结<br>阻塞IO和非阻塞IO的区别：</p>
+<p>调用阻塞会一直阻塞住对应的进程直到操作完成<br>非阻塞 IO在kernel还准备数据的情况下会立刻返回。<br>同步IO和异步IO的区别：</p>
+<p>同步 IO做”IO 操作”的时候会将进程阻塞，阻塞IO、非阻塞IO、IO多路复用都是同步IO<br>异步则不一样，当进程发起IO 操作之后，就直接返回再也不理睬了，直到kernel发送一个信号，告诉进程说IO完成。在这整个过程中，进程完全没有被阻塞。<br>4、select poll epoll IO多路复用介绍<br>首先列一下，sellect、poll、epoll三者的区别</p>
+<p>select<br>select最早于1983年出现在4.2BSD中，它通过一个select()系统调用来监视多个文件描述符的数组，当select()返回后，该数组中就绪的文件描述符便会被内核修改标志位，使得进程可以获得这些文件描述符从而进行后续的读写操作。<br>　<br>select目前几乎在所有的平台上支持<br>　<br>select的一个缺点在于单个进程能够监视的文件描述符的数量存在最大限制，在Linux上一般为1024，不过可以通过修改宏定义甚至重新编译内核的方式提升这一限制。<br>　<br>另外，select()所维护的存储大量文件描述符的数据结构，随着文件描述符数量的增大，其复制的开销也线性增长。同时，由于网络响应时间的延迟使得大量TCP连接处于非活跃状态，但调用select()会对所有socket进行一次线性扫描，所以这也浪费了一定的开销。</p>
+<p>poll<br>它和select在本质上没有多大差别，但是poll没有最大文件描述符数量的限制。<br>一般也不用它，相当于过渡阶段</p>
+<p>epoll<br>直到Linux2.6才出现了由内核直接支持的实现方法，那就是epoll。被公认为Linux2.6下性能最好的多路I/O就绪通知方法。windows不支持<br>　<br>没有最大文件描述符数量的限制。<br>比如100个连接，有两个活跃了，epoll会告诉用户这两个两个活跃了，直接取就ok了，而select是循环一遍。<br>　<br>（了解）epoll可以同时支持水平触发和边缘触发（Edge Triggered，只告诉进程哪些文件描述符刚刚变为就绪状态，它只说一遍，如果我们没有采取行动，那么它将不会再次告知，这种方式称为边缘触发），理论上边缘触发的性能要更高一些，但是代码实现相当复杂。<br>另一个本质的改进在于epoll采用基于事件的就绪通知方式。在select/poll中，进程只有在调用一定的方法后，内核才对所有监视的文件描述符进行扫描，而epoll事先通过epoll_ctl()来注册一个文件描述符，一旦基于某个文件描述符就绪时，内核会采用类似callback的回调机制，迅速激活这个文件描述符，当进程调用epoll_wait()时便得到通知。<br>　<br>所以市面上上见到的所谓的异步IO，比如nginx、Tornado、等，我们叫它异步IO，实际上是IO多路复用。</p>
+<p>异步IO模块，3.0里才有，叫 asyncio</p>
+<p>用select 模拟多并发socket server 能承受大量数据（linux上做服务端）</p>
+<h1 id="Author-Diedline"><a href="#Author-Diedline" class="headerlink" title="Author: Diedline"></a>Author: Diedline</h1><p>import select<br>import socket<br>import queue</p>
+<p>server = socket.socket()<br>server.bind((“localhost”,9000))<br>server.listen(1000)</p>
+<p>server.setblocking(False)       #不阻塞<br>inputs = [server,]<br>outputs =[]<br>msg_dic = {}<br>while True:<br>    readable,writeable,exceptional= select.select(inputs, outputs, inputs)</p>
+<pre><code>#客户端想要返回的数据放到outputs
+print(readable,writeable,exceptional)
+&quot;&quot;&quot;
+会返回三个列表
+readable
+writeable
+exceptional
+&quot;&quot;&quot;
+for r in readable:
+    if r is server:
+        #代表来了一个新连接
+        conn, addr = server.accept()
+        print(&quot;来了个新连接&quot;,addr)
+        inputs.append(conn)    #因为这个新建立的连接还没发送数据过来，现在就接收的话程序就报错了
+        #所以要实现这个客户端发数据时，server端能知道，就需要让Select检测conn。
+        msg_dic[conn] = queue.Queue()#conn 作为key 初始化一个队列作为value,后面存要返回给这个客户端的数据
+    else:
+        data = r.recv(1024)
+        print(&quot;收到数据&quot;,data)
+        # r.send(data)
+        # print(&quot;send done&quot;)
+        msg_dic[r].put(data)
+        outputs.append(r)          #放入返回的连接队列里
+
+for w in writeable:     #要返回给客户端的连接列表
+    data_to_client = msg_dic[w].get()
+    w.send(data_to_client)    #返回给客户端源数据
+    outputs.remove(w)         #确保下一次循环的时候writeable,不返回已经处理完的连接了
+
+
+for e in exceptional:
+    if e in outputs:
+        outputs.remove(e)
+
+    inputs.remove(e)
+    del msg_dic[e]
+</code></pre><p>Socket client</p>
+<p>import socket<br>import sys</p>
+<p>messages = [ b’This is the message. ‘,<br>             b’It will be sent ‘,<br>             b’in parts.’,<br>             ]<br>server_address = (‘192.168.16.130’, 9998)</p>
+<h1 id="Create-a-TCP-IP-socket"><a href="#Create-a-TCP-IP-socket" class="headerlink" title="Create a TCP/IP socket"></a>Create a TCP/IP socket</h1><p>socks = [ socket.socket(socket.AF_INET, socket.SOCK_STREAM) for i in range(11000)]<br>print(socks)</p>
+<h1 id="Connect-the-socket-to-the-port-where-the-server-is-listening"><a href="#Connect-the-socket-to-the-port-where-the-server-is-listening" class="headerlink" title="Connect the socket to the port where the server is listening"></a>Connect the socket to the port where the server is listening</h1><p>print(‘connecting to %s port %s’ % server_address)<br>for s in socks:<br>    s.connect(server_address)</p>
+<p>for message in messages:</p>
+<pre><code># Send messages on both sockets
+for s in socks:
+    print(&apos;%s: sending &quot;%s&quot;&apos; % (s.getsockname(), message) )
+    s.send(message)
+
+# Read responses on both sockets
+for s in socks:
+    data = s.recv(1024)
+    print( &apos;%s: received &quot;%s&quot;&apos; % (s.getsockname(), data) )
+    if not data:
+        print( &apos;closing socket&apos;, s.getsockname() )
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/server/index.html" data-id="cjn8x7snu002u2kqisynjmiyw" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>15</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>6</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>17</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
