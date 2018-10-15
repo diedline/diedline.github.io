@@ -3,20 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>简单的socket网络通信的实现p2 | Died line 的博客</title>
+  <title>归档: 2018/10 | Died line 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
-<meta name="keywords" content="python,网络,文件传输">
-<meta property="og:type" content="article">
-<meta property="og:title" content="简单的socket网络通信的实现p2">
-<meta property="og:url" content="https://diedline.github.io/2018/10/02/简单的socket网络通信的实现p2/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Died line 的博客">
+<meta property="og:url" content="https://diedline.github.io/archives/2018/10/page/2/index.html">
 <meta property="og:site_name" content="Died line 的博客">
-<meta property="og:description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-02T13:49:13.700Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简单的socket网络通信的实现p2">
-<meta name="twitter:description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
+<meta name="twitter:title" content="Died line 的博客">
   
     <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
   
@@ -69,78 +64,47 @@
   </div>
 </div>
 
-        <section id="main"><article id="post-简单的socket网络通信的实现p2" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/10/02/简单的socket网络通信的实现p2/" class="article-date">
-  <time class="post-time" datetime="2018-10-02T13:43:27.000Z" itemprop="datePublished">
+        <section id="main">
+  
+  
+    
+    
+      
+      
+      <section class="archives-wrap animated rubberBand">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2018/10/01/简单的socket网络通信的实现p1/" class="archive-article-date">
+  <time class="post-time" datetime="2018-09-30T16:09:40.000Z" itemprop="datePublished">
     <span class="post-month">10月</span><br/>
-    <span class="post-day">02</span>
+    <span class="post-day">01</span>
   </time>
 </a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+      
   
-    <h1 class="article-title" itemprop="name">
-      简单的socket网络通信的实现p2
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/10/01/简单的socket网络通信的实现p1/">简单的socket网络通信的实现p1</a>
     </h1>
   
 
-        <div>
-          
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.实现简单的ssh服务端<br>客户端输入 命令行命令，服务器端返回数据传送到客户端。</p>
-<p>2.ftp server<br>步骤<br>1.读取文件名<br>2.检测文件是否存在<br>3.打开文件<br>4.检测文件大小<br>5.发送文件大小给客户端<br>6.等客户端确认（防止粘包）<br>7.开始边读边发数据<br>8.发送 Md5值 </p>
-<p>实现文件的传输，通过md5值校对来判断文件是否丢包</p>
-<p><a href="https://diedline.github.io/简单的socket网络通信的实现p2">read more</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/02/简单的socket网络通信的实现p2/" data-id="cjnaigt7p000zn8qi69fsa481" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件传输/">文件传输</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/10/01/简单的socket网络通信的实现p1/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">简单的socket网络通信的实现p1</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
 
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/archives/2018/10/">&laquo; pre</a><a class="page-number" href="/archives/2018/10/">1</a><span class="page-number current">2</span>
+  </nav>
 
 </section>
         
