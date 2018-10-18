@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>redis缓存系统和其他系统的对比和redis的使用 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="缓存系统 从以下几个维度，对 redis、memcache、mongoDB 做了对比。1、性能都比较高，性能对我们来说应该都不是瓶颈。总体来讲，TPS 方面 redis 和 memcache 差不多，要大于 mongodb。2、操作的便利性memcache 数据结构单一。（key-value）redis 丰富一些，数据操作方面，redis 更好一些，较少的网络 IO 次数，同时还提供 list，">
+<meta property="og:type" content="website">
+<meta property="og:title" content="redis缓存系统和其他系统的对比和redis的使用">
+<meta property="og:url" content="https://diedline.github.io/redis缓存系统使用/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="缓存系统 从以下几个维度，对 redis、memcache、mongoDB 做了对比。1、性能都比较高，性能对我们来说应该都不是瓶颈。总体来讲，TPS 方面 redis 和 memcache 差不多，要大于 mongodb。2、操作的便利性memcache 数据结构单一。（key-value）redis 丰富一些，数据操作方面，redis 更好一些，较少的网络 IO 次数，同时还提供 list，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-18T05:12:31.317Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis缓存系统和其他系统的对比和redis的使用">
+<meta name="twitter:description" content="缓存系统 从以下几个维度，对 redis、memcache、mongoDB 做了对比。1、性能都比较高，性能对我们来说应该都不是瓶颈。总体来讲，TPS 方面 redis 和 memcache 差不多，要大于 mongodb。2、操作的便利性memcache 数据结构单一。（key-value）redis 丰富一些，数据操作方面，redis 更好一些，较少的网络 IO 次数，同时还提供 list，">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>7</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>19</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/redis缓存系统使用/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-18T04:37:01.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">18</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      redis缓存系统和其他系统的对比和redis的使用
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> 缓存系统</p>
+<p>从以下几个维度，对 redis、memcache、mongoDB 做了对比。<br>1、性能<br>都比较高，性能对我们来说应该都不是瓶颈。<br>总体来讲，TPS 方面 redis 和 memcache 差不多，要大于 mongodb。<br>2、操作的便利性<br>memcache 数据结构单一。（key-value）<br>redis 丰富一些，数据操作方面，redis 更好一些，较少的网络 IO 次数，同时还提供 list，set，<br>hash 等数据结构的存储。<br>mongodb 支持丰富的数据表达，索引，最类似关系型数据库，支持的查询语言非常丰富。<br>3、内存空间的大小和数据量的大小<br>redis 在 2.0 版本后增加了自己的 VM 特性，突破物理内存的限制；可以对 key value 设置过<br>期时间（类似 memcache）<br>memcache 可以修改最大可用内存,采用 LRU 算法。Memcached 代理软件 magent，比如建立<br>10 台 4G 的 Memcache 集群，就相当于有了 40G。 magent -s 10.1.2.1 -s 10.1.2.2:11211 -b<br>10.1.2.3:14000 mongoDB 适合大数据量的存储，依赖操作系统 VM 做内存管理，吃内存也比较厉害，服务<br>不要和别的服务在一起。<br>4、可用性（单点问题）<br>对于单点问题，<br>redis，依赖客户端来实现分布式读写；主从复制时，每次从节点重新连接主节点都要依赖整<br>个快照,无增量复制，因性能和效率问题，<br>所以单点问题比较复杂；不支持自动 sharding,需要依赖程序设定一致 hash 机制。<br>一种替代方案是，不用 redis 本身的复制机制，采用自己做主动复制（多份存储），或者改成<br>增量复制的方式（需要自己实现），一致性问题和性能的权衡<br>Memcache 本身没有数据冗余机制，也没必要；对于故障预防，采用依赖成熟的 hash 或者环<br>状的算法，解决单点故障引起的抖动问题。<br>mongoDB 支持 master-slave,replicaset（内部采用 paxos 选举算法，自动故障恢复）,auto sharding 机制，对客户端屏蔽了故障转移和切分机制。<br>5、可靠性（持久化）<br>对于数据持久化和数据恢复，<br>redis 支持（快照、AOF）：依赖快照进行持久化，aof 增强了可靠性的同时，对性能有所影<br>响<br>memcache 不支持，通常用在做缓存,提升性能；<br>MongoDB 从 1.8 版本开始采用 binlog 方式支持持久化的可靠性<br>6、数据一致性（事务支持）<br>Memcache 在并发场景下，用 cas 保证一致性redis 事务支持比较弱，只能保证事务中的每个操作连续执行<br>mongoDB 不支持事务<br>7、数据分析<br>mongoDB 内置了数据分析的功能(mapreduce),其他不支持<br>8、应用场景<br>redis：数据量较小的更性能操作和运算上<br>memcache：用于在动态系统中减少数据库负载，提升性能;做缓存，提高性能（适合读多写<br>少，对于数据量比较大，可以采用 sharding）<br>MongoDB:主要解决海量数据的访问效率问题。<br>表格比较：<br>memcache redis 类型 内存数据库 内存数据库<br>数据类型 在定义 value 时就要固定数据类型 不需要<br>有字符串，链表，集 合和有序集合<br>虚拟内存 不支持 支持<br>过期策略 支持 支持<br>分布式 magent master-slave，一主一从或一主多从<br>存储数据安全 不支持 使用 save 存储到 dump.rdb 中<br>灾难恢复 不支持 append only file(aof)用于数据恢复<br>性能<br>1、类型——memcache 和 redis 都是将数据存放在内存，所以是内存数据库。当然，memcache 也可用于缓存其他东西，例如图片等等。<br>2、 数据类型——Memcache 在添加数据时就要指定数据的字节长度,而 redis 不需要。<br>3、 虚拟内存——当物理内存用完时，可以将一些很久没用到的 value 交换到磁盘。<br>4、 过期策略——memcache 在 set 时就指定，例如 set key1 0 0 8,即永不过期。Redis 可以通<br>过例如 expire 设定，例如 expire name 10。<br>5、 分布式——设定 memcache 集群，利用 magent 做一主多从;redis 可以做一主多从。都可<br>以一主一从。<br>6、 存储数据安全——memcache 断电就断了，数据没了；redis 可以定期 save 到磁盘。<br>7、 灾难恢复——memcache 同上，redis 丢了后可以通过 aof 恢复。</p>
+<p>redis 实际上是单线程的，通过epoll实现的多并发，效率相当高</p>
+<p>Linux 下redis 命令<br>命令行<br>redis-server  启动redis-server服务<br>redis-cli 运行<br>set name wch 设置key name value wch<br>keys  * 查询所有key<br>set name wch ex 2 代表wch这个key只存在两秒钟<br>Redis 测试<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line">r = redis.Redis(host=<span class="string">"192.168.167.128"</span>, port=<span class="string">"6379"</span>)</span><br><span class="line">r.set(<span class="string">'foo'</span>,<span class="string">'bar'</span>)</span><br><span class="line">print(r.get(<span class="string">'foo'</span>))</span><br></pre></td></tr></table></figure></p>
+<p>连接池<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line">pool = redis.ConnectionPool(host=<span class="string">"192.168.167.128"</span>, port=<span class="string">"6379"</span>)</span><br><span class="line">r = redis.Redis(connection_pool=pool)</span><br><span class="line">r.set(<span class="string">'foo'</span>,<span class="string">'bar'</span>)</span><br><span class="line">print(r.get(<span class="string">'foo'</span>))</span><br></pre></td></tr></table></figure></p>
+<p>在redis中设置值，默认，不存在则创建，存在则修改<br>参数<br>ex,过期时间（秒）<br>px过期时间（毫秒）<br>nx 如果设置为true,则只有name不存在的时候，当前Set操作才执行<br>xx 如果设置为ture,则只有name存在时，当前Set操作才执行</p>
+<p>setnx(name, value)<br>设置值只有在name 不存在的时候，执行操作（添加）</p>
+<p>setex(name,value,time)<br>相当于就是加了 ex这个参数,能设置过期时间秒计算</p>
+<p>psetex(name,value,time)<br>相当于加了px 这个参数，设置过期时间 毫秒 计算</p>
+<p>mset(*args, **kwargs)<br>批量设置值<br>如：<br>     mset(k1 = “v1”,k2 = “v2”)<br>或mget({“k1”:“v1”,”k2”:”v2”})</p>
+<p>getset(name,value)<br>设置新值，并返回原来的值。</p>
+<p>getrange(key,start,end)<br>如getrange(n1,0,2)<br>输出“jac”        即取前三个字符<br>对字符串的切片操作</p>
+<p>setrange(name,offset,value)<br>如setrange n2 0 p<br>即将n2为key对应的值的第0个位置的字符替换为P</p>
+<p>setbit n4 111 1<br>设置n4为key的111位二进制为1</p>
+<p>BITCOUNT n1<br>统计n1为key 的字符串中有多少二进制1</p>
+<p>getbit n4 111<br>查找n4 111位的二进制位值并输出</p>
+<p>strlen(name)<br>返回name对应值的字符串长度</p>
+<p>incr(self,name,amount=1)<br>decr(self,name,amount =1)<br>可以相当于以name为key一个计数器<br>incr增加decr减少<br>如：<br>incr login<br>decr login</p>
+<p>INCRBYFLOAT(self,name,amount=1.2)<br>如 INCRBYFLOAT login 1.6</p>
+<p>APPEND 追加<br>APPEND name li<br>在以name的key 的value后边追加li。<br>redis hash 操作<br>hest 添加信息<br>如：添加一条hset info name wch</p>
+<p>HGETALL info显示所有信息</p>
+<p>HKEYS info 显示所有key信息</p>
+<p>HVALS info 显示所有值的信息</p>
+<p>HMSET info2 k1 1 k2 2 批量设置key k1=1 k2=2</p>
+<p>hkeys info2  输出info2中key的值</p>
+<p>hgetall info2 输出info2的所有信息</p>
+<p>hlen(name)<br>获取name中所对应的hash键值对的个数</p>
+<p>hexists info2 k3<br>判断info2中是否有k3有返回1没有返回0</p>
+<p>HINCRBY info2  k2  1             像这样简单的key能存200多亿个<br>将info中的k2的值加1</p>
+<p>增量式迭代获取<br>hscan info 0 match <em>n</em><br>从info中找出包含n的key 值和对应的value</p>
+<p>hscan info 0 match *a<br>从hscan中获取开头为a的key 值和对应的value</p>
+<p>hscan_iter(name, match =None, count = None )<br>利用yield封装hscan创建生成器，实现分配去除redis中获取数据</p>
+<p>参数：<br>match匹配指定Key,默认none,表示所有的key。<br>count ,每次分片最少获得次数,默认none采用radis的默认分片个数</p>
+<p>如<br>for item in r,hscan_iter(‘xx’):<br>print item</p>
+<p>列表操作</p>
+<p>lpush names alex hanyan zhangyang<br>先入后出的列表names中 顺序为zhang hanyan alex</p>
+<p>RPUSH names  wangseng<br>先入先出的列表names中，在后面加wangseng</p>
+<p>lrange names 0 -1 取出列表中的所有值</p>
+<p>linsert(name, where, refvalue, value)<br>在name对应的列表的某一个值前或后插入一个新值<br>参数：<br>name,redis的name<br>where,BEFORE或AFTER<br>refvalue,标杆值，即：在它前后插入数据<br>value 即你要插入的数据<br>如：<br>LINSERT names BEFORE alex  TEXT<br>在names列表中 alex前的值插入 TEXT<br>如：<br>LSET names  3 ALEX<br>修改names 位置为3的值为 ALEX</p>
+<p>r.lren(name, value, num)<br>对name所对应的 list 中删除指定的值<br>参数：<br>name, redis的name<br>value , 要删除的值<br>num, num=0删除列表所有的指定值<br>num=2 从前到后，删除两个。<br>num=-2 ,从后向前，删除两个。<br>如 LREM names 1 TEXT<br>删除names 1 中de text值</p>
+<p>lpop(name)<br>在name对应 的列表的左侧获取第一个元素并在列表中移除，返回值则是第一个元素。<br>更多：<br>rpop(name)表示从右向左操作</p>
+<p>lindex(name, index)<br>在name对应的列表中根据索引获取列表元素</p>
+<p>ltrim(name, start, end)<br>在name对应的列表中移除没有在start-end的索引之间的值<br>参数：<br>name:redis 的name<br>start,索引的起始位置<br>end,索引的结束位置</p>
+<p>rpoplpush(src ,dst)<br>从一个参数取出列表最右边的元素，同时将其添加到另一个列表的最左侧<br>参数：<br>src，要取数据的列表的name<br>dst, 要添加的数据的列表的name</p>
+<p>blpop(keys, timeout)<br>将多个列表排列，按照从左到右去pop对应的元素<br>参数：<br>keys：radis name的集合<br>timeout:超时时间，当元素所有列表都获取完毕时，阻塞等待列表中有数据的    时间（s）,0表示永远阻塞。<br>更多：<br>r.brpop(keys, timeout)从右向左获取数据</p>
+<p>brpoplpush(src, dst，timeout =0)<br>从一个列表的右侧移除一个元素并将其添加到另一个列表的左侧<br>参数：<br>src: 取出并要移除元素的列表对应的name<br>dst: 要插入元素的列表的name<br>timeout: 当src对应的列表中没有数据时，阻塞等待其有数据的超时时间（s），0表示永远阻塞。</p>
+<pre><code>redis中的集合
+</code></pre><p>SADD names3 alex p jack 3<br>在names3的集合中增加 alex p jack 3 这四个元素</p>
+<p>SMEMBERS names3<br>获取names3中所有元素的值</p>
+<p>SCARD names3<br>获取names3中元素的个数</p>
+<p>SDIFF names3 name4<br>获取names3中 在name4不同的一部分<br>如：<br>names3<br>127.0.0.1:6379&gt; SMEMBERS names3<br>1) “3”<br>2) “alex”<br>3) “p”<br>4) “jack”</p>
+<p>name4<br>127.0.0.1:6379&gt; SMEMBERS name4<br>1) “alex”<br>2) “543”<br>3) “dnisd”<br>4) “ppp”</p>
+<p>输出：<br>127.0.0.1:6379&gt; SDIFF names3 name4<br>1) “3”<br>2) “p”<br>3) “jack”</p>
+<p>SDIFFSTORE<br>获取第一个name对应的集合且不再其他name 对应的集合，再将其新加入到dest对    应的集合中<br>例：<br>127.0.0.1:6379&gt; SDIFFSTORE n6 names3 name4<br>(integer) 3<br>127.0.0.1:6379&gt; SMEMBERS n6<br>1) “3”<br>2) “p”<br>3) “jack”</p>
+<p> SINTER<br>获取两个集合的交集<br>127.0.0.1:6379&gt; SINTER names3 name4<br>1)”alex”</p>
+<p>sinterstore(dest , keys, *args)<br>获取一个name对应集合的并集，在讲其加入到dest对应的集合中。</p>
+<p>sismember(name, value)<br>检查value 是否是name 所对应的集合的成员，有返回1<br>如：<br>127.0.0.1:6379&gt; SISMEMBER names3 alex<br>(integer) 1</p>
+<p>smembers(name)<br>获取name对应的集合的所有成员</p>
+<p>smove(src, dst, value)<br>将某个成员从一个集合中移到另一个集合</p>
+<p>spop(name)<br>从集合的右侧（尾部）移除一个成员并将其返回</p>
+<p>srandmember(name, numbers)<br>从name对应的集合中随机获取numbers个元素</p>
+<p>srem(name, value)<br>在name对应的集合中删除某些值</p>
+<p>sunion(keys,*args)<br>获取多一个name对应的集合的并集</p>
+<p>sunionstore(dest, keys, *args)<br>获取多一个name对应的集合的并集,并将结果保存在dest中所对应的集合中</p>
+<p>sscan(name, cursor=0, match = None, count = None)<br>sscan_iter(name, match = None, count = None)<br>字符串的操作，用于增量迭代分批获取元素，避免内存消耗太大。<br>如：<br>127.0.0.1:6379&gt; SUNIONSTORE n7 names3 name4<br>(integer) 4<br>127.0.0.1:6379&gt; sscan n7 0 match a*<br>1) “0”<br>2) 1) “alex”<br>和上面的列表迭代差不多输出结果的”0”是光标的位置”alex是输出”</p>
+<p>有序集合</p>
+<p>zadd添加有序集合<br>zrange 切片显示值<br>127.0.0.1:6379&gt; zadd z1 10 alex 5 jack 8 rain<br>(integer) 3<br>127.0.0.1:6379&gt; ZRANGE z1 0 -1<br>1) “jack”<br>2) “rain”<br>3) “alex”<br>集合是从小到大排列的</p>
+<p>当你增加一个已有的值时，但是对应的分数不一样，<br>后面的会把分数给替换掉，所以排名会变<br>127.0.0.1:6379&gt; ZADD z1 7 alex<br>(integer) 0<br>127.0.0.1:6379&gt; ZRANGE z1 0 -1<br>1) “jack”<br>2) “alex”<br>3) “rain”</p>
+<p>你可以在使用zrange来查询的时候加上 withscores来显示每个值的分数，<br>所以最直接的应用就是直接列出全班的分数。你的成绩就是你的分数，你的名字就是那个值。<br>127.0.0.1:6379&gt; ZRANGE z1 0 -1 withscores<br>1) “jack”<br>2) “5”<br>3) “alex”<br>4) “7”<br>5) “rain”<br>6) “8”</p>
+<p>zcard(name)<br>获取name对应的有序集合的数量</p>
+<p>zcount(name, min, max)<br>获取name 在【min,max】之间的所有的分数个数。</p>
+<p>zrank(name, value)<br>获取某个值在name对应的有序集合中的排行（从0开始）</p>
+<p>zrangebyles(name, min, max, start = None, num = None)<br>当有序集合中的所有成员都具有相同的分数时，<br>有序集合的元素会根据成员的值来进行排序<br>对集合中的每个成员进行逐个字节的对比，并按照从低到高的顺序返回排序后的集合。<br>参数：<br>name:redis的name<br>min: 左区间 +表示正无限 - 表示负无限（表示开区间 【表示闭区间<br>max: 右区间<br>Start: 对结果进行分片处理， 索引位置<br>num：对结果进行分片处理，索引后面的num个元素</p>
+<p>zrem(name, values)<br>删除name对应集合中值是values的成员</p>
+<p>zremrangebyrank(name,min,max)<br>根据排行范围删除</p>
+<p>zremrangebyscore(name,min,max)<br>根据分数范围删除</p>
+<p>zremrangebylex(name,min,max)<br>根据值返回删除</p>
+<p>zscore(name, value)<br>获取name对应有序集合中value对应的分数</p>
+<p>zinterstore(desk,key,aggregate=None)<br>获取两个有序集合的交集，如果遇到相同值不同分数，则按照aggregate进行操作同值会相加<br>aggregate的值为： SUM MIN MAX</p>
+<p>zunionstore(desk, keys, aggregate=None)<br>获取两个有序集合的并集，如果遇到相同值不同分数，则按照aggregate进行操作同值会相加</p>
+<p>zscan(name, cursor=0, match=None, count=None, score_cast_func=float)<br>zscan_iter(name, match=None, count=None, score_cast_func=float)<br>同字符串比较相似，相较与字符串新增score_cast_func，用来 对分数进行操作</p>
+<pre><code>redis其他的常用操作
+</code></pre><p>del（*names）<br>根据names删除redis中任意的数据类型</p>
+<p>exist（name）<br>检测redis的name是否存在</p>
+<p>keys（pattern=”<em>”）<br>根据模型获取redis中的name<br>更多：<br>          keys  </em> 匹配数据库中所有key<br>keys  h?llo 匹配hello ,hxllo ,hpllo等<br>keys  h*llo 匹配hllo, heeeeeello等<br>keys  h[ae]llo 匹配hello或者hallo 但不匹配haello</p>
+<p>expire(name, time)<br>为某个redis的name设置超时时间</p>
+<p>rename(src,dst)<br>对redis的name重命名为</p>
+<p>move(name, db)<br>将redis的某个值移动到指定的db下</p>
+<p>randomkey()<br>随机获取一个redis的name不删除</p>
+<p>type(name)<br>获取name对应的值类型</p>
+<p>scan(cursor=0, match=None, count=None)<br>scan_iter(match= None, count=None)<br>同字符串操作用于增量迭代获取key</p>
+<p>redis Publish 命令基本语法如下：<br>redis 127.0.0.1:6379&gt; PUBLISH channel message<br>返回值<br>接收到信息的订阅者数量。</p>
+<p>管道<br>redis-py默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作，如果想要在一次请求中指定多个命令，，则可以使用pipline实现一次请求多个命令，并且默认情况下pipline是原子性操作。</p>
+<p>连接远程Linux使用redis操作</p>
+<h1 id="Author-Diedline"><a href="#Author-Diedline" class="headerlink" title="Author: Diedline"></a>Author: Diedline</h1><p>import  redis<br>import time<br>pool = redis.ConnectionPool(host = “192.168.167.128”, port=”6379”, db=5)<br>r = redis.Redis(connection_pool=pool)<br>pipe = r.pipeline(transaction=True)</p>
+<h1 id="r-set-“name2”-”alex”"><a href="#r-set-“name2”-”alex”" class="headerlink" title="r.set(“name2”,”alex”)"></a>r.set(“name2”,”alex”)</h1><p>“””<br>使用pipe可以同时存取几个操作一起执行<br>“””</p>
+<h1 id="time-sleep-50"><a href="#time-sleep-50" class="headerlink" title="time.sleep(50)"></a>time.sleep(50)</h1><h1 id="r-set-“age2”-”20”"><a href="#r-set-“age2”-”20”" class="headerlink" title="r.set(“age2”,”20”)"></a>r.set(“age2”,”20”)</h1><p>pipe.brpoplpush(“names”, “names232”, timeout=30 )<br>pipe.set(“name7”, “huxudong23”)<br>pipe.execute()</p>
+<p>使用redis发布和订阅</p>
+<p>即实现多个广播多个用户选择听广播的消息<br>redis_helper<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RedisHelper</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.__conn=redis.Redis(host = <span class="string">"192.168.167.128"</span>, port=<span class="string">"6379"</span>)</span><br><span class="line">        self.chan_sub=<span class="string">"fm104.5"</span></span><br><span class="line">        self.chan_pub=<span class="string">"fm104.5"</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">public</span><span class="params">(self,msg)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        向fm104.5发消息</span></span><br><span class="line"><span class="string">        :param msg:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.__conn.publish(self.chan_pub, msg)  <span class="comment">#直接调用radis的publish方法，写上频道把消息发走了</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">subscribe</span><span class="params">(self)</span>:</span></span><br><span class="line">        pub = self.__conn.pubsub()          <span class="comment">#开始订阅，相当于打开收音机</span></span><br><span class="line">        pub.subscribe(self.chan_sub)        <span class="comment">#调频道</span></span><br><span class="line">        pub.parse_response()                <span class="comment">#准备接收</span></span><br><span class="line">        <span class="keyword">return</span> pub</span><br></pre></td></tr></table></figure></p>
+<p>redis_sub<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">from</span> redis_helper <span class="keyword">import</span> RedisHelper</span><br><span class="line"></span><br><span class="line">obj = RedisHelper()</span><br><span class="line">redis_sub = obj.subscribe()</span><br><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    msg = redis_sub.parse_response()</span><br><span class="line">    print(msg)</span><br></pre></td></tr></table></figure></p>
+<p>可以在Linux中的redis命令行中<br>127.0.0.1:6379[5]&gt; PUBLISH fm104.5 “ how are you”<br>(integer) 2<br>多个订阅 fm104.5的用户都能收到消息。“how are you”</p>
+<p>更多关于redis操作的网站<br><a href="https://github.com/andymccurdy/redis-py/" target="_blank" rel="noopener">https://github.com/andymccurdy/redis-py/</a><br><a href="http://doc.redisfans.com/" target="_blank" rel="noopener">http://doc.redisfans.com/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/redis缓存系统使用/index.html" data-id="cjne4qv6z000e24qioe44ytve" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>7</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>19</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
