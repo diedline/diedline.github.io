@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mysql的基本使用命令P1 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="关系型数据库oraclemysql    用的最多的免费开源所以都用sqlserverdb2postgresqlsqliteaccess 常用术语数据库：数据库是一些关联表的集合数据表：表示数据的矩阵列：一列（数据元素）包含了相同的数据，例如邮政编码的的数据。行：一行（=元组，或记录）是一组相关的数据，例如一个用户订阅的数据冗余：存储两倍数据，冗余可以使系统速度更快（表的规范化程度越高，表与表之间">
+<meta property="og:type" content="website">
+<meta property="og:title" content="mysql的基本使用命令P1">
+<meta property="og:url" content="https://diedline.github.io/mysql的基本使用命令P1/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="关系型数据库oraclemysql    用的最多的免费开源所以都用sqlserverdb2postgresqlsqliteaccess 常用术语数据库：数据库是一些关联表的集合数据表：表示数据的矩阵列：一列（数据元素）包含了相同的数据，例如邮政编码的的数据。行：一行（=元组，或记录）是一组相关的数据，例如一个用户订阅的数据冗余：存储两倍数据，冗余可以使系统速度更快（表的规范化程度越高，表与表之间">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://diedline.github.io/img/a1.png">
+<meta property="og:image" content="https://diedline.github.io/img/a2.png">
+<meta property="og:image" content="https://diedline.github.io/img/a3.png">
+<meta property="og:image" content="https://diedline.github.io/img/a4.png">
+<meta property="og:image" content="https://diedline.github.io/img/a5.png">
+<meta property="og:updated_time" content="2018-10-19T16:28:49.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql的基本使用命令P1">
+<meta name="twitter:description" content="关系型数据库oraclemysql    用的最多的免费开源所以都用sqlserverdb2postgresqlsqliteaccess 常用术语数据库：数据库是一些关联表的集合数据表：表示数据的矩阵列：一列（数据元素）包含了相同的数据，例如邮政编码的的数据。行：一行（=元组，或记录）是一组相关的数据，例如一个用户订阅的数据冗余：存储两倍数据，冗余可以使系统速度更快（表的规范化程度越高，表与表之间">
+<meta name="twitter:image" content="https://diedline.github.io/img/a1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>21</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>21</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/mysql的基本使用命令P1/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-19T16:18:54.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">20</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      mysql的基本使用命令P1
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关系型数据库<br>oracle<br>mysql    用的最多的免费开源所以都用<br>sqlserver<br>db2<br>postgresql<br>sqlite<br>access</p>
+<p>常用术语<br>数据库：数据库是一些关联表的集合<br>数据表：表示数据的矩阵<br>列：一列（数据元素）包含了相同的数据，例如邮政编码的的数据。<br>行：一行（=元组，或记录）是一组相关的数据，例如一个用户订阅的数据<br>冗余：存储两倍数据，冗余可以使系统速度更快（表的规范化程度越高，表与表之间的关系就越多；查询时可能经常需要在多个表之间连接查询；而进行连接操作会降低查询速度。例如学生的信息存储在student表中，院信息存储在department表中，通过student表中的dept_id字段与department建立关联关系，如果要查询一个学生所在系的名称，必须从student表中查询学生所在院系的编号（dept_id）,然后根据这个编号去department表查找系的名称。如果经常需要进行这个操作，连接查询会浪费很多时间，因此可以在student表中增加一个冗余字段dept_name,该字段用于存储学生所在院系的名称，这样就不用每次都进行连接操作了。）<br>主键：主键是唯一的。一个数据表中只能包含一个主键。你可以使用主键来查询数据。<br>外键：外键用于关联两个表。<br>复合键：复合键（组合键）将多个列做一个索引键，一般用于复合索引。<br>索引：使用索引可快速访问数据库表中的特定信息，索引是对数据库表一列或多列的值进行排序的一种结构。类似数据的目录。<br>参照完整性：参照的完整性要求关系中不允许引用不存在的实体。与实体完整性是关系模型必须满足的完整性约束条件，目的是保持数据的一致性。<br>数据库中的索引是用的b+树</p>
+<p>踩的坑找不到my.ini文件<br>使用命令%ProgramData%<br>找到mysql的文件夹里面有my.ini<br>找到mysqld<br>[mysqld]<br>skip-grant-tables</p>
+<p>net start mysql80 启动mysql服务<br>数据库连接命令<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure></p>
+<p>账号 密码</p>
+<p>显示所有的数据库<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">databases</span>;</span><br></pre></td></tr></table></figure></p>
+<p>进入选择的数据库<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql;</span><br></pre></td></tr></table></figure></p>
+<p>显示数据库中所有的表<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</span><br></pre></td></tr></table></figure></p>
+<p>显示user表的结构<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc user;</span><br></pre></td></tr></table></figure></p>
+<p>查找user表中所有的数据<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>;</span><br></pre></td></tr></table></figure></p>
+<p>增加一个\G能使命令行中的数据变成竖着的。方便读。写反斜杠不用加分号</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>\G</span><br></pre></td></tr></table></figure>
+<p>展示alex用户的权限<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">grants</span> <span class="keyword">for</span> alex;</span><br></pre></td></tr></table></figure></p>
+<p>刷新权限<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span><br></pre></td></tr></table></figure></p>
+<p>创建新用户<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'user1'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'07fa533360d9'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>修改密码<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> mysql.user <span class="keyword">set</span> <span class="keyword">password</span>=<span class="keyword">password</span>(<span class="string">'新密码'</span>) <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">'user1'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>给该用户添加权限<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grant</span> all <span class="keyword">privileges</span> <span class="keyword">on</span> 想授权的数据库.* <span class="keyword">to</span> <span class="string">'user1'</span>@<span class="string">'%'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>删除用户<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Delete</span> <span class="keyword">FROM</span> mysql.user <span class="keyword">Where</span> <span class="keyword">User</span>=<span class="string">'user1'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>当你进入某个数据库时可以用这条命令显示表的结构。等于desc.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">columns</span> <span class="keyword">from</span> <span class="keyword">user</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这样可以创建一个数据库，但是你不能在这里面写中文。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> myfirstdb ;</span><br></pre></td></tr></table></figure></p>
+<p>显示创建的数据库的属性<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">database</span> myfirstdb;</span><br></pre></td></tr></table></figure></p>
+<p><img src="\img\a1.png" alt=""></p>
+<p>删除数据库<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">database</span> myfristdb;</span><br></pre></td></tr></table></figure></p>
+<p>使用utf-8来创建数据库（支持中文）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">database</span> myfirstdb <span class="keyword">charset</span> utf<span class="number">-8</span>;</span><br></pre></td></tr></table></figure></p>
+<pre><code>mysql的数据类型 
+</code></pre><p>int 类型<br>数据类型    大小    M<br>(默认值)    范围（有符号）    范围（无符号）    用途<br>tinyint [(M)] [UNSIGNED] [ZEROFILL]    1字节    4    -128~127  (-27~27-1)    0 ~ 255 (0 ~ 28-1)    非常小整数值<br>smallint [(M)] [UNSIGNED] [ZEROFILL]    2字节    6    -32768~32767（-215 ~ 215-1)    0 ~ 65535 (0 ~ 216-1)     较小整数<br>mediumint [(M)] [UNSIGNED] [ZEROFILL]    3字节    9    -8388608 ~ 8388607 （-223 ~ 223-1）    0 ~ 16777215 (0 ~ 224-1)     中等大小整数<br>int [(M)] [UNSIGNED] [ZEROFILL]    4字节     11    -2147483648 ~ 2147483647（-231 ~ 231-1）    0 ~ 4294967295 (0 ~ 232-1)     标准整数<br>integer [(M)] [UNSIGNED] [ZEROFILL]    4字节     11    -2147483648 ~ 2147483647（-231 ~ 231-1）    0 ~ 4294967295 (0 ~ 232-1)    和int相同<br>bigint [(M)] [UNSIGNED] [ZEROFILL]    8字节    20    -9223372036854775808 ~9223372036854775807<br>（-263 ~ 263-1）    0 ~ 18446744073709551615<br>(0 ~ 264-1)     较大整数</p>
+<p>float类型</p>
+<p>数据类型    大小    用途<br>float [(M,D)] [ZEROFILL]    4字节    单精度浮点型，8位精度；参数m只影响显示效果，不影响精度，d却不同，会影响到精度；m是十进制数字的总个数，d是小数点后面的数字个数<br>double[(M,D)] [ZEROFILL]    8字节    双精度浮点型，16位精度；参数m只影响显示效果，不影响精度，d却不同，会影响到精度<br>real[(M,D)] [ZEROFILL]    8字节     同double<br>decimal[(M[,D])] [ZEROFILL]    4字节      decimal(m,d) 定点类型浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值。参数m是定点类型数字的最大个数（精 度），范围为0~65，d小数点右侧数字的个数，范围为0~30，但不得超过m。对定点数的计算能精确到65位数字。DECIMAL 数据类型用于精度要求非常高的计算中，这种类型允许指定数值的精度和计数方法作为选择参数。精度在这里指为这个值保存的有效数字的总个数，而计数方法表示小数点后数字的位数。比如语句 DECIMAL(7,3) 规定了存储的值不会超过 7 位数字，并且小数点后不超过 3 位<br>numeric[(M,D)]  [ZEROFILL]    4字节     同decimal</p>
+<p>日期</p>
+<p>类型    大小     范围    格式    用途<br>YEAR[(2|4)]    1字节    1901/2155    YYYY    年份值<br>DATE    3字节    ‘1000-01-01’–’9999-12-31’    YYYY-MM-DD     日期值<br>TIME    3字节    ‘-838:59:59’到’838:59:59’    HH:MM:SS     时间值或持续时间<br>DATETIME    8字节     ‘1000-01-01 00:00:00’–’9999-12-31 23:59:59’    YYYY-MM-DD HH:MM:SS     混合日期和时间值<br>TIMESTAMP[(M)]    8字节      1970-01-01 00:00:00/2037 年某时    YYYYMMDD HHMMSS     混合日期和时间值，时间戳</p>
+<p>字符串类型</p>
+<p>数据类型    大小（范围）    用途<br>char(M)[BINARY]    M个字节，0 &lt;= M &lt;= 255 (L为固定的=255，不够补空格)    定长字符串；CHAR 类型可以使用 BINARY 修饰符。当用于比较运算时，这个修饰符使 CHAR 以二进制方式参于运算，而不是以传统的区分大小写的方式。CHAR值根据缺省字符集以大小写不区分的方式排序和比较，除非给出BINARY关键词<br>varchar(M) [BINARY]    L+1个字节，其中L &lt;= M 且0 &lt;= M &lt;= 65535（MySQL5.0之前都是最大255)    变长字符串；VARCHAR 类型在使用 BINARY 修饰符时与 CHAR 类型完全相同<br>tinyblob，tinytext    L+1个字节，其中L &lt; 28-1 (255)    tinyblob：不超过 255 个字符的二进制字符串；tinytext：短文本字符串<br>blob,text    L+2个字节，其中L &lt; 216-1 (65535)    blob：二进制形式的长文本数据，在分类和比较时BLOB 类型区分大小写;text：长文本数据，在分类和比较时TEXT 不区分大小写<br>mediumblob,mediumtext    L+3个字节，其中L &lt; 224-1    mediumblob：二进制形式的中等长度文本数据；mediumtext ：中等长度文本数据，<br>longblob,longtext    L+4个字节，其中L &lt; 232-1    longblob：二进制形式的极大文本数据   ；longtext ：极大文本数据<br>enum(‘value1’,’value2’,…)    1或2个字节，取决于枚举值的个数(最多65,535个值)<br>set(‘value1’,’value2’,…)    1、2、3、4或者8个字节，取决于set成员的数目(最多64个成员)     </p>
+<p>创建一个student表 auto_increment代表自动递增 primary key主键</p>
+<p><img src="\img\a2.png" alt=""></p>
+<p>插入一条数据到student表中<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student ( <span class="keyword">name</span>,age,register_date) <span class="keyword">value</span>(<span class="string">"zhangyang"</span>, <span class="number">3</span>,<span class="string">"2018-10-19"</span>);</span><br><span class="line">  ```        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> 查询数据</span><br><span class="line"></span><br><span class="line">查询表中的前两条数据。</span><br><span class="line">```sql</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student <span class="keyword">limit</span> <span class="number">2</span> ;</span><br></pre></td></tr></table></figure></p>
+<p>查询表中偏移一条的前两条数据。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student <span class="keyword">limit</span> <span class="number">2</span> <span class="keyword">offset</span> <span class="number">1</span> ;（必须跟limit一起用）</span><br></pre></td></tr></table></figure></p>
+<p>查询id大于三的数据<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student <span class="keyword">where</span> <span class="keyword">id</span> &gt; <span class="number">3</span> ;</span><br></pre></td></tr></table></figure></p>
+<p>查询id大于三，年龄小于7的数据<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student <span class="keyword">where</span> <span class="keyword">id</span> &gt; <span class="number">3</span> <span class="keyword">and</span> age&lt;<span class="number">7</span>;</span><br></pre></td></tr></table></figure></p>
+<p>查询表中所有日期是2018-10月的数据<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student <span class="keyword">where</span> register_date <span class="keyword">like</span> <span class="string">"2018-10%"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>数据的修改<br> 将student表中的id=4的位置修改name,age。<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> student <span class="keyword">set</span> <span class="keyword">name</span>=<span class="string">"wch"</span>,age=<span class="string">"33"</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">4</span>;</span><br></pre></td></tr></table></figure></p>
+<p>将student表中的年龄大于8的位置修改name,和age<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> student <span class="keyword">set</span> <span class="keyword">name</span>=<span class="string">"wch"</span>,age=<span class="string">"33"</span> <span class="keyword">where</span> age &gt; <span class="number">8</span>;</span><br></pre></td></tr></table></figure></p>
+<p>数据的删除<br>删除student表中name=”wch”的数据<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> student <span class="keyword">where</span> <span class="keyword">name</span>=<span class="string">"wch"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>数据的排序<br>将student表中的数据按照id升序排列<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span>;</span><br></pre></td></tr></table></figure></p>
+<p>将student表中的数据按照id降序排列<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span> <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure></p>
+<p>分组统计<br>根据出现名字出现的次数来分组<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span> ,<span class="keyword">count</span>(*) <span class="keyword">from</span> student <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span>;</span><br></pre></td></tr></table></figure></p>
+<p>根据日期的出现次数来分组<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> register_date ,<span class="keyword">count</span>(*) <span class="keyword">from</span> student <span class="keyword">group</span> <span class="keyword">by</span> register_date;</span><br></pre></td></tr></table></figure></p>
+<p>将count(*)字段修改成stu_num<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> register_date ,<span class="keyword">count</span>(*) <span class="keyword">as</span> stu_num <span class="keyword">from</span> student <span class="keyword">group</span> <span class="keyword">by</span> register_date;</span><br></pre></td></tr></table></figure></p>
+<p>根据名字将年龄的总数加起来<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,<span class="keyword">sum</span>(age) <span class="keyword">from</span> student <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span>;</span><br></pre></td></tr></table></figure></p>
+<p><img src="\img\a3.png" alt=""></p>
+<p>根据名字将年龄的总和加起来并最后相加<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,<span class="keyword">sum</span>(age) <span class="keyword">as</span> age_sum <span class="keyword">from</span> student <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span> <span class="keyword">with</span> <span class="keyword">rollup</span>;</span><br></pre></td></tr></table></figure></p>
+<p><img src="\img\a4.png" alt=""></p>
+<p>根据coalesce（）关键词能将之前年龄的总和null取名为Total_age<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">coalesce</span> (<span class="keyword">name</span>,<span class="string">"Total_age"</span>),<span class="keyword">sum</span>(age) <span class="keyword">as</span> <span class="keyword">sum</span> <span class="keyword">from</span> student <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span> <span class="keyword">with</span> <span class="keyword">rollup</span>;</span><br></pre></td></tr></table></figure></p>
+<p><img src="\img\a5.png" alt=""></p>
+<p>修改数据表名，修改数据表字段</p>
+<p>增加一个字段名sex 枚举类型（“M”,”F”）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> student <span class="keyword">add</span> sex enum(<span class="string">"M"</span>,<span class="string">"F"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>删除student表中的age字段<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> student <span class="keyword">drop</span> age;</span><br></pre></td></tr></table></figure></p>
+<p>将student表中的sex 值 修改为非空（注意sex如果存在空值需要先update让它不为空）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> student <span class="keyword">modify</span> sex enum(<span class="string">"M"</span>,<span class="string">"F"</span>)  <span class="keyword">not</span> <span class="literal">null</span>;</span><br></pre></td></tr></table></figure></p>
+<p>当你插入数据时不输入sex值的时候他会自动填充一个M让它不为空</p>
+<p>修改 student 表的sex 字段变成 gander char(32)类型 非空 默认值为x<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> student <span class="keyword">change</span> sex gander <span class="built_in">char</span>(<span class="number">32</span>) <span class="keyword">not</span> <span class="literal">null</span> <span class="keyword">default</span> <span class="string">"X"</span>;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/mysql的基本使用命令P1/index.html" data-id="cjng8csse000e3gqif6eypf9k" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>21</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>21</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
