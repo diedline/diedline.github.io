@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>linux脚本常用操作课堂笔记day1 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Linux 脚本常用命令 开头 # !/bin/bash echo 输出 $1,$2,$3位置变量占了三个位置超过九个可以用shift命令将所有参数变量向左移一个位置。 特殊变量：$0: 显示脚本名称$#：表示传递给脚本的实际参数个数。$$: 当前shell脚本的进程号。$*: 位置参数的值，各个参数之间用环境变量IFS中定义的字符分隔开$@: 表示位置参数的值，它不使用IFS环境变量，所以当IF">
+<meta property="og:type" content="website">
+<meta property="og:title" content="linux脚本常用操作课堂笔记day1">
+<meta property="og:url" content="https://diedline.github.io/linux脚本常用操作课堂笔记/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="Linux 脚本常用命令 开头 # !/bin/bash echo 输出 $1,$2,$3位置变量占了三个位置超过九个可以用shift命令将所有参数变量向左移一个位置。 特殊变量：$0: 显示脚本名称$#：表示传递给脚本的实际参数个数。$$: 当前shell脚本的进程号。$*: 位置参数的值，各个参数之间用环境变量IFS中定义的字符分隔开$@: 表示位置参数的值，它不使用IFS环境变量，所以当IF">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://diedline.github.io/img/p1.png">
+<meta property="og:image" content="https://diedline.github.io/img/p2.png">
+<meta property="og:image" content="https://diedline.github.io/img/p3.png">
+<meta property="og:image" content="https://diedline.github.io/img/p4.png">
+<meta property="og:image" content="https://diedline.github.io/img/p5.png">
+<meta property="og:image" content="https://diedline.github.io/img/p6.png">
+<meta property="og:image" content="https://diedline.github.io/img/p7.png">
+<meta property="og:image" content="https://diedline.github.io/img/p8.png">
+<meta property="og:image" content="https://diedline.github.io/img/p9.png">
+<meta property="og:image" content="https://diedline.github.io/img/p10.png">
+<meta property="og:updated_time" content="2018-10-19T16:11:59.478Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux脚本常用操作课堂笔记day1">
+<meta name="twitter:description" content="Linux 脚本常用命令 开头 # !/bin/bash echo 输出 $1,$2,$3位置变量占了三个位置超过九个可以用shift命令将所有参数变量向左移一个位置。 特殊变量：$0: 显示脚本名称$#：表示传递给脚本的实际参数个数。$$: 当前shell脚本的进程号。$*: 位置参数的值，各个参数之间用环境变量IFS中定义的字符分隔开$@: 表示位置参数的值，它不使用IFS环境变量，所以当IF">
+<meta name="twitter:image" content="https://diedline.github.io/img/p1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>20</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>7</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/linux脚本常用操作课堂笔记/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-19T15:59:39.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">19</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux脚本常用操作课堂笔记day1
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux 脚本常用命令</p>
+<p>开头 # !/bin/bash</p>
+<p>echo 输出</p>
+<p>$1,$2,$3位置变量占了三个位置超过九个可以用shift命令将所有参数变量向左移一个位置。</p>
+<p>特殊变量：<br>$0: 显示脚本名称<br>$#：表示传递给脚本的实际参数个数。<br>$$: 当前shell脚本的进程号。<br>$*: 位置参数的值，各个参数之间用环境变量IFS中定义的字符分隔开<br>$@: 表示位置参数的值，<br>它不使用IFS环境变量，所以当IFS为空时，参数值不会连接在一起。<br>$!:  上一个后台命令的进程号。<br>$?:  执行最后一条命令的退出状态。</p>
+<p>自定义系统变量：<br>export能跨终端显示。类似定义一个公有变量。<br>如果不定义，那么另一个脚本就没法使用它。<br>           如：将IFS定义为<em><br>export: IFS=’</em></p>
+<p>read var 表示从键盘输入<br>echo var输出var</p>
+<p>shell的逻辑运算</p>
+<p>使用test或者[]都能表示它是条件运算。<br>如：<br>    <img src="\img\p1.png" alt=""></p>
+<p>进行字串比较必须有空格不然会表示赋值操作<br>    <img src="\img\p2.png" alt=""><br>算数比较<br>-n 表示不为空<br>-z 为空<br>-eq 表达式结果相等为真<br>-ne 表达式结果不相等为真<br>-ge 左边值大约或等于右边为真<br>-gt 左边值大于右边为真<br>-lt 右边大于左边为真<br>-le 右边大于等于左边为真<br>！表达式 为假则为真<br>如：<br>    <img src="\img\p3.png" alt=""></p>
+<p>文件测试<br>    <img src="\img\p4.png" alt=""></p>
+<p>-d 结果为目录为真<br>-e 文件存在结果为真<br>-f 文件是一个普通文件则结果为真<br>-g 文件的sgid位被设置则为真<br>-r 文件可读为真<br>-s 文件长度不为0为真<br>-u 文件的sudi被设置为真<br>-w 文件可写为真<br>-x 文件可执行为真</p>
+<p>逻辑运算</p>
+<p>and 运算 &amp;&amp;<br>如<br>touch 创建一个文件<br>rm -f 删除一个文件<br>    <img src="\img\p5.png" alt=""><br>输出<br>    <img src="\img\p6.png" alt=""></p>
+<p>or 运算 ||<br>因为当第一个条件为真时，后面的条件都不会去执行，所以只会输出in if<br><img src="\img\p7.png" alt=""></p>
+<p><img src="\img\p8.png" alt=""></p>
+<p>shell 的算数运算<br>你要使两个值想加需要使用$加两个括号<br>如：<br>var3 实现相加<br><img src="\img\p9.png" alt=""></p>
+<p>使用let直接在命令行中敲如：</p>
+<p><img src="\img\p10.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/linux脚本常用操作课堂笔记/index.html" data-id="cjng7q2wf0006wwqi4l1ip5xe" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>20</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>7</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
