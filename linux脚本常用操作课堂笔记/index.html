@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://diedline.github.io/img/p8.png">
 <meta property="og:image" content="https://diedline.github.io/img/p9.png">
 <meta property="og:image" content="https://diedline.github.io/img/p10.png">
-<meta property="og:updated_time" content="2018-10-19T16:11:59.478Z">
+<meta property="og:updated_time" content="2018-10-19T16:15:09.455Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux脚本常用操作课堂笔记day1">
 <meta name="twitter:description" content="Linux 脚本常用命令 开头 # !/bin/bash echo 输出 $1,$2,$3位置变量占了三个位置超过九个可以用shift命令将所有参数变量向左移一个位置。 特殊变量：$0: 显示脚本名称$#：表示传递给脚本的实际参数个数。$$: 当前shell脚本的进程号。$*: 位置参数的值，各个参数之间用环境变量IFS中定义的字符分隔开$@: 表示位置参数的值，它不使用IFS环境变量，所以当IF">
@@ -113,7 +113,7 @@
 <p>echo 输出</p>
 <p>$1,$2,$3位置变量占了三个位置超过九个可以用shift命令将所有参数变量向左移一个位置。</p>
 <p>特殊变量：<br>$0: 显示脚本名称<br>$#：表示传递给脚本的实际参数个数。<br>$$: 当前shell脚本的进程号。<br>$*: 位置参数的值，各个参数之间用环境变量IFS中定义的字符分隔开<br>$@: 表示位置参数的值，<br>它不使用IFS环境变量，所以当IFS为空时，参数值不会连接在一起。<br>$!:  上一个后台命令的进程号。<br>$?:  执行最后一条命令的退出状态。</p>
-<p>自定义系统变量：<br>export能跨终端显示。类似定义一个公有变量。<br>如果不定义，那么另一个脚本就没法使用它。<br>           如：将IFS定义为<em><br>export: IFS=’</em></p>
+<p>自定义系统变量：<br>export能跨终端显示。类似定义一个公有变量。<br>如果不定义，那么另一个脚本就没法使用它。<br>           如：将IFS定义为*<br>export: IFS=’*</p>
 <p>read var 表示从键盘输入<br>echo var输出var</p>
 <p>shell的逻辑运算</p>
 <p>使用test或者[]都能表示它是条件运算。<br>如：<br>    <img src="\img\p1.png" alt=""></p>
