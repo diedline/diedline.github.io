@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>测算各种构建列表的方法的时间 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="测算各种构建列表的时间timeit模块timeit模块可以用来测试一小段Python代码的执行速度。class timeit.Timer(stmt=’pass’, setup=’pass’, timer=)Timer是测量小段代码执行速度的类。stmt参数是要测试的代码语句（statment）；setup参数是运行代码时需要的设置；timer参数是一个定时器函数，与平台有关。timeit.Time">
+<meta property="og:type" content="website">
+<meta property="og:title" content="测算各种构建列表的方法的时间">
+<meta property="og:url" content="https://diedline.github.io/测算各种构建列表的方法的时间/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="测算各种构建列表的时间timeit模块timeit模块可以用来测试一小段Python代码的执行速度。class timeit.Timer(stmt=’pass’, setup=’pass’, timer=)Timer是测量小段代码执行速度的类。stmt参数是要测试的代码语句（statment）；setup参数是运行代码时需要的设置；timer参数是一个定时器函数，与平台有关。timeit.Time">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://diedline.github.io/img/list操作.png">
+<meta property="og:image" content="https://diedline.github.io/img/dict操作.png">
+<meta property="og:updated_time" content="2018-10-29T15:18:09.656Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="测算各种构建列表的方法的时间">
+<meta name="twitter:description" content="测算各种构建列表的时间timeit模块timeit模块可以用来测试一小段Python代码的执行速度。class timeit.Timer(stmt=’pass’, setup=’pass’, timer=)Timer是测量小段代码执行速度的类。stmt参数是要测试的代码语句（statment）；setup参数是运行代码时需要的设置；timer参数是一个定时器函数，与平台有关。timeit.Time">
+<meta name="twitter:image" content="https://diedline.github.io/img/list操作.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>21</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>7</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>21</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/测算各种构建列表的方法的时间/index.html" class="article-date">
+  <time class="post-time" datetime="2018-10-29T15:10:53.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">29</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      测算各种构建列表的方法的时间
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>测算各种构建列表的时间<br>timeit模块<br>timeit模块可以用来测试一小段Python代码的执行速度。<br>class timeit.Timer(stmt=’pass’, setup=’pass’, timer=<timer function="">)<br>Timer是测量小段代码执行速度的类。<br>stmt参数是要测试的代码语句（statment）；<br>setup参数是运行代码时需要的设置；<br>timer参数是一个定时器函数，与平台有关。<br>timeit.Timer.timeit(number=1000000)<br>Timer类中测试语句执行速度的对象方法。number参数是测试代码时的测试次数，默认为1000000次。方法返回执行代码的平均耗时，一个float类型的秒数。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  Author: Diedline</span></span><br><span class="line"><span class="keyword">from</span> timeit <span class="keyword">import</span> Timer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">()</span>:</span></span><br><span class="line">    li = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        li.append(i)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">    li = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        li +=[i]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">()</span>:</span></span><br><span class="line">    li = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test4</span><span class="params">()</span>:</span></span><br><span class="line">    li = list(i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test5</span><span class="params">()</span>:</span></span><br><span class="line">    li = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        li.extend([i])</span><br><span class="line"></span><br><span class="line">timer1 = Timer(<span class="string">"test1()"</span>, <span class="string">"from __main__ import test1"</span>)</span><br><span class="line">print(<span class="string">"append:"</span>,timer1.timeit(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line">timer2 = Timer(<span class="string">"test2()"</span>, <span class="string">"from __main__ import test2"</span>)</span><br><span class="line">print(<span class="string">"+:"</span>,timer2.timeit(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line">timer3 = Timer(<span class="string">"test3()"</span>, <span class="string">"from __main__ import test3"</span>)</span><br><span class="line">print(<span class="string">"[i for i in range(10000)]:"</span>,timer3.timeit(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line">timer4 = Timer(<span class="string">"test4()"</span>, <span class="string">"from __main__ import test4"</span>)</span><br><span class="line">print(<span class="string">"list(i for i in range(10000)):"</span>,timer4.timeit(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line">timer5 = Timer(<span class="string">"test5()"</span>, <span class="string">"from __main__ import test5"</span>)</span><br><span class="line">print(<span class="string">"li.extend([i]):"</span>,timer5.timeit(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">t6</span><span class="params">()</span>:</span></span><br><span class="line">    li = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        li.append(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">t7</span><span class="params">()</span>:</span></span><br><span class="line">    li = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        li.insert(<span class="number">0</span>,i)</span><br><span class="line">timer6 = Timer(<span class="string">"t6()"</span>, <span class="string">"from __main__ import t6"</span>)</span><br><span class="line">print(<span class="string">"li.append(i):"</span>,timer6.timeit(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">timer7 = Timer(<span class="string">"t7()"</span>, <span class="string">"from __main__ import t7"</span>)</span><br><span class="line">print(<span class="string">"li.insert(0,i):"</span>,timer7.timeit(<span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">append: <span class="number">1.5694592626462767</span></span><br><span class="line">+: <span class="number">1.5696250212330078</span></span><br><span class="line">[i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>)]: <span class="number">0.6026453633525723</span></span><br><span class="line">list(i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>)): <span class="number">1.26364698655508</span></span><br><span class="line">li.extend([i]): <span class="number">2.234107574756866</span></span><br><span class="line">li.append(i): <span class="number">1.3918307189150045</span></span><br><span class="line">li.insert(<span class="number">0</span>,i): <span class="number">39.68180304287605</span></span><br></pre></td></tr></table></figure></timer></p>
+<p>得出 尽量不要使用append和加操作 还有当insert操作向表头添加元素的时候速度贼慢。</p>
+<p>list 操作</p>
+<p><img src="/img/list操作.png" alt=""></p>
+<p>dict操作<br><img src="/img/dict操作.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/测算各种构建列表的方法的时间/index.html" data-id="cjnug7n5c0014n8qi0aq6h9bd" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,  联系QQ1019348254</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>21</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>7</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>21</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
