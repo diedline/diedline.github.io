@@ -5,17 +5,17 @@
   
   <title>file递归练习-java | Died line 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  package com.diedline.test;  import java.io.File; import java.util.Scanner;  public class Test1 {     /**      * 从键盘接收一个 文件夹路径 ，统计文件大小      * 1">
+  <meta name="description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667package com.diedl">
 <meta property="og:type" content="website">
 <meta property="og:title" content="file递归练习-java">
 <meta property="og:url" content="https://diedline.github.io/file递归练习-java/index.html">
 <meta property="og:site_name" content="Died line 的博客">
-<meta property="og:description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  package com.diedline.test;  import java.io.File; import java.util.Scanner;  public class Test1 {     /**      * 从键盘接收一个 文件夹路径 ，统计文件大小      * 1">
+<meta property="og:description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667package com.diedl">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-09T12:41:56.151Z">
+<meta property="og:updated_time" content="2018-12-09T12:47:54.441Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="file递归练习-java">
-<meta name="twitter:description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  package com.diedline.test;  import java.io.File; import java.util.Scanner;  public class Test1 {     /**      * 从键盘接收一个 文件夹路径 ，统计文件大小      * 1">
+<meta name="twitter:description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667package com.diedl">
   
     <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
   
@@ -101,184 +101,18 @@
 <ul>
 <li>需求:1,从键盘接收一个文件夹路径,统计该文件夹大小</li>
 </ul>
-<pre><code>package com.diedline.test;
-
-import java.io.File;
-import java.util.Scanner;
-
-public class Test1 {
-    /**
-     * 从键盘接收一个 文件夹路径 ，统计文件大小
-     * 1.创建键盘录入对象
-     * 2.定义一个无限循环
-     * 3.将键盘录入的结果存储并封装成File对象
-     * 4.对File对象判断
-     * 5.将文件夹返回
-     *
-     * 1.定义一个求和变量
-     * 2.获取该文件
-     * 3.获取该文件下的所有文件和文件夹，遍历数组
-     * 4.判断是文件就计算大小，并累加
-     * 5.判断是文件夹就递归调用
-     * @param args
-     */
-    public static void main(String[] args) {
-        File c = isDir();
-        System.out.println(getSize(c));
-
-    }
-    public static File isDir(){
-        Scanner sc = new Scanner(System.in);
-        while (true){
-            String line = sc.nextLine();
-            File file = new File(line);
-            if(!file.exists()){
-                System.out.println(&quot;错误的路径&quot;);
-            }
-            else if (file.isFile()){
-                System.out.println(&quot;输入的是一个文件路径请重新输入&quot;);
-            }
-            else {
-                return file;
-            }
-        }
-    }
-
-    /**
-     * 获取文件大小
-     *
-     * 1.返回值类型long
-     * 2.参数列表File dir
-     * @param a
-     * @return
-     */
-    public static long getSize(File a){
-        File[] arr = a.listFiles();
-        long size = 0;
-        for (File b:arr
-             ) {
-            if (b.isFile()){
-                 size += b.length();
-            }
-            else {
-                getSize(b);
-            }
-        }
-        return size;
-    }
-}
-</code></pre><p>###23.02_File类递归练习(删除该文件夹)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.diedline.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从键盘接收一个 文件夹路径 ，统计文件大小</span></span><br><span class="line"><span class="comment">     * 1.创建键盘录入对象</span></span><br><span class="line"><span class="comment">     * 2.定义一个无限循环</span></span><br><span class="line"><span class="comment">     * 3.将键盘录入的结果存储并封装成File对象</span></span><br><span class="line"><span class="comment">     * 4.对File对象判断</span></span><br><span class="line"><span class="comment">     * 5.将文件夹返回</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 1.定义一个求和变量</span></span><br><span class="line"><span class="comment">     * 2.获取该文件</span></span><br><span class="line"><span class="comment">     * 3.获取该文件下的所有文件和文件夹，遍历数组</span></span><br><span class="line"><span class="comment">     * 4.判断是文件就计算大小，并累加</span></span><br><span class="line"><span class="comment">     * 5.判断是文件夹就递归调用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        File c = isDir();</span><br><span class="line">        System.out.println(getSize(c));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> File <span class="title">isDir</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            String line = sc.nextLine();</span><br><span class="line">            File file = <span class="keyword">new</span> File(line);</span><br><span class="line">            <span class="keyword">if</span>(!file.exists())&#123;</span><br><span class="line">                System.out.println(<span class="string">"错误的路径"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (file.isFile())&#123;</span><br><span class="line">                System.out.println(<span class="string">"输入的是一个文件路径请重新输入"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> file;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取文件大小</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 1.返回值类型long</span></span><br><span class="line"><span class="comment">     * 2.参数列表File dir</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getSize</span><span class="params">(File a)</span></span>&#123;</span><br><span class="line">        File[] arr = a.listFiles();</span><br><span class="line">        <span class="keyword">long</span> size = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (File b:arr</span><br><span class="line">             ) &#123;</span><br><span class="line">            <span class="keyword">if</span> (b.isFile())&#123;</span><br><span class="line">                 size += b.length();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                getSize(b);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> size;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###23.02_File类递归练习(删除该文件夹)</p>
 <ul>
 <li>需求:2,从键盘接收一个文件夹路径,删除该文件夹</li>
 </ul>
-<pre><code>package com.diedline.test;
-
-import java.io.File;
-
-public class Test2 {
-    /**
-     * 需求:2,从键盘接收一个文件夹路径,删除该文件夹
-     *
-     * 删除该文件夹
-     * 分析：
-     * 获取文件夹下的所有文件和和文件夹
-     * 如果是文件直接删除，是文件夹就递归调用
-     * 循环结束后将空文件夹删除
-     * @param args
-     */
-    public static void main(String[] args) {
-        File dir = Test1.isDir();                   //获取文件夹路径
-        delateFile(dir);
-
-    }
-    /**
-     * 删除文件夹
-     * 返回值 void
-     * 参数列表 File dir
-     *
-     */
-    public static void delateFile(File dir){
-        //1.获取该文件夹下所有的文件和文件夹
-        File[] arr = dir.listFiles();
-        for (File a:arr
-             ) {
-            if (a.isFile()){
-                a.delete();
-            }
-            else {
-                delateFile(a);
-            }
-        }
-        dir.delete();
-        System.out.println(&quot;已经删除完了&quot;);
-    }
-}
-</code></pre><p>###23.03_File类递归练习(拷贝)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test2</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求:2,从键盘接收一个文件夹路径,删除该文件夹</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 删除该文件夹</span></span><br><span class="line"><span class="comment">     * 分析：</span></span><br><span class="line"><span class="comment">     * 获取文件夹下的所有文件和和文件夹</span></span><br><span class="line"><span class="comment">     * 如果是文件直接删除，是文件夹就递归调用</span></span><br><span class="line"><span class="comment">     * 循环结束后将空文件夹删除</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        File dir = Test1.isDir();                   <span class="comment">//获取文件夹路径</span></span><br><span class="line">        delateFile(dir);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除文件夹</span></span><br><span class="line"><span class="comment">     * 返回值 void</span></span><br><span class="line"><span class="comment">     * 参数列表 File dir</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">delateFile</span><span class="params">(File dir)</span></span>&#123;</span><br><span class="line">        <span class="comment">//1.获取该文件夹下所有的文件和文件夹</span></span><br><span class="line">        File[] arr = dir.listFiles();</span><br><span class="line">        <span class="keyword">for</span> (File a:arr</span><br><span class="line">             ) &#123;</span><br><span class="line">            <span class="keyword">if</span> (a.isFile())&#123;</span><br><span class="line">                a.delete();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                delateFile(a);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        dir.delete();</span><br><span class="line">        System.out.println(<span class="string">"已经删除完了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###23.03_File类递归练习(拷贝)</p>
 <ul>
 <li>需求:3,从键盘接收两个文件夹路径,把其中一个文件夹中(包含内容)拷贝到另一个文件夹中</li>
 </ul>
-<pre><code>package com.diedline.test;
-
-import java.io.*;
-
-public class Test3 {
-    /**
-     * 需求：输入两个文件夹，将一个文件夹中的内容拷贝到另一个文件夹中
-     * @param args
-     */
-    public static void main(String[] args) throws IOException {
-        System.out.println(&quot;输入两个文件夹&quot;);
-        File a = Test1.isDir();
-        File b = Test1.isDir();
-        if(a.equals(b)){
-            System.out.println(&quot;目标文件夹是原文件夹的子文件夹&quot;);          //不允许自己给自己拷贝
-        }else {
-            fileCopy(a,b);
-        }
-    }
-
-    /**
-     * 分析：
-     * 1.在目标文件中创建原文件夹
-     * 2.获取该文件夹中所有的文件和文件夹，存贮在File数组中
-     * 3.遍历数组
-     * 4.如果是文件就用io流读写操作
-     * 5.如果是文件夹就递归调用
-     *
-     * 返回值类型void
-     * 参数列表 File a ,File b
-     *
-     * @param a
-     * @param b
-     */
-    public static void fileCopy(File a,File b) throws IOException {
-        File newDir = new File(b,a.getName());
-        newDir.mkdir();
-        //获取该文件夹中所有的文件和文件夹，存贮在File数组中
-        File[] subFiles = a.listFiles();
-        //遍历
-        for (File subFile:subFiles
-             ) {
-            //如果是文件就IO流读写
-            if(subFile.isFile()){
-                BufferedInputStream bis =  new BufferedInputStream(new FileInputStream(subFile));
-                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(newDir,subFile.getName())));
-                int c;
-                while ((c = bis.read()) != -1){
-                    bos.write(c);
-                }
-                bis.close();
-                bos.close();
-            }
-            //如果是目录就递归调用
-            else {
-                fileCopy(subFile,newDir);
-            }
-        }
-
-    }
-}
-</code></pre><p>###23.04_File类递归练习(按层级打印)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test3</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求：输入两个文件夹，将一个文件夹中的内容拷贝到另一个文件夹中</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"输入两个文件夹"</span>);</span><br><span class="line">        File a = Test1.isDir();</span><br><span class="line">        File b = Test1.isDir();</span><br><span class="line">        <span class="keyword">if</span>(a.equals(b))&#123;</span><br><span class="line">            System.out.println(<span class="string">"目标文件夹是原文件夹的子文件夹"</span>);          <span class="comment">//不允许自己给自己拷贝</span></span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            fileCopy(a,b);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 分析：</span></span><br><span class="line"><span class="comment">     * 1.在目标文件中创建原文件夹</span></span><br><span class="line"><span class="comment">     * 2.获取该文件夹中所有的文件和文件夹，存贮在File数组中</span></span><br><span class="line"><span class="comment">     * 3.遍历数组</span></span><br><span class="line"><span class="comment">     * 4.如果是文件就用io流读写操作</span></span><br><span class="line"><span class="comment">     * 5.如果是文件夹就递归调用</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 返回值类型void</span></span><br><span class="line"><span class="comment">     * 参数列表 File a ,File b</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> b</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">fileCopy</span><span class="params">(File a,File b)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        File newDir = <span class="keyword">new</span> File(b,a.getName());</span><br><span class="line">        newDir.mkdir();</span><br><span class="line">        <span class="comment">//获取该文件夹中所有的文件和文件夹，存贮在File数组中</span></span><br><span class="line">        File[] subFiles = a.listFiles();</span><br><span class="line">        <span class="comment">//遍历</span></span><br><span class="line">        <span class="keyword">for</span> (File subFile:subFiles</span><br><span class="line">             ) &#123;</span><br><span class="line">            <span class="comment">//如果是文件就IO流读写</span></span><br><span class="line">            <span class="keyword">if</span>(subFile.isFile())&#123;</span><br><span class="line">                BufferedInputStream bis =  <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(subFile));</span><br><span class="line">                BufferedOutputStream bos = <span class="keyword">new</span> BufferedOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="keyword">new</span> File(newDir,subFile.getName())));</span><br><span class="line">                <span class="keyword">int</span> c;</span><br><span class="line">                <span class="keyword">while</span> ((c = bis.read()) != -<span class="number">1</span>)&#123;</span><br><span class="line">                    bos.write(c);</span><br><span class="line">                &#125;</span><br><span class="line">                bis.close();</span><br><span class="line">                bos.close();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果是目录就递归调用</span></span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                fileCopy(subFile,newDir);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###23.04_File类递归练习(按层级打印)</p>
 <ul>
 <li><p>需求:4,从键盘接收一个文件夹路径,把文件夹中的所有文件以及文件夹的名字按层级打印, 例如:<br>aaa是文件夹,里面有bbb.txt,ccc.txt,ddd.txt这些文件,有eee这样的文件夹,eee中有fff.txt和ggg.txt,打印出层级来<br>  aaa</p>
 <pre><code>bbb.txt
@@ -290,50 +124,8 @@ eee
     ggg.txt
 </code></pre></li>
 </ul>
-<p>code</p>
-<pre><code>package com.diedline.test;
-
-import java.io.File;
-
-public class Test4 {
-    /**
-     * aaa是文件夹,里面有bbb.txt,ccc.txt,ddd.txt这些文件,有eee这样的文件夹,eee中有fff.txt和ggg.txt,打印出层级来
-     *     aaa
-     *         bbb.txt
-     *         ccc.txt
-     *         ddd.txt
-     *
-     *         eee
-     *             fff.txt
-     *             ggg.txt
-     *
-     *
-     *     1,获取所有文件和文件夹，返回File数组
-     *     2.遍历数组
-     *     3.无论是文件还是文件夹都是直接打印
-     *     4.如果是文件夹递归调用
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        File dir = Test1.isDir();
-        printLev(dir,0);
-    }
-    public static void printLev(File dir,int lev){
-        File[] arr = dir.listFiles();
-        for (File a:arr
-             ) {
-            for (int i = 0; i &lt;= lev; i++){
-                System.out.print(&quot;\t&quot;);
-            }
-            System.out.println(a.getName());
-            if (a.isDirectory()){
-                printLev(a,lev + 1);
-            }
-        }
-    }
-}
-</code></pre><p>###23.05_递归练习(斐波那契数列)</p>
+<p>code<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test4</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * aaa是文件夹,里面有bbb.txt,ccc.txt,ddd.txt这些文件,有eee这样的文件夹,eee中有fff.txt和ggg.txt,打印出层级来</span></span><br><span class="line"><span class="comment">     * 	aaa</span></span><br><span class="line"><span class="comment">     * 		bbb.txt</span></span><br><span class="line"><span class="comment">     * 		ccc.txt</span></span><br><span class="line"><span class="comment">     * 		ddd.txt</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 		eee</span></span><br><span class="line"><span class="comment">     * 			fff.txt</span></span><br><span class="line"><span class="comment">     * 			ggg.txt</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 	1,获取所有文件和文件夹，返回File数组</span></span><br><span class="line"><span class="comment">     * 	2.遍历数组</span></span><br><span class="line"><span class="comment">     * 	3.无论是文件还是文件夹都是直接打印</span></span><br><span class="line"><span class="comment">     * 	4.如果是文件夹递归调用</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        File dir = Test1.isDir();</span><br><span class="line">        printLev(dir,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printLev</span><span class="params">(File dir,<span class="keyword">int</span> lev)</span></span>&#123;</span><br><span class="line">        File[] arr = dir.listFiles();</span><br><span class="line">        <span class="keyword">for</span> (File a:arr</span><br><span class="line">             ) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= lev; i++)&#123;</span><br><span class="line">                System.out.print(<span class="string">"\t"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(a.getName());</span><br><span class="line">            <span class="keyword">if</span> (a.isDirectory())&#123;</span><br><span class="line">                printLev(a,lev + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>###23.05_递归练习(斐波那契数列)</p>
 <ul>
 <li>不死神兔</li>
 <li>故事得从西元1202年说起，话说有一位意大利青年，名叫斐波那契。</li>
@@ -348,198 +140,22 @@ public class Test4 {
 <li>第五个月两对大兔子生两对小兔子    </li>
 <li>一对小兔子长成大兔子            5</li>
 </ul>
-<pre><code>package com.diedline.test;
-
-public class Test5 {
-    /**
-     * 不死神兔
-     * 故事得从西元1202年说起，话说有一位意大利青年，名叫斐波那契。
-     * 在他的一部著作中提出了一个有趣的问题：假设一对刚出生的小兔一个月后就能长成大兔，再过一个月就能生下一对小兔，并且此后每个月都生一对小兔，一年内没有发生死亡，
-     * 问：一对刚出生的兔子，一年内繁殖成多少对兔子?
-     * 1 1 2 3 5 8 13
-     * 第一个月一对小兔子                    1
-     * 第二个月一对大兔子                    1
-     * 第三个月一对大兔子生了一对小兔子        2
-     * 第四个月一对大兔子生了一对小兔子
-     * 一对小兔子长成大兔子            3
-     * 第五个月两对大兔子生两对小兔子
-     * 一对小兔子长成大兔子            5
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-//        demo1();
-        System.out.println(fun(8));
-    }
-
-    /**
-     * 使用数组求斐波那契数列
-     */
-    public static void demo1() {
-        int[] arr = new int[8];
-        arr[0] = 1;
-        arr[1] = 1;
-        for (int i = 0; i &lt; arr.length - 2; i++) {
-            arr[i + 2] = arr[i] + arr[i + 1];
-        }
-        for (int a : arr
-        ) {
-            System.out.print(a + &quot; &quot;);
-        }
-    }
-
-    /**
-     * 使用递归求斐波那契数列
-     */
-    public static int fun(int num) {
-        if (num == 1 || num == 2) {
-            return 1;
-        } else {
-            return fun(num - 1) + fun(num - 2);
-        }
-    }
-}
-</code></pre><p>###23.06_递归练习(1000的阶乘所有零和尾部零的个数)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.diedline.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test5</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 不死神兔</span></span><br><span class="line"><span class="comment">     * 故事得从西元1202年说起，话说有一位意大利青年，名叫斐波那契。</span></span><br><span class="line"><span class="comment">     * 在他的一部著作中提出了一个有趣的问题：假设一对刚出生的小兔一个月后就能长成大兔，再过一个月就能生下一对小兔，并且此后每个月都生一对小兔，一年内没有发生死亡，</span></span><br><span class="line"><span class="comment">     * 问：一对刚出生的兔子，一年内繁殖成多少对兔子?</span></span><br><span class="line"><span class="comment">     * 1 1 2 3 5 8 13</span></span><br><span class="line"><span class="comment">     * 第一个月一对小兔子					1</span></span><br><span class="line"><span class="comment">     * 第二个月一对大兔子					1</span></span><br><span class="line"><span class="comment">     * 第三个月一对大兔子生了一对小兔子		2</span></span><br><span class="line"><span class="comment">     * 第四个月一对大兔子生了一对小兔子</span></span><br><span class="line"><span class="comment">     * 一对小兔子长成大兔子			3</span></span><br><span class="line"><span class="comment">     * 第五个月两对大兔子生两对小兔子</span></span><br><span class="line"><span class="comment">     * 一对小兔子长成大兔子			5</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">//        demo1();</span></span><br><span class="line">        System.out.println(fun(<span class="number">8</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用数组求斐波那契数列</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">8</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        arr[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">2</span>; i++) &#123;</span><br><span class="line">            arr[i + <span class="number">2</span>] = arr[i] + arr[i + <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> a : arr</span><br><span class="line">        ) &#123;</span><br><span class="line">            System.out.print(a + <span class="string">" "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用递归求斐波那契数列</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (num == <span class="number">1</span> || num == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> fun(num - <span class="number">1</span>) + fun(num - <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###23.06_递归练习(1000的阶乘所有零和尾部零的个数)</p>
 <ul>
 <li>需求:求出1000的阶乘所有零和尾部零的个数,不用递归做</li>
 </ul>
-<pre><code>package com.diedline.test;
-
-import java.math.BigInteger;
-
-public class Test6 {
-    /**
-     * 需求:求出1000的阶乘所有零和尾部零的个数,不用递归做
-     * @param args
-     */
-    public static void main(String[] args) {
-        String a = factorial(1000).toString();          //获取1000阶乘数据的字符串形式
-        System.out.println(&quot;所有的0的个数：&quot;+getZero(a));                             //获取尾部的0
-        getLastZero(a);
-    }
-
-    /**
-     * 获取尾部的0的数量
-     * @param a
-     */
-    public static void getLastZero(String a) {
-        StringBuilder sb = new StringBuilder(a);
-        a = sb.reverse().toString();        //链式编程
-        int count = 0;
-        for(int i = 0;i&lt;a.length();i++){
-            if(&apos;0&apos; != a.charAt(i)){
-                break;
-            }
-            else count++;
-        }
-        System.out.println(&quot;尾部0的个数：&quot;+count);
-    }
-
-    /**
-     * 计算阶乘的值
-     * @param a
-     * @return
-     */
-    public static BigInteger factorial(int a){
-       BigInteger result = new BigInteger(&quot;1&quot;);             //使用BigInteger 提高上限
-        for (int i = 1; i &lt; a+1; i++) {
-            BigInteger result2 = new BigInteger(i+&quot;&quot;);
-            result = result.multiply(result2);
-        }
-        return result;
-    }
-
-    /**
-     * 计算总共有多少个0
-     * @param a
-     * @return
-     */
-    public static int getZero(String a){
-        int count = 0;
-        for (int i = 0; i &lt;a.length() ; i++) {
-            if(&apos;0&apos; == a.charAt(i)){
-                count++;
-            }
-        }
-        return count;
-    }
-}
-</code></pre><p>###23.07_递归练习(1000的阶乘尾部零的个数)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.math.BigInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test6</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求:求出1000的阶乘所有零和尾部零的个数,不用递归做</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String a = factorial(<span class="number">1000</span>).toString();          <span class="comment">//获取1000阶乘数据的字符串形式</span></span><br><span class="line">        System.out.println(<span class="string">"所有的0的个数："</span>+getZero(a));                             <span class="comment">//获取尾部的0</span></span><br><span class="line">        getLastZero(a);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取尾部的0的数量</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getLastZero</span><span class="params">(String a)</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder(a);</span><br><span class="line">        a = sb.reverse().toString();        <span class="comment">//链式编程</span></span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;a.length();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">'0'</span> != a.charAt(i))&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> count++;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"尾部0的个数："</span>+count);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算阶乘的值</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BigInteger <span class="title">factorial</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">       BigInteger result = <span class="keyword">new</span> BigInteger(<span class="string">"1"</span>);             <span class="comment">//使用BigInteger 提高上限</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; a+<span class="number">1</span>; i++) &#123;</span><br><span class="line">            BigInteger result2 = <span class="keyword">new</span> BigInteger(i+<span class="string">""</span>);</span><br><span class="line">            result = result.multiply(result2);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算总共有多少个0</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getZero</span><span class="params">(String a)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;a.length() ; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">'0'</span> == a.charAt(i))&#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###23.07_递归练习(1000的阶乘尾部零的个数)</p>
 <ul>
 <li>需求:求出1000的阶乘尾部零的个数,用递归做</li>
 </ul>
-<pre><code>package com.diedline.test;
-
-public class Test7 {
-    /**
-     *  需求：求出1000阶乘尾部0的个数，使用递归
-     *
-     *  分析 5 10 15 20 25 30 35 40 45 ....100...1000       这些数至少能出现一个0  如果是100个至少能出现20个0,1000个能至少出现200个
-     *  5*5*4 50*2 25,50能出现两个0  5*5*5 5*5*6 200/5=40
-     *  5*5*5*1  5*5*5*2 5*5*5*3 5*5*5*4 5*5*5 5*5*5*6 5*5*5*7 5*5*5*8 5*5*5*9
-     *  40/5 =  8   每五个出现一个 8%5  = 1
-     *  总和 200 + 40 + 8 +1               =  249个0
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(fun(1000));
-    }
-
-    /**
-     * 通过寻找规律来使用递归    
-     * @param num
-     * @return
-     */
-    public static int fun(int num){
-        if(num &gt;0 &amp;&amp; num&lt;5){
-            return 0;
-        }else {
-            return num/5 + fun(num /5);
-        }
-    }
-}
-</code></pre><p>###23.08_集合练习(约瑟夫环)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test7</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  需求：求出1000阶乘尾部0的个数，使用递归</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *  分析 5 10 15 20 25 30 35 40 45 ....100...1000       这些数至少能出现一个0  如果是100个至少能出现20个0,1000个能至少出现200个</span></span><br><span class="line"><span class="comment">     *  5*5*4 50*2 25,50能出现两个0  5*5*5 5*5*6 200/5=40</span></span><br><span class="line"><span class="comment">     *  5*5*5*1  5*5*5*2 5*5*5*3 5*5*5*4 5*5*5 5*5*5*6 5*5*5*7 5*5*5*8 5*5*5*9</span></span><br><span class="line"><span class="comment">     *  40/5 =  8   每五个出现一个 8%5  = 1</span></span><br><span class="line"><span class="comment">     *  总和 200 + 40 + 8 +1               =  249个0</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(fun(<span class="number">1000</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过寻找规律来使用递归    </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> num</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(num &gt;<span class="number">0</span> &amp;&amp; num&lt;<span class="number">5</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> num/<span class="number">5</span> + fun(num /<span class="number">5</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###23.08_集合练习(约瑟夫环)</p>
 <ul>
-<li><p>幸运数字</p>
-<pre><code>package com.diedline.test;
-
-import java.util.ArrayList;
-
-public class Test8 {
-    /**
-     * 约瑟夫环   获取幸运数字
-     * 当一个数%3就删除  取这个集合中的最后保存下来的一个数即为幸运数字
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println(getLucklyNum(8));
-    }
-    /**
-     * 获取幸运数字
-     * 1.返回值类型int
-     * 2.参数列表 int num
-     */
-    public static int getLucklyNum(int num){
-        ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();            //创建集合存储1-num的对象
-        for (int i = 1; i &lt;num + 1 ; i++) {
-            list.add(i);
-        }
-        int count = 1;                              //用来计数
-        for (int i = 0; list.size() != 1;i++){      //只要集合中数超过1就要不断减少
-            if(i==list.size()){             //如果i增长到list集合最大的索引+1的时候 重新归零
-                i = 0;
-            }
-            if (count % 3 ==0){         //如果是3的倍数就杀人
-                list.remove(i--);
-            }
-            count++;
-        }
-        return list.get(0);
-</code></pre></li>
+<li>幸运数字<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test8</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 约瑟夫环   获取幸运数字</span></span><br><span class="line"><span class="comment">     * 当一个数%3就删除  取这个集合中的最后保存下来的一个数即为幸运数字</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(getLucklyNum(<span class="number">8</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取幸运数字</span></span><br><span class="line"><span class="comment">     * 1.返回值类型int</span></span><br><span class="line"><span class="comment">     * 2.参数列表 int num</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getLucklyNum</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();            <span class="comment">//创建集合存储1-num的对象</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;num + <span class="number">1</span> ; i++) &#123;</span><br><span class="line">            list.add(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">1</span>;                              <span class="comment">//用来计数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; list.size() != <span class="number">1</span>;i++)&#123;      <span class="comment">//只要集合中数超过1就要不断减少</span></span><br><span class="line">            <span class="keyword">if</span>(i==list.size())&#123;             <span class="comment">//如果i增长到list集合最大的索引+1的时候 重新归零</span></span><br><span class="line">                i = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (count % <span class="number">3</span> ==<span class="number">0</span>)&#123;         <span class="comment">//如果是3的倍数就杀人</span></span><br><span class="line">                list.remove(i--);</span><br><span class="line">            &#125;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(<span class="number">0</span>);</span><br><span class="line">	</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
-<pre><code>    }
-}
-</code></pre>
+
       
     </div>
     <footer class="article-footer">
