@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>file递归练习-java | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  package com.diedline.test;  import java.io.File; import java.util.Scanner;  public class Test1 {     /**      * 从键盘接收一个 文件夹路径 ，统计文件大小      * 1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="file递归练习-java">
+<meta property="og:url" content="https://diedline.github.io/file递归练习-java/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  package com.diedline.test;  import java.io.File; import java.util.Scanner;  public class Test1 {     /**      * 从键盘接收一个 文件夹路径 ，统计文件大小      * 1">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-09T12:35:50.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="file递归练习-java">
+<meta name="twitter:description" content="###23.01_File类递归练习(统计该文件夹大小)  需求:1,从键盘接收一个文件夹路径,统计该文件夹大小  package com.diedline.test;  import java.io.File; import java.util.Scanner;  public class Test1 {     /**      * 从键盘接收一个 文件夹路径 ，统计文件大小      * 1">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>23</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>7</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>21</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/file递归练习-java/index.html" class="article-date">
+  <time class="post-time" datetime="2018-12-09T12:33:34.000Z" itemprop="datePublished">
+    <span class="post-month">12月</span><br/>
+    <span class="post-day">09</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      file递归练习-java
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###23.01_File类递归练习(统计该文件夹大小)</p>
+<ul>
+<li>需求:1,从键盘接收一个文件夹路径,统计该文件夹大小</li>
+</ul>
+<pre><code>package com.diedline.test;
+
+import java.io.File;
+import java.util.Scanner;
+
+public class Test1 {
+    /**
+     * 从键盘接收一个 文件夹路径 ，统计文件大小
+     * 1.创建键盘录入对象
+     * 2.定义一个无限循环
+     * 3.将键盘录入的结果存储并封装成File对象
+     * 4.对File对象判断
+     * 5.将文件夹返回
+     *
+     * 1.定义一个求和变量
+     * 2.获取该文件
+     * 3.获取该文件下的所有文件和文件夹，遍历数组
+     * 4.判断是文件就计算大小，并累加
+     * 5.判断是文件夹就递归调用
+     * @param args
+     */
+    public static void main(String[] args) {
+        File c = isDir();
+        System.out.println(getSize(c));
+
+    }
+    public static File isDir(){
+        Scanner sc = new Scanner(System.in);
+        while (true){
+            String line = sc.nextLine();
+            File file = new File(line);
+            if(!file.exists()){
+                System.out.println(&quot;错误的路径&quot;);
+            }
+            else if (file.isFile()){
+                System.out.println(&quot;输入的是一个文件路径请重新输入&quot;);
+            }
+            else {
+                return file;
+            }
+        }
+    }
+
+    /**
+     * 获取文件大小
+     *
+     * 1.返回值类型long
+     * 2.参数列表File dir
+     * @param a
+     * @return
+     */
+    public static long getSize(File a){
+        File[] arr = a.listFiles();
+        long size = 0;
+        for (File b:arr
+             ) {
+            if (b.isFile()){
+                 size += b.length();
+            }
+            else {
+                getSize(b);
+            }
+        }
+        return size;
+    }
+}
+</code></pre><p>###23.02_File类递归练习(删除该文件夹)</p>
+<ul>
+<li>需求:2,从键盘接收一个文件夹路径,删除该文件夹</li>
+</ul>
+<pre><code>package com.diedline.test;
+
+import java.io.File;
+
+public class Test2 {
+    /**
+     * 需求:2,从键盘接收一个文件夹路径,删除该文件夹
+     *
+     * 删除该文件夹
+     * 分析：
+     * 获取文件夹下的所有文件和和文件夹
+     * 如果是文件直接删除，是文件夹就递归调用
+     * 循环结束后将空文件夹删除
+     * @param args
+     */
+    public static void main(String[] args) {
+        File dir = Test1.isDir();                   //获取文件夹路径
+        delateFile(dir);
+
+    }
+    /**
+     * 删除文件夹
+     * 返回值 void
+     * 参数列表 File dir
+     *
+     */
+    public static void delateFile(File dir){
+        //1.获取该文件夹下所有的文件和文件夹
+        File[] arr = dir.listFiles();
+        for (File a:arr
+             ) {
+            if (a.isFile()){
+                a.delete();
+            }
+            else {
+                delateFile(a);
+            }
+        }
+        dir.delete();
+        System.out.println(&quot;已经删除完了&quot;);
+    }
+}
+</code></pre><p>###23.03_File类递归练习(拷贝)</p>
+<ul>
+<li>需求:3,从键盘接收两个文件夹路径,把其中一个文件夹中(包含内容)拷贝到另一个文件夹中</li>
+</ul>
+<pre><code>package com.diedline.test;
+
+import java.io.*;
+
+public class Test3 {
+    /**
+     * 需求：输入两个文件夹，将一个文件夹中的内容拷贝到另一个文件夹中
+     * @param args
+     */
+    public static void main(String[] args) throws IOException {
+        System.out.println(&quot;输入两个文件夹&quot;);
+        File a = Test1.isDir();
+        File b = Test1.isDir();
+        if(a.equals(b)){
+            System.out.println(&quot;目标文件夹是原文件夹的子文件夹&quot;);          //不允许自己给自己拷贝
+        }else {
+            fileCopy(a,b);
+        }
+    }
+
+    /**
+     * 分析：
+     * 1.在目标文件中创建原文件夹
+     * 2.获取该文件夹中所有的文件和文件夹，存贮在File数组中
+     * 3.遍历数组
+     * 4.如果是文件就用io流读写操作
+     * 5.如果是文件夹就递归调用
+     *
+     * 返回值类型void
+     * 参数列表 File a ,File b
+     *
+     * @param a
+     * @param b
+     */
+    public static void fileCopy(File a,File b) throws IOException {
+        File newDir = new File(b,a.getName());
+        newDir.mkdir();
+        //获取该文件夹中所有的文件和文件夹，存贮在File数组中
+        File[] subFiles = a.listFiles();
+        //遍历
+        for (File subFile:subFiles
+             ) {
+            //如果是文件就IO流读写
+            if(subFile.isFile()){
+                BufferedInputStream bis =  new BufferedInputStream(new FileInputStream(subFile));
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(newDir,subFile.getName())));
+                int c;
+                while ((c = bis.read()) != -1){
+                    bos.write(c);
+                }
+                bis.close();
+                bos.close();
+            }
+            //如果是目录就递归调用
+            else {
+                fileCopy(subFile,newDir);
+            }
+        }
+
+    }
+}
+</code></pre><p>###23.04_File类递归练习(按层级打印)</p>
+<ul>
+<li><p>需求:4,从键盘接收一个文件夹路径,把文件夹中的所有文件以及文件夹的名字按层级打印, 例如:<br>aaa是文件夹,里面有bbb.txt,ccc.txt,ddd.txt这些文件,有eee这样的文件夹,eee中有fff.txt和ggg.txt,打印出层级来<br>  aaa</p>
+<pre><code>bbb.txt
+ccc.txt
+ddd.txt
+
+eee
+    fff.txt
+    ggg.txt
+</code></pre></li>
+</ul>
+<p>code</p>
+<pre><code>package com.diedline.test;
+
+import java.io.File;
+
+public class Test4 {
+    /**
+     * aaa是文件夹,里面有bbb.txt,ccc.txt,ddd.txt这些文件,有eee这样的文件夹,eee中有fff.txt和ggg.txt,打印出层级来
+     *     aaa
+     *         bbb.txt
+     *         ccc.txt
+     *         ddd.txt
+     *
+     *         eee
+     *             fff.txt
+     *             ggg.txt
+     *
+     *
+     *     1,获取所有文件和文件夹，返回File数组
+     *     2.遍历数组
+     *     3.无论是文件还是文件夹都是直接打印
+     *     4.如果是文件夹递归调用
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        File dir = Test1.isDir();
+        printLev(dir,0);
+    }
+    public static void printLev(File dir,int lev){
+        File[] arr = dir.listFiles();
+        for (File a:arr
+             ) {
+            for (int i = 0; i &lt;= lev; i++){
+                System.out.print(&quot;\t&quot;);
+            }
+            System.out.println(a.getName());
+            if (a.isDirectory()){
+                printLev(a,lev + 1);
+            }
+        }
+    }
+}
+</code></pre><p>###23.05_递归练习(斐波那契数列)</p>
+<ul>
+<li>不死神兔</li>
+<li>故事得从西元1202年说起，话说有一位意大利青年，名叫斐波那契。</li>
+<li>在他的一部著作中提出了一个有趣的问题：假设一对刚出生的小兔一个月后就能长成大兔，再过一个月就能生下一对小兔，并且此后每个月都生一对小兔，一年内没有发生死亡，</li>
+<li>问：一对刚出生的兔子，一年内繁殖成多少对兔子?</li>
+<li>1 1 2 3 5 8 13</li>
+<li>第一个月一对小兔子                     1</li>
+<li>第二个月一对大兔子                    1</li>
+<li>第三个月一对大兔子生了一对小兔子        2</li>
+<li>第四个月一对大兔子生了一对小兔子</li>
+<li>一对小兔子长成大兔子            3</li>
+<li>第五个月两对大兔子生两对小兔子    </li>
+<li>一对小兔子长成大兔子            5</li>
+</ul>
+<pre><code>package com.diedline.test;
+
+public class Test5 {
+    /**
+     * 不死神兔
+     * 故事得从西元1202年说起，话说有一位意大利青年，名叫斐波那契。
+     * 在他的一部著作中提出了一个有趣的问题：假设一对刚出生的小兔一个月后就能长成大兔，再过一个月就能生下一对小兔，并且此后每个月都生一对小兔，一年内没有发生死亡，
+     * 问：一对刚出生的兔子，一年内繁殖成多少对兔子?
+     * 1 1 2 3 5 8 13
+     * 第一个月一对小兔子                    1
+     * 第二个月一对大兔子                    1
+     * 第三个月一对大兔子生了一对小兔子        2
+     * 第四个月一对大兔子生了一对小兔子
+     * 一对小兔子长成大兔子            3
+     * 第五个月两对大兔子生两对小兔子
+     * 一对小兔子长成大兔子            5
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+//        demo1();
+        System.out.println(fun(8));
+    }
+
+    /**
+     * 使用数组求斐波那契数列
+     */
+    public static void demo1() {
+        int[] arr = new int[8];
+        arr[0] = 1;
+        arr[1] = 1;
+        for (int i = 0; i &lt; arr.length - 2; i++) {
+            arr[i + 2] = arr[i] + arr[i + 1];
+        }
+        for (int a : arr
+        ) {
+            System.out.print(a + &quot; &quot;);
+        }
+    }
+
+    /**
+     * 使用递归求斐波那契数列
+     */
+    public static int fun(int num) {
+        if (num == 1 || num == 2) {
+            return 1;
+        } else {
+            return fun(num - 1) + fun(num - 2);
+        }
+    }
+}
+</code></pre><p>###23.06_递归练习(1000的阶乘所有零和尾部零的个数)</p>
+<ul>
+<li>需求:求出1000的阶乘所有零和尾部零的个数,不用递归做</li>
+</ul>
+<pre><code>package com.diedline.test;
+
+import java.math.BigInteger;
+
+public class Test6 {
+    /**
+     * 需求:求出1000的阶乘所有零和尾部零的个数,不用递归做
+     * @param args
+     */
+    public static void main(String[] args) {
+        String a = factorial(1000).toString();          //获取1000阶乘数据的字符串形式
+        System.out.println(&quot;所有的0的个数：&quot;+getZero(a));                             //获取尾部的0
+        getLastZero(a);
+    }
+
+    /**
+     * 获取尾部的0的数量
+     * @param a
+     */
+    public static void getLastZero(String a) {
+        StringBuilder sb = new StringBuilder(a);
+        a = sb.reverse().toString();        //链式编程
+        int count = 0;
+        for(int i = 0;i&lt;a.length();i++){
+            if(&apos;0&apos; != a.charAt(i)){
+                break;
+            }
+            else count++;
+        }
+        System.out.println(&quot;尾部0的个数：&quot;+count);
+    }
+
+    /**
+     * 计算阶乘的值
+     * @param a
+     * @return
+     */
+    public static BigInteger factorial(int a){
+       BigInteger result = new BigInteger(&quot;1&quot;);             //使用BigInteger 提高上限
+        for (int i = 1; i &lt; a+1; i++) {
+            BigInteger result2 = new BigInteger(i+&quot;&quot;);
+            result = result.multiply(result2);
+        }
+        return result;
+    }
+
+    /**
+     * 计算总共有多少个0
+     * @param a
+     * @return
+     */
+    public static int getZero(String a){
+        int count = 0;
+        for (int i = 0; i &lt;a.length() ; i++) {
+            if(&apos;0&apos; == a.charAt(i)){
+                count++;
+            }
+        }
+        return count;
+    }
+}
+</code></pre><p>###23.07_递归练习(1000的阶乘尾部零的个数)</p>
+<ul>
+<li>需求:求出1000的阶乘尾部零的个数,用递归做</li>
+</ul>
+<pre><code>package com.diedline.test;
+
+public class Test7 {
+    /**
+     *  需求：求出1000阶乘尾部0的个数，使用递归
+     *
+     *  分析 5 10 15 20 25 30 35 40 45 ....100...1000       这些数至少能出现一个0  如果是100个至少能出现20个0,1000个能至少出现200个
+     *  5*5*4 50*2 25,50能出现两个0  5*5*5 5*5*6 200/5=40
+     *  5*5*5*1  5*5*5*2 5*5*5*3 5*5*5*4 5*5*5 5*5*5*6 5*5*5*7 5*5*5*8 5*5*5*9
+     *  40/5 =  8   每五个出现一个 8%5  = 1
+     *  总和 200 + 40 + 8 +1               =  249个0
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(fun(1000));
+    }
+
+    /**
+     * 通过寻找规律来使用递归    
+     * @param num
+     * @return
+     */
+    public static int fun(int num){
+        if(num &gt;0 &amp;&amp; num&lt;5){
+            return 0;
+        }else {
+            return num/5 + fun(num /5);
+        }
+    }
+}
+</code></pre><p>###23.08_集合练习(约瑟夫环)</p>
+<ul>
+<li><p>幸运数字</p>
+<pre><code>package com.diedline.test;
+
+import java.util.ArrayList;
+
+public class Test8 {
+    /**
+     * 约瑟夫环   获取幸运数字
+     * 当一个数%3就删除  取这个集合中的最后保存下来的一个数即为幸运数字
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(getLucklyNum(8));
+    }
+    /**
+     * 获取幸运数字
+     * 1.返回值类型int
+     * 2.参数列表 int num
+     */
+    public static int getLucklyNum(int num){
+        ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();            //创建集合存储1-num的对象
+        for (int i = 1; i &lt;num + 1 ; i++) {
+            list.add(i);
+        }
+        int count = 1;                              //用来计数
+        for (int i = 0; list.size() != 1;i++){      //只要集合中数超过1就要不断减少
+            if(i==list.size()){             //如果i增长到list集合最大的索引+1的时候 重新归零
+                i = 0;
+            }
+            if (count % 3 ==0){         //如果是3的倍数就杀人
+                list.remove(i--);
+            }
+            count++;
+        }
+        return list.get(0);
+</code></pre></li>
+</ul>
+<pre><code>    }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/file递归练习-java/index.html" data-id="cjpgvh7gz002ns0qi5hrhrb40" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>23</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>7</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>21</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
