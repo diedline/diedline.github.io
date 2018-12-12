@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用udp创建一个简单聊天工具 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:type" content="website">
+<meta property="og:title" content="使用udp创建一个简单聊天工具">
+<meta property="og:url" content="https://diedline.github.io/使用udp创建一个简单聊天工具/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-12T07:30:23.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用udp创建一个简单聊天工具">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>23</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>8</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/使用udp创建一个简单聊天工具/index.html" class="article-date">
+  <time class="post-time" datetime="2018-12-12T07:23:58.000Z" itemprop="datePublished">
+    <span class="post-month">12月</span><br/>
+    <span class="post-day">12</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用udp创建一个简单聊天工具
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.socket;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.awt.*;</span><br><span class="line"><span class="keyword">import</span> java.awt.event.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> javax.swing.SwingConstants.SOUTH;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo4_GUIChat</span> <span class="keyword">extends</span> <span class="title">Frame</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextField tf;</span><br><span class="line">    <span class="keyword">private</span> Button send;</span><br><span class="line">    <span class="keyword">private</span> Button log;</span><br><span class="line">    <span class="keyword">private</span> Button clear;</span><br><span class="line">    <span class="keyword">private</span> Button shake;</span><br><span class="line">    <span class="keyword">private</span> TextArea viewText;</span><br><span class="line">    <span class="keyword">private</span> TextArea sendText;</span><br><span class="line">    <span class="keyword">private</span> DatagramSocket socket;</span><br><span class="line">    <span class="keyword">private</span> BufferedWriter bw;</span><br><span class="line">    <span class="keyword">private</span> String str;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * GUI聊天</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Demo4_GUIChat</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException, IOException </span>&#123;</span><br><span class="line">        init();</span><br><span class="line"><span class="comment">//        Thread.sleep(10);</span></span><br><span class="line">        centerPanel();</span><br><span class="line"><span class="comment">//        Thread.sleep(10);</span></span><br><span class="line">        southPanel();</span><br><span class="line">        event();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">event</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.addWindowListener(<span class="keyword">new</span> WindowAdapter() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">windowClosing</span><span class="params">(WindowEvent e)</span> </span>&#123;</span><br><span class="line">                socket.close();                             <span class="comment">//在退出虚拟机之前把socket关闭</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    bw.close();                             <span class="comment">// 将文件关闭</span></span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e1) &#123;</span><br><span class="line">                    e1.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                System.exit(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        send.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    send();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (SocketException e1) &#123;</span><br><span class="line">                    e1.printStackTrace();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e1) &#123;</span><br><span class="line">                    e1.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        log.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    logFile();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e1) &#123;</span><br><span class="line">                    e1.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        clear.addActionListener(<span class="keyword">new</span> ActionListener() &#123;                  <span class="comment">//清屏</span></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                viewText.setText(<span class="string">""</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">//震动方法</span></span><br><span class="line">        shake.addActionListener(<span class="keyword">new</span> ActionListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    send(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;-<span class="number">1</span>&#125;, tf.getText());              <span class="comment">//发送-1字节</span></span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e1) &#123;</span><br><span class="line">                    e1.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">//快捷键功能</span></span><br><span class="line">        sendText.addKeyListener(<span class="keyword">new</span> KeyAdapter() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">keyReleased</span><span class="params">(KeyEvent e)</span> </span>&#123;</span><br><span class="line"><span class="comment">//                if(e.getKeyCode() == KeyEvent.VK_ENTER &amp;&amp; e.isControlDown() )&#123;        //回车和ctrl同时按下的情况</span></span><br><span class="line">                <span class="keyword">if</span> (e.getKeyCode() == KeyEvent.VK_ENTER) &#123;                                 <span class="comment">//回车按下的情况</span></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        send();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (IOException e1) &#123;</span><br><span class="line">                        e1.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//震动功能</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">shake</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x = <span class="keyword">this</span>.getLocation().x;               <span class="comment">//获取横坐标位置</span></span><br><span class="line">        <span class="keyword">int</span> y = <span class="keyword">this</span>.getLocation().y;               <span class="comment">//获取纵坐标位置</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">this</span>.setLocation(x + <span class="number">20</span>, y + <span class="number">20</span>);</span><br><span class="line">            Thread.sleep(<span class="number">20</span>);</span><br><span class="line">            <span class="keyword">this</span>.setLocation(x + <span class="number">20</span>, y - <span class="number">20</span>);</span><br><span class="line">            Thread.sleep(<span class="number">20</span>);</span><br><span class="line">            <span class="keyword">this</span>.setLocation(x - <span class="number">20</span>, y + <span class="number">20</span>);</span><br><span class="line">            Thread.sleep(<span class="number">20</span>);</span><br><span class="line">            <span class="keyword">this</span>.setLocation(x - <span class="number">20</span>, y - <span class="number">20</span>);</span><br><span class="line">            Thread.sleep(<span class="number">20</span>);</span><br><span class="line">            <span class="keyword">this</span>.setLocation(x, y);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//历史记录功能</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">logFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        bw.flush();                             <span class="comment">//刷新缓存区</span></span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(<span class="string">"config.txt"</span>);</span><br><span class="line">        ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();           <span class="comment">//在内存中创建缓冲区</span></span><br><span class="line">        <span class="keyword">int</span> len;</span><br><span class="line">        <span class="keyword">byte</span>[] arr = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8192</span>];</span><br><span class="line">        <span class="keyword">while</span> ((len = fis.read(arr)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            baos.write(arr, <span class="number">0</span>, len);</span><br><span class="line">        &#125;</span><br><span class="line">        String str = baos.toString();               <span class="comment">//将内存中的内容转换成字符串</span></span><br><span class="line">        viewText.setText(str);                      <span class="comment">//设置聊天记录</span></span><br><span class="line">        fis.close();                                <span class="comment">//关闭内存输出流</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//重载的发送方法</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(<span class="keyword">byte</span>[] arr, String ip)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        DatagramPacket packet =                             <span class="comment">//创建数据包 设定数据，大小，和端口号</span></span><br><span class="line">                <span class="keyword">new</span> DatagramPacket(arr, arr.length, InetAddress.getByName(ip), <span class="number">9999</span>);</span><br><span class="line">        socket.send(packet);                    <span class="comment">//将数据发送出去</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//发送功能</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        String message = sendText.getText();                <span class="comment">//获取发送区域的内容</span></span><br><span class="line">        String ip = tf.getText();                           <span class="comment">//获取 ip</span></span><br><span class="line">        <span class="comment">//如果没有ip写着就将默认ip设置为255.255.255.255</span></span><br><span class="line">        ip = ip.trim().length() == <span class="number">0</span> ? <span class="string">"255.255.255.255"</span> : ip;</span><br><span class="line">        send(message.getBytes(), ip);             <span class="comment">//调用 重载的send方法</span></span><br><span class="line">        String time = getCurrentTime();         <span class="comment">//获取当前时间</span></span><br><span class="line"></span><br><span class="line">        str = time + <span class="string">"我对"</span> + (ip.equals(<span class="string">"255.255.255.255"</span>)?<span class="string">"所有人"</span>:ip) + <span class="string">"说："</span> + <span class="string">"\r\n"</span> + message + <span class="string">"\r\n"</span>;</span><br><span class="line">        bw.write(str);                      <span class="comment">//将信息写到数据库中 （现在是文本文档模拟）</span></span><br><span class="line">        viewText.append(str);               <span class="comment">//将信息添加到显示区域中</span></span><br><span class="line">        sendText.setText(<span class="keyword">null</span>);                 <span class="comment">//清除输入</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getCurrentTime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Date d = <span class="keyword">new</span> Date();                <span class="comment">//创建当前日期对象</span></span><br><span class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy年MM月dd日 HH:mm:ss"</span>);</span><br><span class="line">        <span class="keyword">return</span> sdf.format(d);                  <span class="comment">//将时间格式化</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">centerPanel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Panel center = <span class="keyword">new</span> Panel();             <span class="comment">//创建中间的panel</span></span><br><span class="line">        <span class="comment">//显示的文本区域</span></span><br><span class="line">        viewText = <span class="keyword">new</span> TextArea();</span><br><span class="line">        viewText.setEditable(<span class="keyword">false</span>);            <span class="comment">//设置成不可编辑</span></span><br><span class="line">        viewText.setBackground(Color.white);               <span class="comment">//设置背景颜色</span></span><br><span class="line">        <span class="comment">//发送的文本区域</span></span><br><span class="line">        sendText = <span class="keyword">new</span> TextArea(<span class="number">5</span>, <span class="number">1</span>);</span><br><span class="line">        center.setLayout(<span class="keyword">new</span> BorderLayout());         <span class="comment">//设置边界布局管理器</span></span><br><span class="line">        center.add(sendText, BorderLayout.SOUTH);        <span class="comment">//发送文本区域放在南边</span></span><br><span class="line">        center.add(viewText, BorderLayout.CENTER);       <span class="comment">//显示区域放在中间</span></span><br><span class="line">        <span class="keyword">this</span>.add(center, BorderLayout.CENTER);</span><br><span class="line">        sendText.setFont(<span class="keyword">new</span> Font(<span class="string">"xxx"</span>, Font.PLAIN, <span class="number">15</span>));</span><br><span class="line">        viewText.setFont(<span class="keyword">new</span> Font(<span class="string">"xxx"</span>, Font.PLAIN, <span class="number">15</span>));</span><br><span class="line">        <span class="keyword">this</span>.setVisible(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">southPanel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Panel south = <span class="keyword">new</span> Panel();              <span class="comment">//创建南边的panel</span></span><br><span class="line">        <span class="comment">//创建文本字段 存储ip地址</span></span><br><span class="line">        tf = <span class="keyword">new</span> TextField(<span class="number">15</span>);</span><br><span class="line">        tf.setText(<span class="string">"127.0.0.1"</span>);</span><br><span class="line">        <span class="comment">//创建发送按钮</span></span><br><span class="line">        send = <span class="keyword">new</span> Button(<span class="string">"发送"</span>);</span><br><span class="line">        <span class="comment">//创建记录</span></span><br><span class="line">        log = <span class="keyword">new</span> Button(<span class="string">"记录"</span>);</span><br><span class="line">        <span class="comment">//清屏</span></span><br><span class="line">        clear = <span class="keyword">new</span> Button(<span class="string">"清屏"</span>);</span><br><span class="line">        <span class="comment">//创建震动按钮</span></span><br><span class="line">        shake = <span class="keyword">new</span> Button(<span class="string">"震动"</span>);</span><br><span class="line">        south.add(tf);</span><br><span class="line">        south.add(send);</span><br><span class="line">        south.add(log);</span><br><span class="line">        south.add(clear);</span><br><span class="line">        south.add(shake);</span><br><span class="line">        <span class="keyword">this</span>.add(south, BorderLayout.SOUTH);                 <span class="comment">//将Panel放在Frame的南边</span></span><br><span class="line">        <span class="keyword">this</span>.setVisible(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setLocation(<span class="number">500</span>, <span class="number">50</span>);</span><br><span class="line">        <span class="keyword">this</span>.setSize(<span class="number">400</span>, <span class="number">600</span>);</span><br><span class="line">        socket = <span class="keyword">new</span> DatagramSocket();                   <span class="comment">//创建socket 使用随机端口号</span></span><br><span class="line">        bw = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(<span class="string">"config.txt"</span>, <span class="keyword">true</span>));         <span class="comment">//需要在尾部追加</span></span><br><span class="line">        <span class="keyword">new</span> Receive().start();                          <span class="comment">//开启接收线程</span></span><br><span class="line">        <span class="keyword">this</span>.setVisible(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//接收和发送需要同时执行 所以定义成多线程的</span></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Receive</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> String str;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                DatagramSocket socket = <span class="keyword">new</span> DatagramSocket(<span class="number">9999</span>);</span><br><span class="line">                DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8192</span>], <span class="number">8192</span>);</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                    socket.receive(packet);                         <span class="comment">//接收信息</span></span><br><span class="line">                    <span class="keyword">byte</span>[] arr = packet.getData();                  <span class="comment">//获取字节数据</span></span><br><span class="line">                    <span class="keyword">int</span> len = packet.getLength();                   <span class="comment">//获取有效的字节数据</span></span><br><span class="line">                    <span class="keyword">if</span> (arr[<span class="number">0</span>] == -<span class="number">1</span> &amp;&amp; len == <span class="number">1</span>) &#123;                   <span class="comment">//如果发过来的数组的第一个存贮的值是-1并且数组长度是-1</span></span><br><span class="line">                        shake();                                    <span class="comment">//调用震动方法</span></span><br><span class="line">                        <span class="keyword">continue</span>;                                   <span class="comment">//中止本次循环  进行下次循环 因为震动不需要使用下面的方法</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    String message = <span class="keyword">new</span> String(arr, <span class="number">0</span>, len); <span class="comment">//转换成字符串</span></span><br><span class="line">                    String time = getCurrentTime();                 <span class="comment">//获取当前时间</span></span><br><span class="line">                    String ip = packet.getAddress().getHostAddress();       <span class="comment">//获取ip地址</span></span><br><span class="line">                    str = time + <span class="string">" "</span> + ip + <span class="string">" 对我说：\r\n"</span> + message + <span class="string">"\r\n"</span>;</span><br><span class="line">                    viewText.append(str);</span><br><span class="line">                    bw.write(str);              <span class="comment">//将信息写入数据库</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SocketException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//主方法 调用构造方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Demo4_GUIChat();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/使用udp创建一个简单聊天工具/index.html" data-id="cjpkux46a002evsqifbx4v61d" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>23</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>8</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
