@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>反射和动态代理实现 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="###27.01_反射(类的加载概述和加载时机)  A:类的加载概述  当程序要使用某个类时，如果该类还未被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化。 加载  就是指将class文件读入内存，并为之创建一个Class对象。任何类被使用时系统都会建立一个Class对象。   连接  验证 是否有正确的内部结构，并和其他类协调一致 准备 负责为类的静态成员分配内存，并设">
+<meta property="og:type" content="website">
+<meta property="og:title" content="反射和动态代理实现">
+<meta property="og:url" content="https://diedline.github.io/反射和动态代理实现/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="###27.01_反射(类的加载概述和加载时机)  A:类的加载概述  当程序要使用某个类时，如果该类还未被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化。 加载  就是指将class文件读入内存，并为之创建一个Class对象。任何类被使用时系统都会建立一个Class对象。   连接  验证 是否有正确的内部结构，并和其他类协调一致 准备 负责为类的静态成员分配内存，并设">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-13T08:15:47.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="反射和动态代理实现">
+<meta name="twitter:description" content="###27.01_反射(类的加载概述和加载时机)  A:类的加载概述  当程序要使用某个类时，如果该类还未被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化。 加载  就是指将class文件读入内存，并为之创建一个Class对象。任何类被使用时系统都会建立一个Class对象。   连接  验证 是否有正确的内部结构，并和其他类协调一致 准备 负责为类的静态成员分配内存，并设">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>24</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>8</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/反射和动态代理实现/index.html" class="article-date">
+  <time class="post-time" datetime="2018-12-13T08:08:35.000Z" itemprop="datePublished">
+    <span class="post-month">12月</span><br/>
+    <span class="post-day">13</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      反射和动态代理实现
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###27.01_反射(类的加载概述和加载时机)</p>
+<ul>
+<li><p>A:类的加载概述</p>
+<ul>
+<li>当程序要使用某个类时，如果该类还未被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化。</li>
+<li>加载 <ul>
+<li>就是指将class文件读入内存，并为之创建一个Class对象。任何类被使用时系统都会建立一个Class对象。</li>
+</ul>
+</li>
+<li><p>连接</p>
+<ul>
+<li>验证 是否有正确的内部结构，并和其他类协调一致</li>
+<li>准备 负责为类的静态成员分配内存，并设置默认初始化值</li>
+<li>解析 将类的二进制数据中的符号引用替换为直接引用</li>
+</ul>
+</li>
+<li><p>初始化 就是我们以前讲过的初始化步骤</p>
+</li>
+</ul>
+</li>
+<li>B:加载时机<ul>
+<li>创建类的实例</li>
+<li>访问类的静态变量，或者为静态变量赋值</li>
+<li>调用类的静态方法</li>
+<li>使用反射方式来强制创建某个类或接口对应的java.lang.Class对象</li>
+<li>初始化某个类的子类</li>
+<li>直接使用java.exe命令来运行某个主类</li>
+</ul>
+</li>
+</ul>
+<p>###27.02_反射(类加载器的概述和分类)</p>
+<ul>
+<li>A:类加载器的概述<ul>
+<li>负责将.class文件加载到内存中，并为之生成对应的Class对象。虽然我们不需要关心类加载机制，但是了解这个机制我们就能更好的理解程序的运行。</li>
+</ul>
+</li>
+<li>B:类加载器的分类<ul>
+<li>Bootstrap ClassLoader 根类加载器</li>
+<li>Extension ClassLoader 扩展类加载器</li>
+<li>Sysetm ClassLoader 系统类加载器</li>
+</ul>
+</li>
+<li>C:类加载器的作用<ul>
+<li>Bootstrap ClassLoader 根类加载器<ul>
+<li>也被称为引导类加载器，负责Java核心类的加载</li>
+<li>比如System,String等。在JDK中JRE的lib目录下rt.jar文件中</li>
+</ul>
+</li>
+<li>Extension ClassLoader 扩展类加载器<ul>
+<li>负责JRE的扩展目录中jar包的加载。</li>
+<li>在JDK中JRE的lib目录下ext目录</li>
+</ul>
+</li>
+<li>Sysetm ClassLoader 系统类加载器<ul>
+<li>负责在JVM启动时加载来自java命令的class文件，以及classpath环境变量所指定的jar包和类路径</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>###27.03_反射(反射概述)</p>
+<ul>
+<li><p>A:反射概述</p>
+<ul>
+<li>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；</li>
+<li>对于任意一个对象，都能够调用它的任意一个方法和属性；</li>
+<li>这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。</li>
+<li>要想解剖一个类,必须先要获取到该类的字节码文件对象。</li>
+<li>而解剖使用的就是Class类中的方法，所以先要获取到每一个字节码文件对应的Class类型的对象。</li>
+</ul>
+</li>
+<li><p>B:三种方式</p>
+<ul>
+<li>a:Object类的getClass()方法,判断两个对象是否是同一个字节码文件</li>
+<li>b:静态属性class,锁对象</li>
+<li>c:Class类中静态方法forName(),读取配置文件</li>
+</ul>
+</li>
+<li>C:案例演示<ul>
+<li>获取class文件对象的三种方式     </li>
+</ul>
+</li>
+</ul>
+<p>code<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.diedline.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.diedline.bean.Person;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1_reflect</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过三种方式读取配置文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ClassNotFoundException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">        Class clazz1 = Class.forName(<span class="string">"com.diedline.bean.Person"</span>);</span><br><span class="line">        Class clazz2 = Person.class;</span><br><span class="line"></span><br><span class="line">        Person p = <span class="keyword">new</span> Person();</span><br><span class="line">        Class clazz3 = p.getClass();</span><br><span class="line">        System.out.println(clazz1 == clazz2);</span><br><span class="line">        System.out.println(clazz3 == clazz2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>###27.04_反射(Class.forName()读取配置文件举例)</p>
+<ul>
+<li>榨汁机(Juicer)榨汁的案例</li>
+<li>分别有水果(Fruit)苹果(Apple)香蕉(Banana)桔子(Orange)榨汁(squeeze)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">		<span class="keyword">package</span> com.diedline.reflect;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line">		<span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line">		<span class="keyword">import</span> java.io.FileReader;</span><br><span class="line">		<span class="keyword">import</span> java.io.IOException;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo2_Reflect</span> </span>&#123;</span><br><span class="line">		    <span class="comment">/**</span></span><br><span class="line"><span class="comment">		     * 榨汁机(Juicer)榨汁的案例</span></span><br><span class="line"><span class="comment">		     * 分别有水果(Fruit)苹果(Apple)香蕉(Banana)桔子(Orange)榨汁(squeeze)</span></span><br><span class="line"><span class="comment">		     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">		     */</span></span><br><span class="line">		    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, IOException, IllegalAccessException, InstantiationException </span>&#123;</span><br><span class="line">		        <span class="comment">/*</span></span><br><span class="line"><span class="comment">		        //没用反射，使用的是多态</span></span><br><span class="line"><span class="comment">		        Juicer c = new Juicer();                        //购买榨汁机</span></span><br><span class="line"><span class="comment">		        c.run(new Apple());                             //父类引用指向子类</span></span><br><span class="line"><span class="comment">		        c.run(new Orange());</span></span><br><span class="line"><span class="comment">		        */</span></span><br><span class="line">		        <span class="comment">//使用反射和配置文件</span></span><br><span class="line">		        BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"config.properites"</span>));</span><br><span class="line">		        Class clazz = Class.forName(br.readLine());</span><br><span class="line">		        Fruit f = (Fruit) clazz.newInstance();                              <span class="comment">//通过水果对象指向苹果对象</span></span><br><span class="line">		        Juicer j = <span class="keyword">new</span> Juicer();</span><br><span class="line">		        j.run(f);</span><br><span class="line">		    &#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="class"><span class="keyword">interface</span> <span class="title">Fruit</span></span>&#123;</span><br><span class="line">		    <span class="function"><span class="keyword">void</span> <span class="title">squeeze</span><span class="params">()</span></span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="class"><span class="keyword">class</span> <span class="title">Apple</span> <span class="keyword">implements</span> <span class="title">Fruit</span></span>&#123;</span><br><span class="line">		    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">squeeze</span><span class="params">()</span></span>&#123;</span><br><span class="line">		        System.out.println(<span class="string">"榨出一杯苹果汁"</span>);</span><br><span class="line">		    &#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="class"><span class="keyword">class</span> <span class="title">Orange</span> <span class="keyword">implements</span> <span class="title">Fruit</span></span>&#123;</span><br><span class="line">		    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">squeeze</span><span class="params">()</span></span>&#123;</span><br><span class="line">		        System.out.println(<span class="string">"榨出一杯橘子汁"</span>);</span><br><span class="line">		    &#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="class"><span class="keyword">class</span> <span class="title">Juicer</span></span>&#123;</span><br><span class="line">		    <span class="comment">/*</span></span><br><span class="line"><span class="comment">		    public void run(Apple a)&#123;</span></span><br><span class="line"><span class="comment">		        a.squeeze();</span></span><br><span class="line"><span class="comment">		    &#125;</span></span><br><span class="line"><span class="comment">		    public void run(Orange a)&#123;</span></span><br><span class="line"><span class="comment">		        a.squeeze();</span></span><br><span class="line"><span class="comment">		    &#125;*/</span></span><br><span class="line">		    <span class="comment">//改进后代码如下</span></span><br><span class="line">		    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">(Fruit fruit)</span></span>&#123;</span><br><span class="line">		        fruit.squeeze();</span><br><span class="line">		    &#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">```		</span><br><span class="line">###27.05_反射(通过反射获取带参构造方法并使用)</span><br><span class="line">* Constructor</span><br><span class="line">	* Class类的newInstance()方法是使用该类无参的构造函数创建对象, 如果一个类没有无参的构造函数, 就不能这样创建了,可以调用Class类的getConstructor(String.class,<span class="keyword">int</span>.class)方法获取一个指定的构造函数然后再调用Constructor类的newInstance(<span class="string">"张三"</span>,<span class="number">20</span>)方法创建对象</span><br><span class="line"></span><br><span class="line">```java			</span><br><span class="line">			<span class="keyword">package</span> com.diedline.reflect;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">import</span> com.diedline.bean.Person;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line">			<span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo3_Constructor</span> </span>&#123;</span><br><span class="line">			    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException </span>&#123;</span><br><span class="line">			        Class clazz = Class.forName(<span class="string">"com.diedline.bean.Person"</span>);</span><br><span class="line">			<span class="comment">//        Person p = (Person) clazz.newInstance();            //是通过 空参来构造Person</span></span><br><span class="line">			<span class="comment">//        System.out.println(p);</span></span><br><span class="line">			        Constructor c = clazz.getConstructor(String.class,<span class="keyword">int</span>.class);           <span class="comment">//获有参构造</span></span><br><span class="line">			        Person p = (Person) c.newInstance(<span class="string">"张三"</span>,<span class="number">32</span>);                 <span class="comment">//通过有参对象创建对象</span></span><br><span class="line">			        System.out.println(p);</span><br><span class="line">			    &#125;</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure>
+<p>###27.06_反射(通过反射获取成员变量并使用)</p>
+<ul>
+<li>Field<ul>
+<li>Class.getField(String)方法可以获取类中的指定字段(可见的), 如果是私有的可以用getDeclaedField(“name”)方法获取,通过set(obj, “李四”)方法可以设置指定对象上该字段的值, 如果是私有的需要先调用setAccessible(true)设置访问权限,用获取的指定的字段调用get(obj)可以获取指定对象中该字段的值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.diedline.bean.Person;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo4_Field</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Class.getField(String)方法可以获取类中的指定字段(可见的),</span></span><br><span class="line"><span class="comment">     * 如果是私有的可以用getDeclaedField("name")方法获取,通过set(obj, "李四")方法可以设置指定对象上该字段的值,</span></span><br><span class="line"><span class="comment">     * 如果是私有的需要先调用setAccessible(true)设置访问权限</span></span><br><span class="line"><span class="comment">     * ,用获取的指定的字段调用get(obj)可以获取指定对象中该字段的值</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 在反射面前所有私有的对象都能暴力获取</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException, NoSuchFieldException </span>&#123;</span><br><span class="line">        Class clazz = Class.forName(<span class="string">"com.diedline.bean.Person"</span>);</span><br><span class="line">        Constructor c = clazz.getConstructor(String.class,<span class="keyword">int</span>.class);           <span class="comment">//获有参构造</span></span><br><span class="line">        Person p = (Person) c.newInstance(<span class="string">"张三"</span>,<span class="number">32</span>);                 <span class="comment">//通过有参对象创建对象</span></span><br><span class="line">        <span class="comment">//因为姓名是私有的所以无法修改</span></span><br><span class="line"><span class="comment">//        Field f = clazz.getField("name");                                   //获取姓名字段</span></span><br><span class="line"><span class="comment">//        f.set(p,"李四");                                                           //修改姓名字段的值</span></span><br><span class="line">        Field f = clazz.getDeclaredField(<span class="string">"name"</span>);                       <span class="comment">//暴力反射获取字段</span></span><br><span class="line">        f.setAccessible(<span class="keyword">true</span>);                                                 <span class="comment">//去除私有权限</span></span><br><span class="line">        f.set(p,<span class="string">"李四"</span>);</span><br><span class="line">        System.out.println(p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###27.07_反射(通过反射获取方法并使用)</p>
+<ul>
+<li>Method<ul>
+<li>Class.getMethod(String, Class…) 和 Class.getDeclaredMethod(String, Class…)方法可以获取类中的指定方法,调用invoke(Object, Object…)可以调用该方法,Class.getMethod(“eat”) invoke(obj) Class.getMethod(“eat”,int.class) invoke(obj,10)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.diedline.bean.Person;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo5_Method</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Class.getMethod(String, Class...) 和 Class.getDeclaredMethod(String, Class...)方法可以获取类中的指定方法</span></span><br><span class="line"><span class="comment">     * ,调用invoke(Object, Object...)可以调用该方法</span></span><br><span class="line"><span class="comment">     * ,Class.getMethod("eat") invoke(obj) Class.getMethod("eat",int.class) invoke(obj,10)</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException, ClassNotFoundException </span>&#123;</span><br><span class="line">        Class clazz = Class.forName(<span class="string">"com.diedline.bean.Person"</span>);</span><br><span class="line">        Constructor c = clazz.getConstructor(String.class,<span class="keyword">int</span>.class);           <span class="comment">//获有参构造</span></span><br><span class="line">        Person p = (Person) c.newInstance(<span class="string">"张三"</span>,<span class="number">32</span>);                 <span class="comment">//通过有参对象创建对象</span></span><br><span class="line">        Method m = clazz.getMethod(<span class="string">"eat"</span>);                              <span class="comment">//获取eat方法</span></span><br><span class="line">        m.invoke(p);</span><br><span class="line"></span><br><span class="line">        Method m2 = clazz.getMethod(<span class="string">"eat"</span>, <span class="keyword">int</span>.class);                  <span class="comment">//获取有参的eat方法</span></span><br><span class="line">        m2.invoke(p,<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###27.08_反射(通过反射越过泛型检查)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">package</span> com.diedline.test;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line">	<span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line">	<span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test3</span> </span>&#123;</span><br><span class="line">	    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	     *  ArrayList&lt;Integer&gt;的一个对象，在这个集合中添加一个字符串数据，如何实现呢？</span></span><br><span class="line"><span class="comment">	     * 泛型只在编译期有效，在运行期会被擦除</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	     */</span></span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException </span>&#123;</span><br><span class="line">	        ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	        list.add(<span class="number">111</span>);</span><br><span class="line">	        list.add(<span class="number">222</span>);</span><br><span class="line">	        Class clazz = Class.forName(<span class="string">"java.util.ArrayList"</span>);</span><br><span class="line">	        Method m = clazz.getMethod(<span class="string">"add"</span>, Object.class);            <span class="comment">//获取add方法</span></span><br><span class="line">	        m.invoke(list,<span class="string">"你是sb么"</span>);                                 <span class="comment">//放入字符串</span></span><br><span class="line">	        <span class="keyword">for</span> (Integer i:list</span><br><span class="line">	             ) &#123;</span><br><span class="line">	            System.out.println(i);</span><br><span class="line">	        &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">```	      </span><br><span class="line">###27.09_反射(通过反射写一个通用的设置某个对象的某个属性为指定的值)</span><br><span class="line"></span><br><span class="line">Test</span><br><span class="line">```java	</span><br><span class="line">	<span class="keyword">package</span> com.diedline.test;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test4</span> </span>&#123;</span><br><span class="line">	    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	     * public void setProperty(Object obj, String propertyName, Object value)&#123;&#125;，</span></span><br><span class="line"><span class="comment">	     * 此方法可将obj对象中名为propertyName的属性的值设置为value。</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	     */</span></span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	        Student s = <span class="keyword">new</span> Student(<span class="string">"张"</span>,<span class="number">23</span>);</span><br><span class="line">	        System.out.println(s);</span><br><span class="line">	        Tool tool = <span class="keyword">new</span> Tool();</span><br><span class="line">	        tool.setProperty(s,<span class="string">"name"</span>,<span class="string">"李"</span>);</span><br><span class="line">	        System.out.println(s);</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;</span><br><span class="line">	    <span class="keyword">private</span> String name;</span><br><span class="line">	    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">	</span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">	        <span class="keyword">this</span>.name = name;</span><br><span class="line">	        <span class="keyword">this</span>.age = age;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    <span class="meta">@Override</span></span><br><span class="line">	    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	        <span class="keyword">return</span> <span class="string">"Student&#123;"</span> +</span><br><span class="line">	                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">	                <span class="string">", age="</span> + age +</span><br><span class="line">	                <span class="string">'&#125;'</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	        <span class="keyword">return</span> name;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">	        <span class="keyword">this</span>.name = name;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	        <span class="keyword">return</span> age;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">	        <span class="keyword">this</span>.age = age;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">Tool工具类</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">package</span> com.diedline.test;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tool</span> </span>&#123;</span><br><span class="line">	    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	     * 将obj对象中propertyName设置为value</span></span><br><span class="line"><span class="comment">	     *</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@param</span> obj</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@param</span> propertyName</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">	     */</span></span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProperty</span><span class="params">(Object obj, String propertyName, Object value)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	        Class clazz = obj.getClass();                                    <span class="comment">//获取字节码对象</span></span><br><span class="line">	        Field field = clazz.getDeclaredField(propertyName);             <span class="comment">//暴力反射获取字段</span></span><br><span class="line">	        field.setAccessible(<span class="keyword">true</span>);                                      <span class="comment">//去除权限</span></span><br><span class="line">	        field.set(obj,value);</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>###27.10_反射(练习)</p>
+<ul>
+<li>已知一个类，定义如下： <ul>
+<li>package cn.itcast.heima;</li>
+<li>public class DemoClass {<br> public void run() {<pre><code>System.out.println(&quot;welcome to heima!&quot;);
+</code></pre> }<br>}</li>
+<li>(1) 写一个Properties格式的配置文件，配置类的完整名称。 </li>
+<li>(2) 写一个程序，读取这个Properties配置文件，获得类的完整名称并加载这个类，用反射的方式运行run方法。</li>
+</ul>
+</li>
+</ul>
+<p>Test</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">package</span> com.diedline.test;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line">	<span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line">	<span class="keyword">import</span> java.io.FileReader;</span><br><span class="line">	<span class="keyword">import</span> java.io.IOException;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test5</span> </span>&#123;</span><br><span class="line">	    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	     * 已知一个类，定义如下：</span></span><br><span class="line"><span class="comment">	     * package cn.itcast.heima;</span></span><br><span class="line"><span class="comment">	     * public class DemoClass &#123; public void run() &#123; System.out.println("welcome to heima!"); &#125; &#125;</span></span><br><span class="line"><span class="comment">	     * (1) 写一个Properties格式的配置文件，配置类的完整名称。</span></span><br><span class="line"><span class="comment">	     * (2) 写一个程序，读取这个Properties配置文件，获得类的完整名称并加载这个类，用反射的方式运行run方法。</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	     */</span></span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException, IllegalAccessException, InstantiationException </span>&#123;</span><br><span class="line">	        BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"xxx.properties"</span>));           <span class="comment">//创建数据流，关联xxx.properties</span></span><br><span class="line">	        Class clazz = Class.forName(br.readLine());                     <span class="comment">//读取配置文件中类名，获取到字节码对象</span></span><br><span class="line">	        Demo_Class dc = (Demo_Class) clazz.newInstance();               <span class="comment">//通过字节码对象创建对象</span></span><br><span class="line">	        dc.run();</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	                    </span><br><span class="line">Demo_Class</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">package</span> com.diedline.test;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo_Class</span> </span>&#123;</span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; System.out.println(<span class="string">"welcome to heima!"</span>); &#125;</span><br><span class="line">	&#125;</span><br><span class="line">```             </span><br><span class="line"></span><br><span class="line">配置文件</span><br><span class="line"></span><br><span class="line">xxx.properties                    </span><br><span class="line">	</span><br><span class="line">	com.diedline.test.Demo_Class          </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">###27.11_反射(动态代理的概述和实现)</span><br><span class="line">* A:动态代理概述</span><br><span class="line">	* 代理：本来应该自己做的事情，请了别人来做，被请的人就是代理对象。</span><br><span class="line">	* 举例：春节回家买票让人代买</span><br><span class="line">	* 动态代理：在程序运行过程中产生的这个对象,而程序运行过程中产生对象其实就是我们刚才反射讲解的内容，所以，动态代理其实就是通过反射来生成一个代理</span><br><span class="line">		</span><br><span class="line">	* 在Java中java.lang.reflect包下提供了一个Proxy类和一个InvocationHandler接口，通过使用这个类和接口就可以生成动态代理对象。JDK提供的代理只能针对接口做代理。我们有更强大的代理cglib，Proxy类中的方法创建动态代理类对象</span><br><span class="line">	* <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">newProxyInstance</span><span class="params">(ClassLoader loader,Class&lt;?&gt;[] interfaces,InvocationHandler h)</span></span></span><br><span class="line"><span class="function">	* 最终会调用InvocationHandler的方法</span></span><br><span class="line"><span class="function">	* InvocationHandler Object <span class="title">invoke</span><span class="params">(Object proxy,Method method,Object[] args)</span></span></span><br><span class="line"><span class="function">                                                       </span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function">MyInvocationHandler</span></span><br><span class="line"><span class="function">```java</span></span><br><span class="line"><span class="function">	<span class="keyword">package</span> com.diedline.proxy</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line">	<span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInvocationHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">private</span> Object target;</span><br><span class="line">	</span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="title">MyInvocationHandler</span><span class="params">(Object target)</span> </span>&#123;</span><br><span class="line">	        <span class="keyword">this</span>.target = target;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    <span class="meta">@Override</span></span><br><span class="line">	    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">	        System.out.println(<span class="string">"权限校验"</span>);</span><br><span class="line">	        method.invoke(target,args);                         <span class="comment">//执行被代理target对象的方法</span></span><br><span class="line">	        System.out.println(<span class="string">"日志记录"</span>);</span><br><span class="line">	        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>student<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">package</span> com.diedline.proxy;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">	    <span class="function"><span class="keyword">void</span> <span class="title">login</span><span class="params">()</span></span>;</span><br><span class="line">	    <span class="function"><span class="keyword">void</span> <span class="title">submit</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">              </span><br><span class="line">Student_imp</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">package</span> com.diedline.proxy;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student_imp</span> <span class="keyword">implements</span> <span class="title">Student</span></span>&#123;</span><br><span class="line">	    <span class="meta">@Override</span></span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	        System.out.println(<span class="string">"登录"</span>);</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    <span class="meta">@Override</span></span><br><span class="line">	    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">submit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	        System.out.println(<span class="string">"提交"</span>);</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Test</p>
+<pre><code class="java"><span class="keyword">package</span> com.diedline.proxy;
+
+<span class="keyword">import</span> java.lang.reflect.Proxy;
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>{
+    <span class="comment">/**</span>
+<span class="comment">     *public static Object newProxyInstance(ClassLoader loader,Class&lt;?&gt;[] interfaces,InvocationHandler h)</span>
+<span class="comment">     * <span class="doctag">@param</span> args</span>
+<span class="comment">     */</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        <span class="comment">/*</span>
+<span class="comment">        User_Imp ui = new User_Imp();</span>
+<span class="comment">        ui.add();</span>
+<span class="comment">        ui.delate();</span>
+<span class="comment">        System.out.println("----------------------------------------------------------------------");</span>
+<span class="comment">        MyInvocationHandler m = new MyInvocationHandler(ui);</span>
+<span class="comment">        User u = (User) Proxy.newProxyInstance(ui.getClass().getClassLoader(),ui.getClass().getInterfaces(),m);</span>
+<span class="comment">        u.add();</span>
+<span class="comment">        u.delate();*/</span>
+        Student_imp si = <span class="keyword">new</span> Student_imp();
+        si.login();
+        si.submit();
+
+        System.out.println(<span class="string">"------------------------------------------------------------------"</span>);
+        MyInvocationHandler m = <span class="keyword">new</span> MyInvocationHandler(si);
+        Student s = (Student) Proxy.newProxyInstance(si.getClass().getClassLoader(),si.getClass().getInterfaces(),m);
+        s.login();
+        s.submit();
+    }
+}
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/反射和动态代理实现/index.html" data-id="cjpmbxl3l00375sqiaokqhosi" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>24</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>8</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
