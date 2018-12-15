@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>javaJDBC的一系列操作 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="####Mysql连接 1.步骤  加载驱动数据库驱动，不需要自己实例化 由容器自动完成 如 Class.forName(com.mysql.cj.jdbc.Driver);   2.连接数据库 这里创建了一个connect对象，可以查看API 使用connect 和DriverManager的方法  Connection connect = DriverManager.getConnection">
+<meta property="og:type" content="website">
+<meta property="og:title" content="javaJDBC的一系列操作">
+<meta property="og:url" content="https://diedline.github.io/javaJDBC的一系列操作/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="####Mysql连接 1.步骤  加载驱动数据库驱动，不需要自己实例化 由容器自动完成 如 Class.forName(com.mysql.cj.jdbc.Driver);   2.连接数据库 这里创建了一个connect对象，可以查看API 使用connect 和DriverManager的方法  Connection connect = DriverManager.getConnection">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-15T08:20:18.647Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javaJDBC的一系列操作">
+<meta name="twitter:description" content="####Mysql连接 1.步骤  加载驱动数据库驱动，不需要自己实例化 由容器自动完成 如 Class.forName(com.mysql.cj.jdbc.Driver);   2.连接数据库 这里创建了一个connect对象，可以查看API 使用connect 和DriverManager的方法  Connection connect = DriverManager.getConnection">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>25</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>8</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>24</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/javaJDBC的一系列操作/index.html" class="article-date">
+  <time class="post-time" datetime="2018-12-15T08:15:29.000Z" itemprop="datePublished">
+    <span class="post-month">12月</span><br/>
+    <span class="post-day">15</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      javaJDBC的一系列操作
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>####Mysql连接</p>
+<p>1.步骤</p>
+<ul>
+<li>加载驱动数据库驱动，不需要自己实例化 由容器自动完成</li>
+<li>如 Class.forName(com.mysql.cj.jdbc.Driver); </li>
+</ul>
+<p>2.连接数据库</p>
+<p>这里创建了一个connect对象，可以查看API 使用connect 和DriverManager的方法</p>
+<ul>
+<li>Connection connect = DriverManager.getConnection(<pre><code>DBURL,USER,PASSWORD);
+</code></pre></li>
+<li>第一个属性是url 如： jdbc:mysql://localhost:3306/myfirstdb</li>
+<li>3306端口是mysql默认绑定的端口号  myfirstdb是你创建的数据库名称</li>
+<li>USER 账户名 如：root</li>
+<li>PASSWORD 密码</li>
+</ul>
+<p>4.数据库关闭<br>connect.close();</p>
+<p>实例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"mypassword"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        System.out.println(connect);</span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>####常见错误</p>
+<p>#####1.监听服务出现错误</p>
+<p>监听的主机名称不是本机的计算机名称，也不要使用ip地址。</p>
+<p>#####2.UID错误，即你要连接的数据库的名字错误。</p>
+<p>在命令行或者其他数据库管理工具可以查看数据库和创建数据库。</p>
+<p>在JDBC操作中,在驱动数据库连接对象时采用的是工厂设计模式,而DriverManager就是一个工厂类</p>
+<p>客户端调用的时候会完全隐藏具体的实现子类     </p>
+<p>####数据库的更新和查询操作</p>
+<p>当你取得connection对象时就可以使用其中的方法createStatement 取得接口对象</p>
+<p>Statement createStatement() throws SQLException</p>
+<ul>
+<li>数据更新操作 返回的int值是返回更新行数<ul>
+<li>int executeUpdate(String sql)<pre><code>throws SQLException
+</code></pre></li>
+</ul>
+</li>
+<li><p>执行给定的SQL语句，这可能是INSERT ， UPDATE ，或DELETE语句，或者不返回任何内容，如SQL DDL语句的SQL语句。</p>
+</li>
+<li><p>数据查询操作</p>
+</li>
+<li>ResultSet executeQuery(String sql)<pre><code>throws SQLException执行给定的SQL语句，返回单个ResultSet对象。
+</code></pre></li>
+<li>返回的ResultSet跟set没有任何关系</li>
+</ul>
+<p>范例</p>
+<p>增加删更新都是直接写sql语句就行替换下例中的String sql就行。</p>
+<p>添加一条数据到数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.Statement;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"xxxx"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        System.out.println(connect);</span><br><span class="line">        <span class="comment">//3.进行数据库的数据操作</span></span><br><span class="line">        Statement statement = connect.createStatement();</span><br><span class="line">        <span class="comment">//在编写sql语句时，如果太长需要换行，那么请一定要前后加上空格</span></span><br><span class="line">        String sql = <span class="string">"insert into student ( name ,register_date) "</span> +</span><br><span class="line">                <span class="string">" value(\"张三\",\"2018-12-13\");"</span>;</span><br><span class="line">        <span class="keyword">int</span> len = statement.executeUpdate(sql);         <span class="comment">//执行sql返回更新的数据行数</span></span><br><span class="line">        System.out.println(<span class="string">"受影响的数据行:"</span>+len);</span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####数据查询</p>
+<p>使用 SELECT进行查询的时候实际上会将所有的查询结果返回给用户显示，而显示的基本形式就是表的形式，可是如果要进行我们的查询，这些查询的结果应该返回给程序，由用户来进行处理，那么就必须有一种类型可以接收所有的返回结果，在数据库中虽然可能有几百张数据表，但是整个数据表的组成类型都是固定的，所以在ResultSet设计的过程之中是按照数据类型</p>
+<p>在ResultSet接口里面定义了如下的方法  查看ResultSet接口其中的方法就能实现查询</p>
+<ul>
+<li>向下移动指针并判断是否有数据行Reult.next<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.Statement;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"xxxxx"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        System.out.println(connect);</span><br><span class="line">        <span class="comment">//3.进行数据库的数据操作</span></span><br><span class="line">        Statement statement = connect.createStatement();</span><br><span class="line">        <span class="comment">//在编写sql语句时，如果太长需要换行，那么请一定要前后加上空格</span></span><br><span class="line">        String sql = <span class="string">"SELECT name FROM student;"</span>;</span><br><span class="line">        ResultSet result = statement.executeQuery(sql);</span><br><span class="line">        <span class="keyword">while</span> (result.next())&#123;      <span class="comment">//循环</span></span><br><span class="line">            String name = result.getString(<span class="string">"name"</span>);</span><br><span class="line">            System.out.println(<span class="string">"姓名："</span> + name);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>既然已经可以执行查询了，那么就可以继续添加实现各种复杂查询，例如限定查询。分组统计查询。子查询。</p>
+<p>注意：</p>
+<p>1.使用 getxxx()取出列数据的时候，强烈建议按照给定的数据取</p>
+<p>2.每一个列数数据只能按照顺序取一次</p>
+<p>以上的代码在取列内容的时候重复编写了列名称，这一点实际上可以忽略，因为在写sql语句的时候就已经明确给出了列名称</p>
+<p>####总结</p>
+<p>Statement接口的执行步骤几乎都是固定的，并且最方便的是可以直接执行sql的字符串操作，但是任何的开发都不可能去使用Statement。以后都要去使用PreparedStatement接口。</p>
+<p>####Statement接口问题<br>虽然jdbc中提供了Statement接口，但是从实际来讲，Statement接口中存在有严重的操作缺陷，是不可能在实际的工作中使用的，</p>
+<p>如果出现SQLSyntax错误就去查找你的Sql语句是否出错</p>
+<p>StateMent如果想要变成灵活的应用，那么必须采用拼凑字符串的形式完成如果输入的内容存在有“’”，那么整个sql就会出错，也就是说StateMent的执行模式不适合一些敏感字符。</p>
+<p>####PreparedStatment操作</p>
+<p>Statment的问题在于它需要一个完整的字符串来定义需要使用的SQL语句，所有导致在使用中需要进行大量的SQL拼凑PreparedStatment操作和Statment不同的地方在于，它执行的是一个完整的具备特殊占位标记的SQL语句，并且可以动态的设置所需要的数据。</p>
+<p>PreparedStatment属于Statment的子接口，但是如果想要取得这个子接口的实例对象Connection接口所提供的方法PreparedStatement prepareStatement(String sql)<br>                            throws SQLException </p>
+<p>注意这个方法是prepare 不是prepared ，里面在执行的时候需要传入sql语句，这个sql是具备特殊标记的完整sql，但是此时没有内容，当取得PreparedStatement接口对象时需要使用一系列的setXXX()方法用于为所使用的标记设置具体内容，而后对于执行操作，有两个方法支持</p>
+<ul>
+<li>更新操作 executeUpdate()     不接收sql语句</li>
+<li>查询操作 executeQuery()    同不接收</li>
+<li>返回值都是ResultSet</li>
+</ul>
+<p>注意当使用了PreparedStatement接口操作时，最需要注意的是里面的setDate方法，因为此方法使用的是java.sql.Date </p>
+<p>在java.util.Date类下有三个子类都是在java.sql包中的：</p>
+<ul>
+<li>java.sql.Date: 描述的是日期</li>
+<li>java.sql.Time：描述的是时间</li>
+<li>java.sql.TimeStamp： 描述的是时间戳（日期和时间）</li>
+</ul>
+<p>如果要将java.util.Date变成java.sql.Date(Time TimeStamp) 只能依靠long 完成</p>
+<ul>
+<li>java.util.Date： public long getTime() 可以将Date变为long</li>
+</ul>
+<p>范例：</p>
+<p>改进数据增加</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.crypto.Data;</span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.Statement;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"xxxxx"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String name1  = <span class="string">"隔壁老王"</span>;</span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        System.out.println(connect);</span><br><span class="line">        <span class="comment">//在编写sql语句时，如果太长需要换行，那么请一定要前后加上空格</span></span><br><span class="line">        String sql = <span class="string">"insert into student ( name ,register_date) "</span> +</span><br><span class="line">                <span class="string">" values(?,?);"</span>;</span><br><span class="line">        <span class="comment">//3.进行数据库的数据操作,执行了完整的sql语句</span></span><br><span class="line">        PreparedStatement preparedStatement = connect.prepareStatement(sql);</span><br><span class="line">        <span class="comment">//下面是按照?对应的顺序写sql语句  默认是从1开始的</span></span><br><span class="line">        preparedStatement.setString(<span class="number">1</span>,name1);</span><br><span class="line">        <span class="comment">//使用sql.date中的构造传入util.date返回的long值</span></span><br><span class="line">        preparedStatement.setDate(<span class="number">2</span>,<span class="keyword">new</span> java.sql.Date(date.getTime()));</span><br><span class="line">        <span class="keyword">int</span> len = preparedStatement.executeUpdate();         <span class="comment">//执行sql返回更新的数据行数</span></span><br><span class="line">        System.out.println(<span class="string">"受影响的数据行:"</span>+len);</span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更新删除操作和增加操作的区别不大</p>
+<p>整个数据库操作里面更新操作几乎都是固定的模式，但是查询操作是最复杂的。</p>
+<p>范例：</p>
+<p>1.查询所有数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.crypto.Data;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"xxxx"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String name1  = <span class="string">"隔壁老王"</span>;</span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        System.out.println(connect);</span><br><span class="line">        <span class="comment">//在编写sql语句时，如果太长需要换行，那么请一定要前后加上空格</span></span><br><span class="line">        String sql = <span class="string">"SELECT id,name,register_date FROM student ORDER BY id;"</span>;</span><br><span class="line">        <span class="comment">//3.进行数据库的数据操作,执行了完整的sql语句</span></span><br><span class="line">        PreparedStatement preparedStatement = connect.prepareStatement(sql);</span><br><span class="line">        <span class="comment">//下面是按照?对应的顺序写sql语句  默认是从1开始的</span></span><br><span class="line">        ResultSet resultSet = preparedStatement.executeQuery();</span><br><span class="line">        <span class="keyword">while</span> (resultSet.next())&#123;</span><br><span class="line">            <span class="keyword">int</span> nid = resultSet.getInt(<span class="number">1</span>) ;</span><br><span class="line">            String name = resultSet.getString(<span class="number">2</span>);</span><br><span class="line">            Date date1 = resultSet.getDate(<span class="number">3</span>);</span><br><span class="line">            System.out.println(nid+<span class="string">","</span>+name+<span class="string">","</span>+date1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.模糊查询</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.crypto.Data;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"xxxxx"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String name1  = <span class="string">"隔壁老王"</span>;</span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        String keyWord = <span class="string">"wch"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        System.out.println(connect);</span><br><span class="line">        <span class="comment">//在编写sql语句时，如果太长需要换行，那么请一定要前后加上空格</span></span><br><span class="line">        String sql = <span class="string">"SELECT id,name,register_date FROM student WHERE name LIKE ?;"</span>;</span><br><span class="line">        <span class="comment">//3.进行数据库的数据操作,执行了完整的sql语句</span></span><br><span class="line">        PreparedStatement preparedStatement = connect.prepareStatement(sql);</span><br><span class="line">        <span class="comment">//下面是按照?对应的顺序写sql语句  默认是从1开始的</span></span><br><span class="line">        preparedStatement.setString(<span class="number">1</span>,<span class="string">"%"</span>+keyWord+<span class="string">"%"</span>);</span><br><span class="line">        ResultSet resultSet = preparedStatement.executeQuery();</span><br><span class="line">        <span class="keyword">while</span> (resultSet.next())&#123;</span><br><span class="line">            <span class="keyword">int</span> nid = resultSet.getInt(<span class="number">1</span>) ;</span><br><span class="line">            String name = resultSet.getString(<span class="number">2</span>);</span><br><span class="line">            Date date1 = resultSet.getDate(<span class="number">3</span>);</span><br><span class="line">            System.out.println(nid+<span class="string">","</span>+name+<span class="string">","</span>+date1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.统计模糊查询的数据量使用COUNT()函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.crypto.Data;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"xxxxx"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> currentPage = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> lineSize = <span class="number">3</span>;</span><br><span class="line">        String name1  = <span class="string">"隔壁老王"</span>;</span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        String keyWord = <span class="string">"wch"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        System.out.println(connect);</span><br><span class="line">        <span class="comment">//在编写sql语句时，如果太长需要换行，那么请一定要前后加上空格</span></span><br><span class="line">        String sql = <span class="string">"SELECT COUNT(id) FROM student where name LIKE ?"</span>;</span><br><span class="line">        <span class="comment">//3.进行数据库的数据操作,执行了完整的sql语句</span></span><br><span class="line">        PreparedStatement preparedStatement = connect.prepareStatement(sql);</span><br><span class="line">        <span class="comment">//下面是按照?对应的顺序写sql语句  默认是从1开始的</span></span><br><span class="line">        preparedStatement.setString(<span class="number">1</span>,<span class="string">"%"</span>+keyWord+<span class="string">"%"</span>);</span><br><span class="line">        ResultSet resultSet = preparedStatement.executeQuery();</span><br><span class="line">        <span class="keyword">if</span> (resultSet.next())&#123;          <span class="comment">//因为只返回一行数据</span></span><br><span class="line">            <span class="keyword">int</span> count = resultSet.getInt(<span class="number">1</span>);</span><br><span class="line">            System.out.println(count);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结：</p>
+<p>在以后任何的开发都是使用的是PreparedStatement接口</p>
+<p>####批处理</p>
+<p>批处理：一次性向数据库发出多条操作命令，一起执行。</p>
+<p>Statement 中批处理的方法</p>
+<p>添加批处理命令</p>
+<p>void addBatch()<br>       throws SQLException</p>
+<p>执行批处理命令</p>
+<p>int[] executeBatch()<br>            throws SQLException</p>
+<p>返回的数组是包含了所有批处理语句的执行结果，返回的是每条语句影响的行数；</p>
+<p>执行批处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.crypto.Data;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"xxxx"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> currentPage = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> lineSize = <span class="number">3</span>;</span><br><span class="line">        String name1  = <span class="string">"隔壁老王"</span>;</span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        String date1 = date.toString();</span><br><span class="line">        String keyWord = <span class="string">"wch"</span>;</span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        Statement statement = connect.createStatement();</span><br><span class="line">        statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (7,'测试a','2018-12-15')"</span>);</span><br><span class="line">        statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (8,'测试b','2018-12-15')"</span>);</span><br><span class="line">        statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (9,'测试c','2018-12-15')"</span>);</span><br><span class="line">        statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (10,'测试d','2018-12-15')"</span>);</span><br><span class="line">        statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (11,'测试e','2018-12-15')"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] result = statement.executeBatch();            <span class="comment">//执行批处理</span></span><br><span class="line">        System.out.println(Arrays.toString(result));</span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果假设以上的五条批处理属于一组关联的操作，如果中间有一条语句执行失败，其他的不应该成功。<br>在批处理操作过程中，由于jdbc具有自动的事务提交，所以一旦中间的语句出现问题，那么结果就是错误前的语句正常执行，错误后的语句不执行。</p>
+<p>所以可以使用jdbc的提供的事务操作来进行手工的事务控制，所有的操作方法都在Connection接口中定义</p>
+<ul>
+<li>事务提交  void commit()<br>   throws SQLException</li>
+<li>事务回滚 void rollback()<pre><code>throws SQLException
+</code></pre></li>
+<li>设置是否为自动提交void setAutoCommit(boolean autoCommit)<pre><code>throws SQLException
+</code></pre></li>
+</ul>
+<p>例子：</p>
+<p>利用事务处理出现异常进行回滚</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.diedline.mysql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.crypto.Data;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBDRIVER = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DBURL = <span class="string">"jdbc:mysql://localhost:3306/myfirstdb?"</span> +</span><br><span class="line">            <span class="string">"useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true"</span> +</span><br><span class="line">            <span class="string">"&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PASSWORD = <span class="string">"xxxx"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> currentPage = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> lineSize = <span class="number">3</span>;</span><br><span class="line">        String name1  = <span class="string">"隔壁老王"</span>;</span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        String date1 = date.toString();</span><br><span class="line">        String keyWord = <span class="string">"wch"</span>;</span><br><span class="line">        <span class="comment">//1.加载驱动数据库驱动，不需要自己实例化 由容器自动完成</span></span><br><span class="line">        Class.forName(DBDRIVER);</span><br><span class="line">        <span class="comment">//2.连接数据库</span></span><br><span class="line">        Connection connect = DriverManager.getConnection(</span><br><span class="line">                DBURL,USER,PASSWORD);</span><br><span class="line">        Statement statement = connect.createStatement();</span><br><span class="line">        connect.setAutoCommit(<span class="keyword">false</span>);       <span class="comment">//取消自动提交</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (7,'测试a','2018-12-15')"</span>);</span><br><span class="line">            statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (8,'测试b','2018-12-15')"</span>);</span><br><span class="line">            statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (9,'测试c','2018-12-15')"</span>);</span><br><span class="line">            statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (10,'测试d','2018-12-15')"</span>);</span><br><span class="line">            statement.addBatch(<span class="string">"INSERT INTO student(id,name,register_date) values (11,'测试e','2018-12-15')"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span>[] result = statement.executeBatch();            <span class="comment">//执行批处理</span></span><br><span class="line">            System.out.println(Arrays.toString(result));</span><br><span class="line">            connect.commit();                                   <span class="comment">//如果没有错误进行提交</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            connect.rollback();                 <span class="comment">//如果出现异常，进行回滚</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//4.关闭数据库</span></span><br><span class="line">        connect.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上只是演示下如何手工处理事务，而在实际事务中这些操作意义不大。意义不大指的是日后的容器会帮我们自动处理。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/javaJDBC的一系列操作/index.html" data-id="cjpp70a7e001620qi7n87li67" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>25</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>8</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>24</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
