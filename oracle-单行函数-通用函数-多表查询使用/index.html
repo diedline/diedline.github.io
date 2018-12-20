@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Died line 的博客">
 <meta property="og:description" content="####sql语句的注意点  sql语言不区分大小写 关键字不能被缩写也不能被分行 各子句一般要分行写 使用缩进提高语句可读性。  ####基本的sql SELECT语句 123456789101112desc employees; 		// 获取employees的表结构 这个是sql plus中才有的SELECT * from employees;  //查询表中所有数据SELECT EMPL">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-20T16:01:52.542Z">
+<meta property="og:updated_time" content="2018-12-20T16:14:54.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单行函数-通用函数-多表查询使用">
 <meta name="twitter:description" content="####sql语句的注意点  sql语言不区分大小写 关键字不能被缩写也不能被分行 各子句一般要分行写 使用缩进提高语句可读性。  ####基本的sql SELECT语句 123456789101112desc employees; 		// 获取employees的表结构 这个是sql plus中才有的SELECT * from employees;  //查询表中所有数据SELECT EMPL">
@@ -138,12 +138,8 @@ Gietz`s job is AC_ACCOUNT
 <p>######第二种转换方法（推荐）注意当你格式化时间的时候如果前面有0必须加<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> last_name,hire_date</span><br><span class="line"><span class="keyword">from</span> employees</span><br><span class="line"><span class="comment">--where hire_date = '7-6月-1994'</span></span><br><span class="line"><span class="keyword">where</span> to_char(hire_date,<span class="string">'yyyy-mm-dd'</span>) = <span class="string">'1994-06-07'</span></span><br></pre></td></tr></table></figure></p>
 <p>####过滤条件的操作符</p>
 <p>= 等于(不是==)</p>
-<blockquote>
-<p>大于</p>
-</blockquote>
-<blockquote>
-<p>= 大于等于</p>
-</blockquote>
+<p>> 大于</p>
+<p>>= 大于等于</p>
 <p>&lt; 小于</p>
 <p>&lt;= 小于等于</p>
 <p>&lt;&gt; 不等于 （也可以使用!=）</p>
