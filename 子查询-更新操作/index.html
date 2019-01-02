@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>子查询_更新操作 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##子查询 1.使用子查询 查询谁的工资比 Abel高 -- 谁的工资比 Abel高 select salary,last_name from employees where  salary&amp;gt;(select salary                from employees                where last_name = &amp;apos;Abel&amp;apos;) 2.查询员">
+<meta property="og:type" content="website">
+<meta property="og:title" content="子查询_更新操作">
+<meta property="og:url" content="https://diedline.github.io/子查询-更新操作/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="##子查询 1.使用子查询 查询谁的工资比 Abel高 -- 谁的工资比 Abel高 select salary,last_name from employees where  salary&amp;gt;(select salary                from employees                where last_name = &amp;apos;Abel&amp;apos;) 2.查询员">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-02T15:00:23.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="子查询_更新操作">
+<meta name="twitter:description" content="##子查询 1.使用子查询 查询谁的工资比 Abel高 -- 谁的工资比 Abel高 select salary,last_name from employees where  salary&amp;gt;(select salary                from employees                where last_name = &amp;apos;Abel&amp;apos;) 2.查询员">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>27</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/子查询-更新操作/index.html" class="article-date">
+  <time class="post-time" datetime="2019-01-02T14:57:19.000Z" itemprop="datePublished">
+    <span class="post-month">1月</span><br/>
+    <span class="post-day">02</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      子查询_更新操作
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##子查询</p>
+<p>1.使用子查询 查询谁的工资比 Abel高</p>
+<pre><code>-- 谁的工资比 Abel高
+select salary,last_name
+from employees
+where  salary&gt;(select salary
+               from employees
+               where last_name = &apos;Abel&apos;)
+</code></pre><p>2.查询员工名为chen的manager的信息</p>
+<pre><code>-- 查询员工名为chen的manager的信息
+select employee_id,last_name,email
+from employees
+where employee_id = (select manager_id 
+from employees
+where lower(last_name) = &apos;chen&apos;
+)
+</code></pre><p>3.返回job_id与141号员工相同,salary 比 143号员工多的员工姓名，job_id和工资</p>
+<pre><code>-- 返回job_id与141号员工相同,salary 比 143号员工多的员工姓名，job_id和工资
+select last_name,job_id,salary
+from employees
+where job_id = (select job_id
+                from employees 
+                where employee_id = 141) 
+and salary &gt; (select salary
+             from employees
+             where employee_id = 143)
+</code></pre><p>4.返回工资最少的 last_name,job_id,salary</p>
+<pre><code>-- 返回工资最少的 last_name,job_id,salary
+select last_name,job_id,salary
+from employees
+where salary = (select min(salary)
+               from employees)
+</code></pre><p>5.查询最低工资大于50号部门的最低工资的部门id和它的最低工资</p>
+<pre><code>-- 查询最低工资大于50号部门的最低工资的部门id和它的最低工资
+select department_id,min(salary)
+from employees
+group by department_id
+having min(salary) &gt; (select min(salary)
+               from employees
+               where department_id = 50)
+</code></pre><ul>
+<li><p>注意当子查询中的内容返回是空时，总查询不会报错，并且不会返回任何结果 </p>
+</li>
+<li><p>使用any 关键字来查询任意值，all所有的都满足</p>
+</li>
+</ul>
+<p>6.返回其他部门中比job_id为’IT_PROG’部门任一工资低的员工的员工号，姓名，job_id 以及salary</p>
+<pre><code>-- 返回其他部门中比job_id为&apos;IT_PROG&apos;部门任一工资低的
+--员工的员工号，姓名，job_id 以及salary
+select employee_id,last_name,job_id,salary
+from employees
+where job_id &lt;&gt; &apos;IT_PROG&apos;  and salary &lt; any (
+                                              select salary
+                                              from employees
+                                              where job_id = &apos;IT_PROG&apos;
+      )
+</code></pre><p>####子查询练习</p>
+<p>1.查询工资最低的员工信息</p>
+<pre><code>-- 查询工资最低的员工信息
+select last_name,salary
+from employees
+where salary = (select min(salary)
+             from employees)
+</code></pre><p>2.查询平均工资最低的部门信息</p>
+<pre><code>-- 查询平均工资最低的部门信息
+--1.查询各部门的平均工资
+--2.找到各部门中工资最低的
+--3.哪个部门平均 工资 等于2的结果
+--4.查询此部门的部门信息
+
+
+select * 
+from departments
+where department_id = (
+select department_id
+from employees
+having avg(salary) = (
+               select min(avg(salary))
+               from employees
+               group by department_id
+               )        
+group by department_id
+) 
+</code></pre><p>3.查询平均工资最低的部门信息，和它的平均工资</p>
+<pre><code>select d.* ,(select avg(salary) from employees where department_id = d.department_id)
+from departments d
+where department_id = (
+select department_id
+from employees
+having avg(salary) = (
+               select min(avg(salary))
+               from employees
+               group by department_id
+               )        
+group by department_id
+)
+</code></pre><p>4.查询平均工资最高的job的信息</p>
+<pre><code>-- 查询平均工资最高的job的信息
+--1.按 job 分组查询 最高的平均工资
+--2.查询得到哪个job_id的平均工资等于1，得到的值 
+--3.从 jobs 表中返回job_id对应项的信息
+
+
+
+select * from jobs
+-- 注意这里可能会有多个值，所以要使用in
+where job_id in (
+    select job_id
+    from employees
+    having avg(salary) = (
+            select max(avg(salary))
+            from employees
+            group by job_id
+    )
+    group by job_id
+)
+</code></pre><p>5.查询平均工资高于公司的平均工资的部门</p>
+<pre><code>-- 查询平均工资高于公司的平均工资的部门
+select department_id,avg(salary)
+from employees
+group by department_id 
+having avg(salary) &gt; (select avg(salary)
+                     from employees
+                     )
+</code></pre><p>6.查询出公司中所有 manager 的详细信息</p>
+<pre><code>-- 查询出公司中所有 manager 的详细信息
+select * from employees
+where employee_id in(
+                    select manager_id
+                    from employees
+)
+</code></pre><p>7.查询出各个部门中 最高工资中最低的那个部门的 最低工资是多少</p>
+<pre><code>-- 查询出各个部门中 最高工资中最低的那个部门的 最低工资是多少
+-- 1.查询所有最高工资最低的工资
+-- 2. 根据这个工资查询部门号
+
+
+
+select department_id 
+from employees
+having max(salary) = (
+                     select min(max(salary))
+                     from employees
+                     group by department_id
+)
+group by department_id
+</code></pre><p>8.查询平均工资最高的部门的manager 的 详细信息</p>
+<pre><code>-- 查询平均工资最高的部门的manager 的 详细信息
+-- 1.查询出平均工资最高的部门
+-- 2.根据部门id来查询下面所有的manager_id
+-- 3.根据manager_id来查找所有的信息
+select last_name,employee_id,email,salary
+from employees
+where (employee_id in (
+select distinct manager_id
+from employees
+where department_id = (
+                      select department_id
+                      from employees
+                      having avg(salary) in (
+                                           select max(avg(salary))
+                                           from employees
+                                           group by department_id
+
+                      )
+                      group by department_id
+)
+)
+)
+</code></pre><p>9.查询1999年来公司的员工中最高工资的那个员工信息</p>
+<pre><code>-- 查询1999年来公司的员工中最高工资的那个员工信息
+
+select *
+from employees
+where salary in (                  
+                select max(salary)
+                from employees
+                where employee_id in (               
+                select employee_id
+                from employees
+                where to_char(hire_date,&apos;yyyy&apos;) =&apos;1999&apos;  
+                )
+
+)
+</code></pre><p>10.查询和Zlotkey相同部门的员工姓名和雇用日期</p>
+<pre><code>--查询和Zlotkey相同部门的员工姓名和雇用日期
+select last_name,hire_date
+from employees
+where department_id = (
+                      select department_id
+                      from employees
+                      where lower(last_name) = &apos;zlotkey&apos;
+)
+and lower(last_name) != &apos;zlotkey&apos;
+</code></pre><p>11.查询工资比公司平均工资高的员工的员工号，姓名和工资。</p>
+<pre><code>--2.查询工资比公司平均工资高的员工的员工号，姓名和工资。
+select employee_id,last_name,salary
+from employees
+where salary &gt;  (
+               select avg(salary)
+               from employees
+
+)
+</code></pre><p>12.查询各部门中工资比本部门平均工资高的员工的员工号, 姓名和工资</p>
+<pre><code>select employee_id,last_name,salary
+from employees e1
+where salary &gt; (
+               select avg(salary)
+               from employees e2
+               where e1.department_id = e2.department_id
+               group by department_id
+)
+</code></pre><p>13.查询和姓名中包含字母u的员工在相同部门的员工的员工号和姓名</p>
+<pre><code>--查询和姓名中包含字母u的员工在相同部门的员工的员工号和姓名
+
+select employee_id,last_name
+from employees
+where department_id in (
+                       select department_id
+                       from employees
+                       where last_name like &apos;%u%&apos;
+)
+and last_name not like &apos;%u%&apos;
+</code></pre><p>14.查询在部门的location_id为1700的部门工作的员工的员工号</p>
+<pre><code>--查询在部门的location_id为1700的部门工作的员工的员工号
+
+
+select employee_id
+from employees
+where department_id in (
+                      select department_id
+                      from departments
+                      where location_id = 1700
+
+)
+</code></pre><p>15.查询管理者是King的员工姓名和工资</p>
+<pre><code>--查询管理者是King的员工姓名和工资
+select last_name,salary
+from employees where manager_id in (
+                                  select employee_id
+                                  from employees where last_name = &apos;King&apos;
+) 
+</code></pre><p>####管理和创建表</p>
+<h4 id="DML用于查询和修改数据"><a href="#DML用于查询和修改数据" class="headerlink" title="DML用于查询和修改数据"></a>DML用于查询和修改数据</h4><h4 id="DDL-定义数据库的结构，创建修改删除数据库对象"><a href="#DDL-定义数据库的结构，创建修改删除数据库对象" class="headerlink" title="DDL 定义数据库的结构，创建修改删除数据库对象"></a>DDL 定义数据库的结构，创建修改删除数据库对象</h4><h4 id="DCL-用于控制数据库的访问"><a href="#DCL-用于控制数据库的访问" class="headerlink" title="DCL 用于控制数据库的访问"></a>DCL 用于控制数据库的访问</h4><p>#####查询用户定义的表</p>
+<p>SELECT table_name<br>From user_tables;</p>
+<p>#####查看用户定义的数据库对象<br>SELECT DISTINCT object_type<br>FROM USER_OBJECTS;</p>
+<p>#####查看用户定义的表，视图，同义词和序列<br>SELECT * FROM USER_CATALOG</p>
+<p>####命名规则</p>
+<ul>
+<li>必须以字母开头</li>
+<li>必须在1-30个字符之间</li>
+<li>只能包含a-z A-Z 0-9 _ $ #</li>
+<li>必须不能和用户定义的其他对象重名</li>
+<li>必须不能是oracle的保留字</li>
+</ul>
+<p>####创建表<br>1.第一种方式创建表（白手起家）</p>
+<p>oracle使用的是varchar2 mysql使用varchar</p>
+<pre><code>create table emp1(
+id number(10),
+name varchar2(20),
+salary number(10,2),
+hire_date date
+)
+</code></pre><p>2.创建表的第二种方式（依托于现有的表 ）</p>
+<p>获取employees的三列值</p>
+<pre><code>CREATE table emp2 
+AS
+SELECT employee_id id,last_name name,hire_date,salary
+FROM employees
+</code></pre><p>只获取employees的 80 号部门的数据</p>
+<pre><code>CREATE TABLE emp3
+AS
+SELECT employee_id id,last_name name,hire_date,salary
+from employees
+where department_id = 80
+</code></pre><p>如果想不获取数据直接就让过滤条件不满足就行</p>
+<pre><code>CREATE TABLE emp4
+AS
+SELECT employee_id id,last_name name,hire_date,salary
+from employees
+where 1=2
+</code></pre><p>####数据类型</p>
+<ul>
+<li>VARCHAR2(size)                          可变长字符串数据</li>
+<li>CHAR(size)                            定长字符串数据</li>
+<li>NUMBER(p,s)                            可变长数值数据</li>
+<li>DATE                                    日期           </li>
+<li>LONG                                    可变长字符数据，最大达到2G</li>
+<li>CLOB                                    字符数据，最大可达到4G</li>
+<li>BLOB                                    二进制数据最大达到4G</li>
+<li>BFILE                                    存贮外部文件的二进制数据，最大可以达到4G</li>
+<li>ROWID                                    行地址</li>
+</ul>
+<p>####为现有的表 添加字段 修改字段 删除列 重命名列</p>
+<ul>
+<li>注意当你表中有数据时，如果修改的的字段属性变成其他类型是不行的，当你修改的字段属性只是修改的字段长度是只会对后面加入的数据有影响。</li>
+</ul>
+<p>为emp1添加 email 字段</p>
+<pre><code>--创建 表   表名 create table table_name
+alter table emp1
+add(email varchar2(20))
+</code></pre><p>将emp1的id字段 修改成15</p>
+<pre><code>alter table emp1
+modify (id number(15))
+</code></pre><p>将emp1的salary字段修改成20,2位小数 默认值200</p>
+<pre><code>alter table emp1
+modify (salary number(20,2)  default 200)
+</code></pre><p>将emp1表中的 email 列删除</p>
+<pre><code>alter table emp1
+drop column email
+</code></pre><p>将emp1中的表 salary列名修改成 sal</p>
+<pre><code>alter table emp1
+rename column salary to sal
+</code></pre><p>回滚，只有增删改才能回滚，修改表结构不能回滚因为已经自动提交了</p>
+<pre><code>rollback;
+</code></pre><p>####清空表中的内容</p>
+<p>第一种方式清空 删除表中的所有数据释放空间（不可回滚）</p>
+<pre><code>truncate table emp3;
+</code></pre><p>第二种方式清空（可以回滚）</p>
+<pre><code>delete from emp2
+</code></pre><p>重命名表</p>
+<pre><code>rename emp2 to employees2;
+</code></pre><p>1.创建表dept1</p>
+<pre><code>name    Null?    type
+id        Number(7)
+name        Varchar2(25)
+</code></pre><p>sql语句</p>
+<pre><code>create table dept(
+id number(7),
+name varchar2(25)
+)
+</code></pre><p>2.将表departments中的数据插入新表dept2中</p>
+<pre><code>create table dept2
+as select * from departments
+</code></pre><p>3.创建表emp5</p>
+<pre><code>name    Null?    type
+id                Number(7)
+First_name        Varchar2(25)
+Last_name        Varchar2(25)
+Dept_id            Number(7)
+</code></pre><p>sql 语句</p>
+<pre><code>create table emp5(
+id number(7),
+First_name varchar2(25),
+Last_name varchar2(25),
+Dept_id number(7)
+)
+</code></pre><p>4.将列Last_name的长度增加到50</p>
+<pre><code>alter table emp5
+modify (last_name varchar2(50))
+</code></pre><p>5.根据表employees创建employees2</p>
+<pre><code>create table employees2
+as select * from employees
+</code></pre><p>6.删除表emp5</p>
+<pre><code>--6.删除表emp5
+drop table emp5
+</code></pre><p>7.将表employees2重命名为emp5</p>
+<pre><code>--7.将表employees2重命名为emp5
+rename employeess2 to emp5
+</code></pre><p>8.在表dept和emp5中添加新列test_column，并检查所作的操作</p>
+<pre><code>--在表dept和emp5中添加新列test_column，并检查所作的操作
+alter table dept
+add(test_column number(20))
+</code></pre><p>9.在表dept和emp5中将列test_column设置成不可用，之后删除</p>
+<pre><code>设置成不可用
+alter table dept
+set unused column test_column
+删除不用的列
+alter table dept
+drop unused columns
+</code></pre><p>10.直接删除表emp5中的列 dept_id</p>
+<pre><code>--10.直接删除表emp5中的列 dept_id
+alter table emp5
+drop column department_id
+</code></pre><p>####插入数据</p>
+<p>#####第一种方式  一条一条添加<br>向emp1中插入一条数据</p>
+<pre><code>insert into emp1
+values(1001，&apos;aa&apos;,sysdate,10000)
+</code></pre><p>当你插入的类型是date类型的时候需要用到to_date转换，空值用Null代替</p>
+<pre><code>insert into emp1
+values(1002，&apos;BB&apos;,to_date(&apos;1998-12-21&apos;,&apos;yyyy-mm-dd&apos;),20000)
+</code></pre><p> 只选择其中三项值添加（可以改变字段的顺序添加）不可用出现非空约束的列为null</p>
+<pre><code>insert into emp1(employee_id,last_name,hire_date)
+values(1003，&apos;BB&apos;,to_date(&apos;1998-12-21&apos;,&apos;yyyy-mm-dd&apos;))
+</code></pre><p>#####第二种方式从其他表拷贝数据<br>将现有的数据从employees表中导入到emp1中</p>
+<pre><code>insert into emp1(employee_id,hire_date,last_name,salary)
+select employee_id,hire_date,last_name,salary
+from employees
+where department_id = 80
+</code></pre><p>#####插入一条数据 使用的是脚本</p>
+<pre><code>insert into emp1(employee_id,last_name,salary,hire_date)
+values(10007,&apos;xxx&apos;,1000,&apos;7-6月-1995&apos;)
+</code></pre><p>####更新数据<br>按照条件查询取得对象然后使用set来更新值</p>
+<pre><code>update emp1 
+set salary = 10000
+where employee_id = 10007
+</code></pre><p>如果你添加数据是可以回滚的，但是你可以使用commit提交来使它不能回滚</p>
+<pre><code>commit;
+</code></pre><p>1.更新114号员工的工作和工资使其与205号员工的工作和工资相同</p>
+<pre><code>--更新114号员工的工作和工资使其与205号员工的工作和工资相同
+update employees1
+set job_id=(
+          select job_id 
+          from employees1
+          where employee_id = 205
+),salary = (
+           select salary
+           from employees1
+           where employee_id = 205
+)
+where employee_id = 114
+</code></pre><p>2.调整employee_id 为200的员工的job_id相同的员工的department_id为employee_id为100的员工的department_id</p>
+<pre><code>--调整employee_id 为200的员工的job_id相同的
+--员工的department_id为employee_id为100的员工的department_id
+update employees1
+set department_id = (
+                    select department_id
+                    from employees1
+                    where employee_id = 100
+)
+where job_id = (
+               select job_id
+               from employees1
+               where employee_id = 100
+)
+</code></pre><p>####删除操作<br>3.从empoyees1表中删除部门名称中含Public字符的部门id</p>
+<pre><code>--从empoyees1表中删除部门名称中含Public字符的部门id
+delete from employees1
+where department_id = (
+                      select department_id
+                      from departments
+                      where department_name like &apos;%Public%&apos;
+)
+</code></pre><p>##事务<br>一组逻辑单元，使数据从一种状态变成另一种状态。</p>
+<p>构成</p>
+<ul>
+<li>一个或多个dml语句</li>
+<li>一个ddl语句 （数据定义语言）</li>
+<li>一个dcl语句  （数据控制语言）</li>
+</ul>
+<p>以commit 或者rollback 结束</p>
+<p>创建一个存储点A（相当于存档）</p>
+<pre><code>savepoint A;
+</code></pre><p>返回到A这个位置</p>
+<pre><code>rollback to savepoint A;
+</code></pre><p>只有锁被释放的时候，其他用户才可以操作涉及到的数据</p>
+<p>####练习1<br>1.更改108号员工的信息：使其工资变成所在部门的最高工资<br>job变为公司中平均工资最低的job</p>
+<pre><code>--更改108号员工的信息：使其工资变成所在部门的最高工资
+--job变为公司中平均工资最低的job
+update employees1
+set salary = (
+    select max(salary)
+    from employees1
+    where department_id = (
+                          select department_id
+                          from employees1
+                          where employee_id = 108
+    )
+
+),
+job_id = (
+         select job_id
+         from employees1
+         group by job_id
+         having avg(salary) = (
+                              select min(avg(salary))
+                              from employees1
+                              group by job_id
+         ) 
+)
+where employee_id = 108
+</code></pre><p>2.删除108号员工所在部门中工资最低的那个员工</p>
+<pre><code>--删除108号员工所在部门中工资最低的那个员工
+--优化版
+delete from employees1 e
+where employee_id = (
+                    select employee_id
+                    from employees1 
+                    where salary = (
+                                    select min(salary)
+                                    from employees1
+                                    where department_id = e.department_id
+                    )
+                    and department_id = (
+                                        select department_id
+                                        from employees1
+                                        where employee_id = 108
+                    )     
+)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/子查询-更新操作/index.html" data-id="cjqfbam21004b6oqi5w26azbx" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>27</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
