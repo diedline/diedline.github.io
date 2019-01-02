@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>oracle_约束_视图_索引_同义词 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##约束（constraint） ####约束是表级的强制规定有以下五种约束  NOT NULL 不为空 UNIQUE 唯一        注意空值之间不认为是违反唯一性约束的 PRIMARY KEY 主键 FOREIGN KEY 外键 CHECK 检查的条件  创建emp2表 constraint 是修改约束名 不修改的话就是默认的约束名 create table emp2( id number">
+<meta property="og:type" content="website">
+<meta property="og:title" content="oracle_约束_视图_索引_同义词">
+<meta property="og:url" content="https://diedline.github.io/oracle-约束-视图-索引-同义词/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="##约束（constraint） ####约束是表级的强制规定有以下五种约束  NOT NULL 不为空 UNIQUE 唯一        注意空值之间不认为是违反唯一性约束的 PRIMARY KEY 主键 FOREIGN KEY 外键 CHECK 检查的条件  创建emp2表 constraint 是修改约束名 不修改的话就是默认的约束名 create table emp2( id number">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-02T15:10:52.435Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="oracle_约束_视图_索引_同义词">
+<meta name="twitter:description" content="##约束（constraint） ####约束是表级的强制规定有以下五种约束  NOT NULL 不为空 UNIQUE 唯一        注意空值之间不认为是违反唯一性约束的 PRIMARY KEY 主键 FOREIGN KEY 外键 CHECK 检查的条件  创建emp2表 constraint 是修改约束名 不修改的话就是默认的约束名 create table emp2( id number">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>28</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/oracle-约束-视图-索引-同义词/index.html" class="article-date">
+  <time class="post-time" datetime="2019-01-02T15:08:58.000Z" itemprop="datePublished">
+    <span class="post-month">1月</span><br/>
+    <span class="post-day">02</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      oracle_约束_视图_索引_同义词
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##约束（constraint）</p>
+<p>####约束是表级的强制规定<br>有以下五种约束</p>
+<ul>
+<li>NOT NULL 不为空</li>
+<li>UNIQUE 唯一        注意空值之间不认为是违反唯一性约束的</li>
+<li>PRIMARY KEY 主键</li>
+<li>FOREIGN KEY 外键</li>
+<li>CHECK 检查的条件</li>
+</ul>
+<p>创建emp2表 constraint 是修改约束名 不修改的话就是默认的约束名</p>
+<pre><code>create table emp2(
+id number(10) constraint emp2_id_nn not null,
+name varchar2(20) not null,
+salary number(10,2)
+)
+</code></pre><p>使用约束来创建表 表级约束就是列级约束之后加上括号指定要约束的列</p>
+<pre><code>create table emp4(
+--列级约束
+id number(10) constraint emp4_id_pk primary key,
+name varchar2(20) constraint emp4_name_unique not null,
+salary number(10,2),
+email varchar2(20),
+--表级约束
+constraint emp4_email_uk unique(email)
+)
+</code></pre><p>将创建的emp6表和departments表通过department_id来连接</p>
+<pre><code>create table emp6(
+--列级约束
+id number(10),
+name varchar2(20) constraint emp6_name_unique not null,
+salary number(10,2),
+email varchar2(20),
+department_id number(10),
+--表级约束
+constraint emp6_email_uk unique(email),
+constraint emp6_id_pk primary key(id),
+constraint emp6_dept_fk foreign key(department_id) references departments(department_id)
+)
+</code></pre><ul>
+<li>级联删除<ul>
+<li>当父表中的列被删除的时候，子表中相应的列也被删除 </li>
+</ul>
+</li>
+<li>级联置空<ul>
+<li>子表中相应的列置空</li>
+</ul>
+</li>
+</ul>
+<p>使用外键级联置空     </p>
+<pre><code>create table emp7  (
+--列级约束
+id number(10),
+name varchar2(20) constraint emp7_name_unique not null,
+salary number(10,2),
+email varchar2(20),
+department_id number(10),
+--表级约束
+constraint emp7_email_uk unique(email),
+constraint emp7_id_pk primary key(id),
+--级联置空
+constraint emp7_dept_fk foreign key(department_id) references departments(department_id) on delete set null
+)
+</code></pre><p>外键使用级联删除</p>
+<pre><code>create table emp8  (
+--列级约束
+id number(10),
+name varchar2(20) constraint emp8_name_unique not null,
+salary number(10,2),
+email varchar2(20),
+department_id number(10),
+--表级约束
+constraint emp8_email_uk unique(email),
+constraint emp8_id_pk primary key(id),
+--级联删除
+constraint emp8_dept_fk foreign key(department_id) references departments(department_id) on delete cascade
+)
+</code></pre><p>使用check约束来约束工资的条件</p>
+<pre><code>create table emp9  (
+--列级约束
+id number(10),
+name varchar2(20) constraint emp9_name_unique not null,
+salary number(10,2) check(salary&gt;1500 and salary&lt;30000),
+email varchar2(20),
+department_id number(10),
+--表级约束
+constraint emp9_email_uk unique(email),
+constraint emp9_id_pk primary key(id),
+--级联置空
+constraint emp9_dept_fk foreign key(department_id) references departments(department_id) on delete cascade
+)
+</code></pre><p>##添加约束的语法<br>使用ALTER TABLE 语句</p>
+<ul>
+<li>添加或删除约束但是不能修改约束</li>
+<li>有效化或无效化约束</li>
+<li>添加not null约束 有使用modify语句</li>
+</ul>
+<p>添加not null约束(只有not null使用的是modify)</p>
+<pre><code>alter table emp4
+modify(salary number(10,2) not null)
+</code></pre><p>删除约束 是根据约束名来删除的</p>
+<pre><code>alter table emp4
+drop constraint emp4_name_unique
+</code></pre><p>添加unique约束 跟之前的表级约束很像</p>
+<pre><code>alter table emp4
+add constraint emp4_name_uk unique(name)
+</code></pre><p>无效化约束</p>
+<pre><code>alter table emp3
+disable constraint emp3_email_uk
+</code></pre><p>有效化约束</p>
+<pre><code>alter table emp3
+enable constraint emp3_email_uk
+</code></pre><p>查询约束 如果想要查询其他表的约束，只需要改table_name 就行</p>
+<pre><code>select constraint_name,constraint_type,
+search_condition
+from user_constraints
+where table_name = &apos;EMPLOYEES&apos;
+</code></pre><p>查询约束作用在的行</p>
+<pre><code>select constraint_name,column_name
+from user_cons_columns
+where table_name = &apos;EMPLOYEES&apos;
+</code></pre><p>####约束练习</p>
+<p>1.向表emp2的id列中添加PRIMARY KEY约束（my_emp_id_pk）</p>
+<pre><code>alter table emp2
+add constraint my_emp_id_pk primary key(id)
+</code></pre><p>2.向表emp2中添加列dept_id，并在其中定义FOREIGN KEY约束，与之相关联的列是dept2表中的id列。<br>    alter table emp2<br>    add (dept_id number(10) constraint emp2_dept_fk references dept2(id) on delete set null)</p>
+<p>##视图<br>从表中抽取的逻辑相关的数据集合</p>
+<p>向视图提供的的数据内容的语句为select内容，可以将视图理解为存储起来的select语句</p>
+<p>创建视图</p>
+<pre><code>create view empview
+as
+select employee_id,last_name,salary
+from employees
+where department_id = 80
+</code></pre><p>视图的更新操作 能直接修改原表的数据</p>
+<pre><code>update empview
+set salary = 20000
+where employee_id = 179
+</code></pre><p>创建多表连接的视图</p>
+<pre><code>create view empview2
+as 
+select employee_id,last_name,salary,department_name
+from employees e,departments d
+where e.department_id = d.department_id
+</code></pre><p>覆盖原有的视图</p>
+<pre><code>create or replace view empview2
+as 
+select employee_id,last_name,department_name
+from employees e,departments d
+where e.department_id = d.department_id
+</code></pre><p>使用 with read only来使这个视图只能读 </p>
+<pre><code>create or replace view empview2
+as 
+select employee_id,last_name,department_name
+from employees e,departments d
+where e.department_id = d.department_id
+with read only
+</code></pre><p>###简单视图和复杂视图<br>如果创建的视图使用到了分组函数就是复杂视图</p>
+<p>创建复杂视图 注意在复杂视图中是不能进行增删改的操作的</p>
+<pre><code>create or replace view empview3
+as
+select department_name dept_nane,avg(salary) avg_sal
+from employees e ,departments d
+where e.department_id = d.department_id
+group by department_name
+</code></pre><p>##TOP - N  分析<br>查询一个列中最大或最小的n个值</p>
+<p>最大和最小的值是TOP - N 所关心的</p>
+<p>使用排序好的rownum来获取工资最高的前十的列</p>
+<pre><code>--将排序好的rownum来获取工资最高的前十的列
+select rownum,employee_id,last_name,salary
+from(
+    select employee_id,last_name,salary
+    from employees
+    order by salary desc
+)
+where rownum &lt;11
+</code></pre><p>可以将 嵌套的方法来将rownum变成存在的实列，这样可以实现分页</p>
+<p>之所以嵌套两次是因为伪列只能使用&lt; &lt;= 不能使用 &gt; &gt;=</p>
+<pre><code>--可以将 嵌套的方法来将rownum变成存在的实列，这样可以实现分页
+select  rn,employee_id,last_name,salary
+from(
+select rownum rn,employee_id,last_name,salary
+from(
+    select employee_id,last_name,salary
+    from employees
+    order by salary desc
+    )
+)
+where rn&gt;40 and rn&lt;50
+</code></pre><p>####视图练习<br>1.使用表employees创建视图employee_vu，其中包括姓名（LAST_NAME），员工号（EMPLOYEE_ID），部门号(DEPARTMENT_ID).</p>
+<pre><code>--使用表employees创建视图employee_vu，其中包括姓名（LAST_NAME）
+--，员工号（EMPLOYEE_ID），部门号(DEPARTMENT_ID).
+create or replace view employee_vo 
+as
+select last_name,employee_id,department_id
+from employees
+</code></pre><p>2.将视图中的数据限定在部门号是80的范围内将视图改变成只读视图</p>
+<pre><code>--使用表employees创建视图employee_vu，其中包括姓名（LAST_NAME）
+--，员工号（EMPLOYEE_ID），部门号(DEPARTMENT_ID).
+--将视图中的数据限定在部门号是80的范围内
+--将视图改变成只读视图
+create or replace view employee_vo 
+as
+select last_name,employee_id,department_id
+from employees
+where department_id = 80
+with read only  
+</code></pre><p>##序列<br>提供有规律的数值</p>
+<ul>
+<li>自动提供的唯一数值</li>
+<li>共享对象</li>
+<li>主要用于提供主键值</li>
+<li>将序列值装入内存可以提高访问效率</li>
+</ul>
+<p>创建一个序列</p>
+<pre><code>create sequence empseq
+increment by 10 -- 每次增长10
+start with 10 -- 从10开始
+maxvalue 100 -- 最大值100
+cycle -- 需要循环
+nocache -- 不需要缓存登录
+</code></pre><p>序列首次使用必须使用NextValue </p>
+<pre><code>select empseq.nextval from dual;
+</code></pre><p>然后才能使用</p>
+<pre><code>select empseq.currval from dual;
+</code></pre><p>使用序列来作为表的主键</p>
+<pre><code>insert into emp01
+values(empseq.nextval,&apos;cc&apos;,2300)
+</code></pre><p>修改序列（注意初始值只能通过删除序列之后重建序列来完成）</p>
+<pre><code>alter sequence empseq 
+increment by 1  --每次增长1
+nocycle         --不循环
+</code></pre><p>序列在下列情况下会出现裂缝</p>
+<ul>
+<li>回滚</li>
+<li>系统异常</li>
+<li>多个表同时使用同一个序列</li>
+</ul>
+<p>查询所有序列的命令</p>
+<pre><code>select sequence_name,min_value,max_value,increment_by,last_number
+from user_sequences
+</code></pre><p>删除序列</p>
+<pre><code>drop sequence empseq
+</code></pre><p>##索引<br>提高查询的效率</p>
+<ul>
+<li>索引被删除或损坏不会对表产生影响，其影响的只是查询的速度</li>
+<li>在删除一个表的时候所有基于该表的索引都会被自动删除</li>
+<li>通过指针加速oracle服务器的查询速度</li>
+<li>通过快速定位数据的方法减少磁盘io</li>
+<li>索引一旦建立，oracle管理系统会自动对他进行维护，而且由oracle管理系统来决定何时使用索引，用户不用在查询语句中指定使用哪个索引</li>
+</ul>
+<p>####创建索引</p>
+<ul>
+<li>自动创建<ul>
+<li>在定义primary key 或unique约束系统自动在相应的列上创建唯一性约束</li>
+</ul>
+</li>
+<li>手动创建<ul>
+<li>用户可以在其他列上创建非唯一的索引以加速查询</li>
+</ul>
+</li>
+</ul>
+<p>为 emp01的employee_id 来创建索引</p>
+<pre><code>create index emp01_id_ix
+on emp01(employee_id)
+</code></pre><p>删除索引</p>
+<pre><code>drop index emp01_id_ix
+</code></pre><p>什么时候创建索引？</p>
+<ul>
+<li>当列中数据值分布范围很广的时候</li>
+<li>列经常在where子句或连接条件中出现</li>
+<li>表经常被访问而且数据量很大，访问的数据大概占数据总量的%2到%4</li>
+</ul>
+<p>什么时候不要创建索引？</p>
+<ul>
+<li>表很小</li>
+<li>列不经常作为连接条件出现在where子句中</li>
+<li>查询的数据大于%2到%4</li>
+<li>表经常更新</li>
+</ul>
+<p>##同义词-synonym<br>给对象起别名</p>
+<p>给employees表起别名e </p>
+<pre><code>create synonym e for employees
+</code></pre><p>删除同义词</p>
+<pre><code>drop synonym e
+</code></pre><p>what-why-how</p>
+<p>总结：</p>
+<p>表table </p>
+<p>视图view</p>
+<p>序列sequence</p>
+<p>索引index</p>
+<p>同义词synonym</p>
+<p>####练习<br> 1.创建序列dept_id_seq，开始值为200，每次增长10，最大值为10000</p>
+<pre><code>create sequence dept_id_seq
+increment by 10
+start with 200
+maxvalue 10000
+</code></pre><p>2.使用序列向表dept中插入数据</p>
+<pre><code>insert into dept
+values(dept_id_seq.nextval,&apos;a&apos;)
+
+
+
+附：
+create table dept as 
+select department_id id,department_name name 
+from departments
+where 1=2
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/oracle-约束-视图-索引-同义词/index.html" data-id="cjqfbkn16000nakqijllgjf31" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>28</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
