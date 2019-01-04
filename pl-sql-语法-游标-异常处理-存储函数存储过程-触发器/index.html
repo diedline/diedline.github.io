@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>pl/sql-语法-游标-异常处理-存储函数存储过程-触发器 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#plsql 使用前必须的操作，让输出可见 set serveroutput on ##plsql学习内容  1.plsql基本的语法格式 2.记录类型type…is record(…); 3.流程控制： 条件判断（两种） 方式一： if ..then elsif then…else…end if; 方式二：case…when …then…end;   循环结构（三种） 方式一：loop ….ex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="pl&#x2F;sql-语法-游标-异常处理-存储函数存储过程-触发器">
+<meta property="og:url" content="https://diedline.github.io/pl-sql-语法-游标-异常处理-存储函数存储过程-触发器/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="#plsql 使用前必须的操作，让输出可见 set serveroutput on ##plsql学习内容  1.plsql基本的语法格式 2.记录类型type…is record(…); 3.流程控制： 条件判断（两种） 方式一： if ..then elsif then…else…end if; 方式二：case…when …then…end;   循环结构（三种） 方式一：loop ….ex">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-04T13:50:54.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pl&#x2F;sql-语法-游标-异常处理-存储函数存储过程-触发器">
+<meta name="twitter:description" content="#plsql 使用前必须的操作，让输出可见 set serveroutput on ##plsql学习内容  1.plsql基本的语法格式 2.记录类型type…is record(…); 3.流程控制： 条件判断（两种） 方式一： if ..then elsif then…else…end if; 方式二：case…when …then…end;   循环结构（三种） 方式一：loop ….ex">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>30</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/pl-sql-语法-游标-异常处理-存储函数存储过程-触发器/index.html" class="article-date">
+  <time class="post-time" datetime="2019-01-04T13:49:06.000Z" itemprop="datePublished">
+    <span class="post-month">1月</span><br/>
+    <span class="post-day">04</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      pl/sql-语法-游标-异常处理-存储函数存储过程-触发器
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#plsql</p>
+<p>使用前必须的操作，让输出可见</p>
+<pre><code>set serveroutput on
+</code></pre><p>##plsql学习内容</p>
+<ul>
+<li>1.plsql基本的语法格式</li>
+<li>2.记录类型type…is record(…);</li>
+<li>3.流程控制：<ul>
+<li>条件判断（两种）<ul>
+<li>方式一： if ..then elsif then…else…end if;</li>
+<li>方式二：case…when …then…end;</li>
+</ul>
+</li>
+<li>循环结构（三种）<ul>
+<li>方式一：loop ….exit when… end loop; </li>
+<li>方式二：while…loop….end loop;</li>
+<li>方式三：for i in …loop…end loop; </li>
+</ul>
+</li>
+<li>goto ，exit</li>
+</ul>
+</li>
+<li>4.游标的使用（类似java中的iterator）</li>
+<li>5.异常的处理（三种方式）</li>
+<li>6.会写一个存储函数（有返回值），存储过程（无返回值）</li>
+<li>7.会写一个触发器</li>
+</ul>
+<p>plsql的第一个hello，world程序</p>
+<pre><code>declare
+  --声明变量，类型，游标
+begin
+  --程序的执行部分（类似java main方法）
+  dbms_output.put_line(&apos;hello,world!&apos;);
+--exception
+  --针对begin块出现的异常，提供处理的机制
+  --when...then...
+  --when..then...
+end; 
+</code></pre><p>查询员工id为100的员工的工资</p>
+<pre><code>declare
+--声明变量
+  v_sal varchar2(20);
+begin
+--sql语句操作，select...into...from ....where..
+  select salary into v_sal from employees where employee_id = 100;
+--打印
+  dbms_output.put_line(v_sal);
+end;
+</code></pre><p>查询员工id为100的员工的工资，邮箱，雇佣日期（在声明数据类型大小的时候不能小于源数据大小）</p>
+<pre><code>declare
+--声明变量
+  v_sal number(10,2);
+  v_email varchar2(20);
+  v_hire_date date;
+begin
+--sql语句操作，select...into...from ....where..
+  select salary,email,hire_date into v_sal,v_email,v_hire_date from employees where employee_id = 100;
+--打印
+  dbms_output.put_line(v_sal||&apos;,&apos;||v_email||&apos;,&apos;||v_hire_date);
+end;
+</code></pre><p>使用%type动态获取数据类型</p>
+<pre><code>declare
+--声明变量
+--动态获取数据类型
+  v_sal employees.salary%type;
+  v_email employees.email%type;
+  v_hire_date employees.hire_date%type;
+begin
+--sql语句操作，select...into...from ....where..
+  select salary,email,hire_date into v_sal,v_email,v_hire_date from employees where employee_id = 100;
+--打印
+  dbms_output.put_line(v_sal||&apos;,&apos;||v_email||&apos;,&apos;||v_hire_date);
+end;
+</code></pre><p>使用记录类型来封装对象（好繁琐）</p>
+<pre><code>declare
+--声明一个记录类型(相当于java中的类)
+  type emp_record is record(
+  v_sal employees.salary%type,
+  v_email employees.email%type,
+  v_hire_date employees.hire_date%type
+  );
+--定义一个记录类型的成员变量
+  v_emp_record emp_record;
+begin
+--sql语句操作，select...into...from ....where..
+  select salary,email,hire_date into v_emp_record from employees where employee_id = 100;
+--打印
+  dbms_output.put_line(v_emp_record.v_sal||&apos;,&apos;||v_emp_record.v_email||&apos;,&apos;||v_emp_record.v_hire_date);
+end;
+</code></pre><p>####练习：</p>
+<p>使用 := 来初始化值      </p>
+<pre><code>declare
+--定义并初始化
+v_sal number(8,2) :=0;
+v_emp_id number(10);
+
+begin
+--程序执行部分
+      select salary,employee_id into v_sal,v_emp_id from employees where employee_id = 123;
+      dbms_output.put_line(&apos;employee_id:&apos;||v_emp_id||&apos;,&apos;||&apos;salary:&apos;||v_sal);
+--exception
+--异常处理部分
+
+end;
+</code></pre><p>同样使用记录类型封装</p>
+<pre><code>declare
+--定义记录类型并初始化
+type emp_record is record(
+v_sal number(8,2) :=0,
+v_emp_id number(10)
+);
+
+v_emp_record emp_record;
+begin
+--程序执行部分
+      select salary,employee_id into v_emp_record from employees where employee_id = 123;
+      dbms_output.put_line(&apos;employee_id:&apos;||v_emp_record.v_emp_id||&apos;,&apos;||&apos;salary:&apos;||v_emp_record.v_sal);
+--exception
+--异常处理部分
+
+end;
+</code></pre><p>自己定义的记录类型</p>
+<pre><code>declare 
+  type salary_record is record(
+       v_name varchar2(20),
+       v_sal number(10,2)
+  ); 
+  v_salary_record salary_record;
+begin
+  v_salary_record.v_name :=&apos;刘德华&apos;;
+  v_salary_record.v_sal :=120000;
+  dbms_output.put_line(&apos;name:&apos;||v_salary_record.v_name||&apos;,salary:&apos;|| v_salary_record.v_sal);
+
+end;
+</code></pre><p>使用pl/sql对数据的更新操作</p>
+<pre><code>declare
+  v_emp_id number(10);
+
+begin
+  v_emp_id := 123;
+  update employees
+  set salary = salary+100
+  where employee_id = v_emp_id;
+  dbms_output.put_line(&apos;执行成功&apos;);
+end; 
+</code></pre><p>####流程控制</p>
+<p>使用if ..then..elsif..then…else..end id;</p>
+<pre><code>--查询150号员工的工资，如果工资大于等于10000则打印&apos;salary&gt;10000&apos;;
+--若在5000-10000之间，则打印&apos;5000&lt;salary&lt;10000&apos;;否则 打印&apos;salary&lt;5000&apos;;
+declare
+   v_sal employees.salary%type;
+
+begin
+  select salary into v_sal from employees where employee_id = 150;
+  if v_sal &gt;=10000 then dbms_output.put_line(&apos;salary&gt;=10000&apos;);
+  elsif 5000&lt;=v_sal then dbms_output.put_line(&apos;5000&lt;=salary&lt;10000&apos;);
+  else dbms_output.put_line(&apos;salary&lt;5000&apos;);
+  end if;
+end;
+</code></pre><p>或者直接将输出语句变成一个变量最后程序结束的时候输出变量就ok</p>
+<pre><code>--查询150号员工的工资，如果工资大于等于10000则打印&apos;salary&gt;10000&apos;;
+--若在5000-10000之间，则打印&apos;5000&lt;salary&lt;10000&apos;;否则 打印&apos;salary&lt;5000&apos;;
+declare
+   v_sal employees.salary%type;
+   v_temp varchar2(20);
+
+begin
+  select salary into v_sal from employees where employee_id = 150;
+  if v_sal &gt;=10000 then v_temp :=&apos;salary&gt;=10000&apos;;
+  elsif 5000&lt;=v_sal then v_temp :=&apos;5000&lt;=salary&lt;10000&apos;;
+  else v_temp :=&apos;salary&lt;5000&apos;;
+  end if;
+  dbms_output.put_line(v_temp);
+end;
+</code></pre><p>case 语句的使用（个人感觉不好用因为 case 中的when后边只能写具体的值不能写范围）</p>
+<pre><code>--查询150号员工的工资，如果工资大于等于10000则打印&apos;salary&gt;10000&apos;;
+--若在5000-10000之间，则打印&apos;5000&lt;salary&lt;10000&apos;;否则 打印&apos;salary&lt;5000&apos;;
+declare
+   v_sal employees.salary%type;
+   v_temp varchar2(20);
+
+begin
+  select salary into v_sal from employees where employee_id = 150;
+  v_temp :=
+  case trunc(v_sal/5000) when 0 then  &apos;salary&lt;5000&apos;
+                         when 1 then &apos;10000&gt;salary&gt;=5000&apos;
+                         else  &apos;salary&gt;=10000&apos;
+  end;
+  dbms_output.put_line(v_temp);
+end;
+</code></pre><p>查询122号员工的JOB_ID，若其值为’IT_PROG’,则打印’GRADE: A’;为’AC_MGT’,打印’GRADE: B’;为’AC_ACCOUNT’,打印’GRADE: C’;否则打印’GRADE: D’;</p>
+<pre><code>--查询122号员工的JOB_ID，若其值为&apos;IT_PROG&apos;,则打印&apos;GRADE: A&apos;;
+--为&apos;AC_MGT&apos;,打印&apos;GRADE: B&apos;;
+--为&apos;AC_ACCOUNT&apos;,打印&apos;GRADE: C&apos;;
+--否则打印&apos;GRADE: D&apos;;
+declare
+   v_job_id varchar2(10);
+   v_temp varchar2(10);
+
+begin
+  select job_id into v_job_id from employees where employee_id = 122;
+  v_temp := 
+          case v_job_id when &apos;IT_PROG&apos; then &apos;GRADE: A&apos;
+                         when &apos;AC_MGT&apos;  then &apos;GRADE: B&apos;
+                         when &apos;AC_ACCOUNT&apos; then &apos;GRADE: C&apos;
+                         else &apos;GRADE: D&apos;
+                           end;
+ dbms_output.put_line(v_temp);
+end;
+</code></pre><p>##循环结构</p>
+<p>1.使用循环语句打印1-100    </p>
+<pre><code>--使用循环语句打印1-100
+--1.初始化条件2.循环体3.循环条件4.迭代条件
+declare
+  --1
+  v_i number(10):=0;
+
+begin
+  loop
+    --2
+    dbms_output.put_line(v_i);
+    --3
+    exit when v_i &gt;= 100;
+    --4
+    v_i := v_i + 1;
+    end loop;
+end;
+</code></pre><p>2.使用while循环语句</p>
+<pre><code>--使用循环语句打印1-100
+--1.初始化条件2.循环体3.循环条件4.迭代条件
+declare
+  --1
+  v_i number(10):=0;
+
+begin
+  while v_i&lt;=100 loop
+    dbms_output.put_line(v_i);
+    v_i := v_i + 1;
+  end loop;
+end;
+</code></pre><p>3.使用For倒序循环打印 reverse是倒序</p>
+<pre><code>--使用循环语句打印1-100
+begin
+  for c in reverse 1..100 loop
+    dbms_output.put_line(c);
+    end loop;
+end;
+</code></pre><p>4.使用while循环输出2-100的质数</p>
+<pre><code>--输出2-100的质数
+declare
+  v_i number(3) := 2;
+  v_j number(3) := 2;
+  v_flag number(1) :=1;  
+begin
+  while v_i&lt;=100 loop
+    while v_j&lt;=sqrt(v_i) loop
+      if v_i mod v_j = 0 then v_flag :=0;
+      end if;
+      v_j := v_j + 1;
+      end loop;
+      if v_flag = 1 then dbms_output.put_line(v_i); 
+      end if;
+      v_i := v_i + 1;
+      v_j := 2;
+      v_flag := 1; 
+      end loop;
+end;
+</code></pre><p>使用if来解决 使用goto语句提高效率</p>
+<pre><code>--输出2-100的质数
+declare
+  v_i number(3) := 2;
+  v_j number(3) := 2;
+  v_flag number(1) :=1;  
+begin
+  for v_i in 2..100 loop
+    for v_j in 2..sqrt(v_i) loop 
+      if mod(v_i,v_j) = 0 then v_flag := 0;
+      goto label;
+      end if;
+      end loop;
+      &lt;&lt;label&gt;&gt;
+      if v_flag = 1 then dbms_output.put_line(v_i);
+      end if;
+      v_flag :=1;
+      end loop; 
+end;
+</code></pre><p>打印1-100的自然数，当打印到50时，跳出循环，输出’打印结束’（使用if）</p>
+<p>第一种方式 使用 goto</p>
+<pre><code>--打印1-100的自然数，当打印到50时，跳出循环，输出&apos;打印结束&apos;
+declare
+
+begin
+
+  for i in 1..100 loop
+    if i =50 then goto lable;
+    end if;
+    dbms_output.put_line(i);
+
+
+    end loop;
+    &lt;&lt;lable&gt;&gt;
+    dbms_output.put_line(&apos;打印结束&apos;);
+end;
+</code></pre><p>第二种方式    使用exit</p>
+<pre><code>--打印1-100的自然数，当打印到50时，跳出循环，输出&apos;打印结束&apos;
+declare
+
+begin
+
+  for i in 1..100 loop
+    if i =50 then  dbms_output.put_line(&apos;打印结束&apos;);
+    exit;
+    end if;
+    dbms_output.put_line(i);
+
+    end loop;
+
+end;
+</code></pre><p>##游标</p>
+<p>在pl/sql中处理多行的事务通常使用游标来实现。</p>
+<p>显式的游标处理需要四个pl/sql步骤</p>
+<ul>
+<li>1.定义游标</li>
+<li>2.打开游标</li>
+<li>3.提取游标数据 </li>
+<li>4.关闭游标</li>
+</ul>
+<p>1.使用游标打印出80号部门所有员工的编号和工资：</p>
+<pre><code>--打印出80号部门所有员工的编号和工资
+declare
+  v_sal employees.salary%type;
+  v_empid employees.employee_id%type;
+  --定义游标
+  cursor emp_sal_cursor is select salary,employee_id from employees where department_id = 80;
+begin
+  --打开游标
+  open emp_sal_cursor;
+  --提取游标
+  fetch emp_sal_cursor into v_sal,v_empid;
+  --判断下一个是否有值
+  while emp_sal_cursor%found loop
+    dbms_output.put_line(&apos;empid:&apos;||v_empid||&apos;,salary:&apos;||v_sal);
+    fetch emp_sal_cursor into v_sal,v_empid;
+    end loop;
+  --关闭游标
+  close emp_sal_cursor;
+end;
+</code></pre><p>2.将declare定义的变量放入记录类型中</p>
+<pre><code>--打印出80号部门所有员工的工资：salary：xxx
+declare
+  --声明一个记录类型
+  type emp_record is record(
+  v_sal employees.salary%type,
+  v_empid employees.employee_id%type
+
+  );
+  --声明一个记录类型的变量
+  v_emp_record emp_record;
+  --定义游标
+  cursor emp_sal_cursor is select salary,employee_id from employees where department_id = 80;
+begin
+  --打开游标
+  open emp_sal_cursor;
+  --提取游标
+  fetch emp_sal_cursor into v_emp_record;
+  --判断下一个是否有值
+  while emp_sal_cursor%found loop
+    dbms_output.put_line(&apos;empid:&apos;||v_emp_record.v_empid||&apos;,salary:&apos;||v_emp_record.v_sal);
+    fetch emp_sal_cursor into v_emp_record;
+    end loop;
+  --关闭游标
+  close emp_sal_cursor;
+end;
+</code></pre><p>###游标属性<br>%found        布尔型，当最近一次读记录时成功返回true</p>
+<p>%nofound    布尔型，与%found相反</p>
+<p>%isopen        布尔型，当游标已打开时返回true</p>
+<p>%rowcount    数字型，返回已从游标中读取的记录数</p>
+<p>使用for循环简化游标操作</p>
+<pre><code>--打印出80号部门所有员工的工资：salary：xxx
+declare
+  --定义游标
+  cursor emp_sal_cursor is select salary,employee_id from employees where department_id = 80;
+begin
+  for c in emp_sal_cursor loop
+    dbms_output.put_line(&apos;empid:&apos;||c.employee_id||&apos;,salary:&apos;||c.salary);
+    end loop;
+    end;
+</code></pre><p>利用游标，调整公司中员工的工资：</p>
+<pre><code>/*
+  利用游标，调整公司中员工的工资：
+      工资范围        调整基数
+      0-5000            %5
+      5000-10000        %3
+      10000-15000       %2
+      15000-            %1
+*/
+
+declare
+      cursor emp_sal_cursor is select employee_id,salary from employees;
+      --用于记录调整基数
+      v_temp number(4,2);
+
+      v_empid employees.employee_id%type;
+      v_sal employees.salary%type;
+begin
+  open emp_sal_cursor;
+
+  fetch emp_sal_cursor into v_empid,v_sal;
+
+  while emp_sal_cursor%found loop
+    if v_sal &lt; 5000 then v_temp := 0.05;
+    elsif v_sal &lt; 10000 then v_temp := 0.03;
+    elsif v_sal &lt; 15000 then v_temp := 0.02;
+    else v_temp := 0.01;
+    end if;
+    dbms_output.put_line(v_empid||&apos;,&apos;||v_sal);
+    update employees
+    set salary = salary*(1 + v_temp)
+    where employee_id = v_empid;
+
+    fetch emp_sal_cursor into v_empid,v_sal;
+    end loop;
+    close emp_sal_cursor;
+    end;
+</code></pre><p>使用if 来解决    </p>
+<pre><code>/*
+  利用游标，调整公司中员工的工资：
+      工资范围        调整基数
+      0-5000            %5
+      5000-10000        %3
+      10000-15000       %2
+      15000-            %1
+*/
+
+declare
+      cursor emp_sal_cursor is select employee_id,salary from employees;
+      --用于记录调整基数
+      v_temp number(4,2);
+begin
+  for c in emp_sal_cursor loop
+    if c.salary &lt; 5000 then v_temp := 0.05;
+    elsif c.salary &lt;10000 then v_temp := 0.03;
+    elsif c.salary &lt;15000 then v_temp := 0.02;
+    else v_temp :=  0.01;
+    end if;
+    update employees
+    set salary = salary * (1 + v_temp)
+    where c.employee_id = employee_id;
+    end loop;
+    end;
+</code></pre><p>隐式游标：更新指定员工salary（涨工资10），如果该员工没有找到，则打印’查无此人’信息</p>
+<pre><code>--隐式游标：更新指定员工salary（涨工资10），如果该员工没有找到，则打印&apos;查无此人&apos;信息    
+begin 
+  update employees
+  set salary = salary + 10
+  where employee_id = 1001;
+  if sql%notfound then dbms_output.put_line(&apos;查无此人&apos;);
+  end if;
+  end;
+</code></pre><p>##异常处理</p>
+<p>处理预定义的异常</p>
+<pre><code>declare
+  v_sal employees.salary%type;
+
+begin
+  select salary into v_sal
+  from employees
+  where employee_id &gt; 100;
+
+  dbms_output.put_line(v_sal);
+
+exception
+  --捕获行数太多的异常
+  when too_many_rows then dbms_output.put_line(&apos;输出的行数过多&apos;);
+  --捕获预定义的异常
+  when others then dbms_output.put_line(&apos;出现其他类型的异常&apos;);
+end;
+</code></pre><p>如果不是预定义异常就可以自定义异常</p>
+<pre><code>declare
+  e_deleteid_exception exception;
+  pragma exception_init(e_deleteid_exception,-2292);
+begin
+  delete from employees
+  where employee_id = 100; 
+
+exception
+  when e_deleteid_exception then dbms_output.put_line(&apos;违反完整性约束条件不可删除&apos;);
+
+end;
+</code></pre><p>使用自定义异常如果工资大于10000触发自定义异常</p>
+<pre><code>--使用自定义异常如果工资大于10000触发自定义异常
+declare
+  e_too_high_salary exception;
+  v_sal employees.salary%type;
+
+begin
+  select salary into v_sal 
+  from employees
+  where employee_id = 100;
+  if v_sal &gt;10000 then
+    --触发异常
+    raise e_too_high_salary;
+    end if;
+exception
+  when e_too_high_salary then dbms_output.put_line(&apos;工资太高了！&apos;);
+    end;
+</code></pre><p>##存储函数和存储过程</p>
+<p>存储函数的形式：</p>
+<pre><code>--存储函数
+create or relace function func_name(dept_id number,salary number)
+return number
+is
+       --函数的使用过程中，需要声明的变量。记录类型。cursor
+begin
+       --函数的执行体
+
+exception
+       --处理函数执行过程中的异常
+
+end;
+</code></pre><p>创建一个函数的hello_world 返回一个hello,world!的字符串</p>
+<pre><code>--函数的hello,world 返回一个hello,world!的字符串
+create or replace function hello_world
+return varchar2
+is
+begin
+  return &apos;hello,world!&apos;;
+
+end;
+</code></pre><p>调用hello,world函数</p>
+<p>第一种方式</p>
+<pre><code>begin
+  dbms_output.put_line(hello_world);
+end;
+</code></pre><p>第二种方式调用</p>
+<pre><code>select hello_world from dual
+</code></pre><p>增加一个v_logo参数调用方法的时候只需要在后边加上括号和参数就行</p>
+<pre><code>--函数的hello,world 返回一个hello,world!的字符串
+create or replace function hello_world(v_logo varchar2)
+return varchar2
+is
+begin
+  return &apos;hello,world!&apos;||v_logo;
+
+end;
+</code></pre><p>创建一个存储函数返回当前系统存储的时间</p>
+<pre><code>--创建一个存储函数返回当前系统存储的时间
+create or replace function sys_date
+return date
+is
+       v_date date;
+begin
+       v_date := sysdate;
+
+       return v_date;
+end;
+</code></pre><p>定义带参数的函数 两个数相加</p>
+<pre><code>--定义带参数的函数 两个数相加
+create or replace function add_param(v_num1 number,v_num2 number)
+return number
+is
+      v_sum number(10);
+begin
+  v_sum := v_num1 + v_num2;
+  return v_sum;
+end;
+</code></pre><p>调用</p>
+<pre><code>select add_param(1,2) from dual;
+</code></pre><p>定义一个函数获取给定部门的工资总和，要求部门号定义为参数，工资总额定义为返回值</p>
+<pre><code>--定义一个函数获取给定部门的工资总和，要求部门号定义为参数，工资总额定义为返回值
+
+create or replace function sum_sal(dept_id number)
+return number
+is
+v_sum_sal number(20) := 0;
+cursor salary_cursor is select salary from employees where department_id = dept_id;
+begin
+       for c in salary_cursor loop
+         v_sum_sal := v_sum_sal +c.salary;
+         end loop;
+         return v_sum_sal; 
+end;
+</code></pre><p>使用out类型的参数相当于增加返回值的个数<br>要求: 定义一个函数: 获取给定部门的工资总和 和 该部门的员工总数(定义为 OUT 类型的参数).部门号定义为参数, 工资总额定义为返回值.</p>
+<pre><code>--要求: 定义一个函数: 获取给定部门的工资总和 和 该部门的员工总数(定义为 OUT 类型的参数).
+--要求: 部门号定义为参数, 工资总额定义为返回值.
+create or replace function get_sal(dept_id number,total_count out number)
+return number
+is
+       v_sumsal number := 0;
+       cursor salary_cursor is select salary from employees where department_id = dept_id;
+
+begin
+  total_count := 0;
+  for c in salary_cursor loop
+    v_sumsal := v_sumsal + c.salary;
+    total_count := total_count +1;
+    end loop;
+
+    return v_sumsal; 
+    end;
+</code></pre><p>调用函数的方法 需要额外指定参数来接收out类型中的参数的值</p>
+<pre><code>declare
+  v_num number(5) := 0;
+
+begin
+  dbms_output.put_line(get_sal(80,v_num));
+  dbms_output.put_line(v_num);
+end;
+</code></pre><p>####存储过程</p>
+<p>存储过程就是没有返回值的存储函数</p>
+<p>1.要求: 定义一个存储过程，获取给定部门的工资总和（通过out参数）要求部门号和工资总额定义为参数</p>
+<pre><code>--要求: 定义一个存储过程，获取给定部门的工资总和（通过out参数）要求部门号和工资总额定义为参数
+create or replace procedure get_sal1(dept_id number,sumsal out number)
+
+is
+       cursor salary_cursor is select salary from employees where department_id = dept_id;
+
+begin
+  sumsal := 0;
+  for c in salary_cursor loop
+    sumsal := sumsal + c.salary;
+    end loop;
+    dbms_output.put_line(sumsal);
+    end;
+</code></pre><p>调用存储过程</p>
+<pre><code>declare 
+  v_sal number(10) := 0;
+
+begin
+  get_sal1(80,v_sal);
+  end;
+</code></pre><p>自定义一个存储过程完成以下操作: </p>
+<pre><code>    /*
+自定义一个存储过程完成以下操作: 
+对给定部门(作为输入参数)的员工进行加薪操作, 若其到公司的时间在 (? , 95) 期间,    为其加薪 %5
+                                                               [95 , 98)             %3       
+                                                               [98, ?)               %1
+得到以下返回结果: 为此次加薪公司每月需要额外付出多少成本(定义一个 OUT 型的输出参数).
+*/
+create or replace procedure add_sal(dept_id number,temp_sal  out number)
+is
+       cursor sal_cursor is select employee_id,salary,hire_date from employees where department_id = dept_id;
+       v_i number(4,2) := 0;
+begin
+  temp_sal := 0;
+  for c in sal_cursor loop
+    if to_char(c.hire_date,&apos;yyyy&apos;) &lt; &apos;1995&apos; then v_i := 0.05;
+    elsif to_char(c.hire_date,&apos;yyyy&apos;) &lt; &apos;1998&apos; then v_i := 0.03;
+    else v_i := 0.01;
+    end if;
+    --1.更新工资
+    update employees 
+    set salary = salary * (1 + v_i) where employee_id = c.employee_id ;
+    --2.付出的成本
+    temp_sal := temp_sal + c.salary * v_i;
+    end loop;
+    dbms_output.put_line(temp_sal);
+end;
+</code></pre><p>执行</p>
+<pre><code>declare 
+  v_temp number(10);
+
+begin
+  add_sal(80,v_temp);
+  end;
+</code></pre><p>##触发器  </p>
+<p>组成：</p>
+<ul>
+<li>触发事件：在何种情况下触发TRIGGER；例如insert update delete</li>
+<li>触发时间：是在触发事件发生之前还是之后触发，也就是触发事件和触发器的顺序</li>
+<li>触发器本身：即该触发器被触发之后的目的和意图，正是触发器本身要做的事，例如PL/SQL块；</li>
+<li>触发频率：说明触发器内定义动作被执行的次数，即语句级触发器和行级触发器。<ul>
+<li>语句级触发器：当某触发事件发生时，该触发器执行一次</li>
+<li>行级触发器：当某触发事件发生，对受到该操作影响的每一行数据，触发器都单独执行一次。</li>
+</ul>
+</li>
+</ul>
+<p>创建一个触发器，当你对employees表执行update时，输出hello,world!.如果将for each row删除就是语句触发器</p>
+<pre><code>create or replace trigger update_emp_trigger
+after
+       update on employees
+for each row
+begin
+  dbms_output.put_line(&apos;hello,world!&apos;);
+
+end;
+</code></pre><p>每添加一次触发一次</p>
+<pre><code>create or replace trigger update_emp_trigger3
+after
+       insert on emp_test
+begin
+  dbms_output.put_line(&apos;hello,world!&apos;);
+
+end;
+</code></pre><p>使用 :new :old修饰符<br>将更新前后的值全部输出</p>
+<pre><code>create or replace trigger update_emp_trigger2
+after
+       update on emp_test
+for each row
+begin
+  dbms_output.put_line(&apos;old:salary:&apos;||:old.salary||&apos;,&apos;||&apos;new:salary:&apos;||:new.salary);
+
+end;
+</code></pre><p>编写一个触发器, 在对 my_emp 记录进行删除的时候, 在 my_emp_bak 表中备份对应的记录</p>
+<pre><code>--编写一个触发器, 在对 my_emp 记录进行删除的时候, 在 my_emp_bak 表中备份对应的记录
+create or replace trigger delete_emp_trigger
+before
+delete on my_emp
+for each row
+begin
+  insert into my_emp_bak
+  values(:old.employee_id,:old.salary);
+end;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/pl-sql-语法-游标-异常处理-存储函数存储过程-触发器/index.html" data-id="cjqi3ov5q000sfcqi3lpjqxz3" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>30</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
