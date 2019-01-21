@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>java8_Lambda | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="lambda表达式的学习 基础语法格式    package com.diedline.java8;  import org.junit.jupiter.api.Test;  import java.util.*; import java.util.function.Consumer;  /**  * Lambda 的基础语法 新的操作符 &amp;quot;-&amp;gt;&amp;quot;  称为 lambda">
+<meta property="og:type" content="website">
+<meta property="og:title" content="java8_Lambda">
+<meta property="og:url" content="https://diedline.github.io/java8-Lambda/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="lambda表达式的学习 基础语法格式    package com.diedline.java8;  import org.junit.jupiter.api.Test;  import java.util.*; import java.util.function.Consumer;  /**  * Lambda 的基础语法 新的操作符 &amp;quot;-&amp;gt;&amp;quot;  称为 lambda">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-21T17:23:05.655Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java8_Lambda">
+<meta name="twitter:description" content="lambda表达式的学习 基础语法格式    package com.diedline.java8;  import org.junit.jupiter.api.Test;  import java.util.*; import java.util.function.Consumer;  /**  * Lambda 的基础语法 新的操作符 &amp;quot;-&amp;gt;&amp;quot;  称为 lambda">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>31</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/java8-Lambda/index.html" class="article-date">
+  <time class="post-time" datetime="2019-01-21T17:22:14.000Z" itemprop="datePublished">
+    <span class="post-month">1月</span><br/>
+    <span class="post-day">22</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      java8_Lambda
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>lambda表达式的学习<ul>
+<li>基础语法格式</li>
+</ul>
+</li>
+</ul>
+<pre><code>package com.diedline.java8;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.*;
+import java.util.function.Consumer;
+
+/**
+ * Lambda 的基础语法 新的操作符 &quot;-&gt;&quot;  称为 lambda 操作符
+ *                      该操作符将lambda 分为两部分
+ * 左侧：Lambda 表达式中的参数列表
+ * 右侧：Lambda中所需要的功能
+ *
+ * 语法格式一： 无参无返回值
+ *  () -&gt;System.out,println(&quot;123&quot;);
+ * 语法格式二： 有一个参数，无返回值的方法
+ *  (x) -&gt; System.out.println(x);
+ * 语法格式三：只有一个参数，小括号可以省略不写
+ *  x -&gt; System.out.println(x);
+ * 语法格式四：有两个以上的参数，并且lambda体中有多条语句,需要使用大括号和return
+ *    Comparator&lt;Integer&gt; con = (x,y) -&gt; {
+ *             System.out.println(&quot;函数式接口&quot;);
+ *             return Integer.compare(x,y);
+ *         };
+ * 语法格式五：若lambda体中只有一条语句,return 和大括号都可以省略不写
+ *      Comparator&lt;Integer&gt; con = (x,y) -&gt;  Integer.compare(x,y);
+ * 语法格式六：Lambda表达式的参数列表的数据类型可以省略不写，因为jvm的编译期可以通过上下文推断出数据类型
+ *      (Integer x,Integer y) -&gt;  Integer.compare(x,y);
+ *
+ * 左右遇一括号省
+ * 左侧推断类型省
+ *
+ * 二：lambda表达式需要“函数式接口的支持”
+ * 函数式接口：接口中只有一个抽象方法时，就是函数式接口可以使用 @FunctionalInterface 修饰
+ *              可以检查是否是函数式接口
+ * */
+public class TestLambda2 {
+    @Test
+    public void test1(){
+        //使用匿名内部类
+        int num = 0;
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(&quot;Hello,world!&quot; + num);
+            }
+        };
+        r.run();
+        System.out.println(&quot;----------------&quot;);
+        //使用lambda 表达式
+        Runnable r1 = ()-&gt; System.out.println(&quot;Hello,world!&quot;);
+        r1.run();
+    }
+
+    @Test
+    public void test2(){
+        Consumer&lt;String&gt; con = x -&gt; System.out.println(x);
+        con.accept(&quot;厉害了&quot;);
+    }
+
+    @Test
+    public void test3(){
+        Comparator&lt;Integer&gt; con = (x,y) -&gt; {
+            System.out.println(&quot;函数式接口&quot;);
+            return Integer.compare(x,y);
+        };
+    }
+    @Test
+    public void test4(){
+        Comparator&lt;Integer&gt; con = (x,y) -&gt;  Integer.compare(x,y);
+    }
+
+    @Test
+    public void test5(){
+        Comparator&lt;Integer&gt; con = (Integer x,Integer y) -&gt;  Integer.compare(x,y);
+    }
+
+    //类型推断
+    public void test6(){
+//        String[] strs;
+//        strs  = {&quot;aaa&quot;,&quot;bbb&quot;,&quot;ccc&quot;};
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();
+        show(new HashMap&lt;&gt;());
+    }
+
+    public void show(Map&lt;String,Integer&gt; map){
+    }
+
+    //需求：对一个数进行运算
+    @Test
+    public void test7(){
+        Integer num = operation(100,(x) -&gt; x * x);
+        System.out.println(num);
+        System.out.println(operation(200,(y) -&gt; y + 200));
+    }
+
+    public Integer operation(Integer num, MyFun mf){
+        return mf.getValue(num);
+    }
+}
+</code></pre><p>函数式接口MyFun</p>
+<pre><code>package com.diedline.java8;
+
+@FunctionalInterface
+public interface MyFun {
+    public Integer getValue(Integer num);
+}
+</code></pre><p>#####Lambda练习</p>
+<p>1.调用collections.sort方法,通过定制排序比较两个employee(先按照年龄比较，年龄相同按照姓名比较)，使用Lambda作为参数传递。</p>
+<pre><code>package com.diedline.exer;
+
+import com.diedline.java8.Employee;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class TestLambda {
+    List&lt;Employee&gt; employees = Arrays.asList(
+            new Employee(&quot;张三&quot;,18,9999.99),
+            new Employee(&quot;李四&quot;,38,2323.99),
+            new Employee(&quot;王五&quot;,78,4349.99),
+            new Employee(&quot;赵六&quot;,8,23539.99),
+            new Employee(&quot;田气&quot;,16,91233.99)
+    );
+
+    @Test
+    public void test1(){
+        Collections.sort(employees,(e1,e2) -&gt;{
+            if(e1.getAge() == e2.getAge()){
+                return e1.getName().compareTo(e2.getName());
+            } else {
+               return Integer.compare(e1.getAge(),e2.getAge());     //如果使用减号可以倒过来排序
+            }
+        });
+        for (Employee e:employees
+             ) {
+            System.out.println(e);
+        }
+    }
+
+}
+</code></pre><p>2.</p>
+<ul>
+<li>1.声明函数式接口，接口中声明抽象方法,public String getValue(String str);</li>
+<li>2.声明类TestLambda,类中编写方法使用接口作为参数，将第一个字符转换成大写，并作为方法的返回值</li>
+<li>3.在将一个字符串的第二个和第四个索引位置进行截取子串</li>
+</ul>
+<p>接口                        </p>
+<pre><code>package com.diedline.exer;
+
+@FunctionalInterface
+public interface MyFunction {
+    public String getValue(String a);
+}
+</code></pre><p>实现    </p>
+<pre><code>//需求：用于处理字符串的方法
+   public String strHandler(String str,MyFunction myFunction){
+       return myFunction.getValue(str);
+   }
+
+   @Test
+   public void test2(){
+       String str = strHandler(&quot;\t\t\t 威武23333  &quot;, String::trim);
+       System.out.println(str);
+
+       String upper = strHandler(&quot;abcdf&quot;,(a) -&gt; a.toUpperCase());
+       System.out.println(upper);
+
+       String newStr = strHandler(&quot;\t 威武23333  &quot;,(a) -&gt; a.substring(2,4));
+       System.out.println(newStr);
+   }          
+</code></pre><p>3.</p>
+<ul>
+<li>1.声明一个带两个泛型的函数式接口，泛型类型为&lt;T,R&gt; T为参数，R为返回值  </li>
+<li>2.接口中声明对应的抽象方法</li>
+<li>3.在TestLambda中声明方法，使用接口作为参数，计算两个long型参数的和。</li>
+<li>4.再计算两个long型参数的乘积 </li>
+</ul>
+<p>接口</p>
+<pre><code>package com.diedline.exer;
+
+@FunctionalInterface
+public interface MyInterface&lt;T,R&gt; {
+    public  R getValue(T t1,T t2);
+}
+</code></pre><p>实现</p>
+<pre><code>//处理long字符串
+   public Long longCheck(long a,long b,MyInterface&lt;Long,Long&gt; myInterface){
+       return myInterface.getValue(a,b);
+   }
+   @Test
+   public void test3(){
+       Long l = longCheck(23, 100, (a, b) -&gt; a + b);
+       System.out.println(l);
+
+       Long l2 = longCheck(23,100,(a,b) -&gt; a * b);
+       System.out.println(l2);
+   }           
+</code></pre><p>#####大多数情况下其实都不用自己写接口，因为这样太麻烦了，所以可以使用java8中内置的四大核心函数式接口</p>
+<pre><code>package com.diedline.java8;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+/**
+ * java8 中内置的四大核心函数式接口
+ * Consumer&lt;T&gt; 消费型接口
+ *      void accept(T t);
+ *
+ * Supplier&lt;T&gt; 供给型接口
+ *      T get();
+ *
+ * Function&lt;T,R&gt; 函数型接口
+ *      R apply(T)  
+ *
+ * Predicate&lt;T&gt; 断言型接口
+ *      boolean test(T t);
+ */
+public class TestLambda3 {
+    //Consumer&lt;T&gt; 消费型接口
+    @Test
+    public void test1(){
+        happy(10000,(m) -&gt; System.out.println(&quot;出去保健消费&quot;+m+&quot;元&quot;));
+    }
+    public void happy(double money, Consumer&lt;Double&gt; con  ){
+        con.accept(money);
+    }
+
+    //Supplier&lt;T&gt; 供给型接口
+    @Test
+    public void test2(){
+        //使用math的random 方法 每次产生十个随机数
+        List&lt;Integer&gt; list = getNum(10,()-&gt; (int) (Math.random() * 100));
+        for (Integer a:list
+             ) {
+            System.out.println(a);
+        }
+    }
+    //需求：产生指定个数的整数，并放入集合中
+    public List&lt;Integer&gt; getNum(int num, Supplier&lt;Integer&gt; supplier){
+        List&lt;Integer&gt; list = new ArrayList&lt;&gt;();     //创建集合
+        for (int i = 0; i &lt; num;i++){
+            Integer a = supplier.get();
+            list.add(a);
+        }
+        return list;
+    }
+
+    //Function&lt;T,R&gt; 函数型接口
+    @Test
+    public void test3(){
+        //小写转大写
+        String a = strOpr(&quot;abcde&quot;, String::toUpperCase);
+        System.out.println(a);
+        //去除空格
+        String b = strOpr(&quot;\t\t我的方法 &quot;,String::trim);
+        System.out.println(b);
+    }
+
+    //需求：用于处理字符串
+    public String strOpr(String a, Function&lt;String,String&gt; function){
+        return function.apply(a);
+    }
+
+
+
+    //Predicate&lt;T&gt; 断言型接口
+
+    //需求:将满足条件的字符串放入到集合中
+    @Test
+    public void test4(){
+        List&lt;String&gt; list= Arrays.asList(&quot;hello&quot;,&quot;123&quot;,&quot;Lambda&quot;,&quot;www&quot;,&quot;OK&quot;);
+        //过滤获取字符长度大于3的字符串
+        List&lt;String&gt; strList = getList(list,(a) -&gt; a.length()&gt;3);
+        for (String a:strList
+             ) {
+            System.out.println(a);
+        }
+    }
+    public  List&lt;String&gt; getList(List&lt;String&gt; list, Predicate&lt;String&gt; predicate){
+        List&lt;String&gt; strlist = new ArrayList&lt;&gt;();
+        for (String a:list
+             ) {
+            if(predicate.test(a)){
+                strlist.add(a);
+            }
+        }
+        return strlist;
+    }
+
+}
+</code></pre><p>#####其他接口</p>
+<p>BiFunction&lt;T,U,R&gt; 参数T，U返回R</p>
+<p>UnaryOperator<t> 是Function子接口 参数T 返回T</t></p>
+<p>BinaryOperator<t> 参数类型T，T 返回类型T</t></p>
+<p>BiComsumer&lt;T,U&gt;    参数类型T，U 返回类型void</p>
+<p>ToIntFuntion<t> 参数类型 T 返回int</t></p>
+<p>ToLongFunction<t> 参数类型T 返回long</t></p>
+<p>ToDoubleFunction<t> 参数类型T 返回double</t></p>
+<p>IntFunction<r> 参数类型 int 返回R</r></p>
+<p>LongFunction<r> 参数类型 long 返回R</r></p>
+<p>DoubleFunction<r> 参数类型 Double 返回R</r></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/java8-Lambda/index.html" data-id="cjr6lpcbg0050poqis01c4p27" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>31</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
