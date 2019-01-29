@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>git | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="####git命令行操作 #####本地库初始化  初始化： git init 命令：git add 效果： 注意: .git目录中存放的是本地库相关的子目录和文件，不需要删除和修改。  #####设置签名  形式： 用户名： Tom Email地址： goodMorning@qq.com  作用： 区别不同开发人员的身份  辨析： 这里设置的签名和登录远程库（代码托管中心）的账号密码没有任何关系">
+<meta property="og:type" content="website">
+<meta property="og:title" content="git">
+<meta property="og:url" content="https://diedline.github.io/git/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="####git命令行操作 #####本地库初始化  初始化： git init 命令：git add 效果： 注意: .git目录中存放的是本地库相关的子目录和文件，不需要删除和修改。  #####设置签名  形式： 用户名： Tom Email地址： goodMorning@qq.com  作用： 区别不同开发人员的身份  辨析： 这里设置的签名和登录远程库（代码托管中心）的账号密码没有任何关系">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.imgur.com/TE9pjop.png">
+<meta property="og:image" content="https://i.imgur.com/uKfikf5.png">
+<meta property="og:image" content="https://i.imgur.com/bOZQDZI.png">
+<meta property="og:image" content="https://i.imgur.com/WvqlOOQ.png">
+<meta property="og:image" content="https://i.imgur.com/5rE2oRE.png">
+<meta property="og:image" content="https://i.imgur.com/SEvSLrJ.png">
+<meta property="og:image" content="https://i.imgur.com/sbHCHY5.png">
+<meta property="og:image" content="https://i.imgur.com/dcL8Tb9.png">
+<meta property="og:image" content="https://i.imgur.com/aB8CiTj.png">
+<meta property="og:image" content="https://i.imgur.com/gdPDrlk.png">
+<meta property="og:image" content="https://i.imgur.com/rWogqdj.png">
+<meta property="og:image" content="https://i.imgur.com/3dy0wCL.png">
+<meta property="og:image" content="https://i.imgur.com/DsHroJU.png">
+<meta property="og:image" content="https://i.imgur.com/bycMjBl.png">
+<meta property="og:image" content="https://i.imgur.com/bFquSLM.png">
+<meta property="og:image" content="https://i.imgur.com/XFCNwok.png">
+<meta property="og:image" content="https://i.imgur.com/MN3kSDi.png">
+<meta property="og:image" content="https://i.imgur.com/S0zhtuV.png">
+<meta property="og:image" content="https://i.imgur.com/dbU4XBP.png">
+<meta property="og:image" content="https://i.imgur.com/MWBC0h2.png">
+<meta property="og:image" content="https://i.imgur.com/iYxohhF.png">
+<meta property="og:image" content="https://i.imgur.com/eJNQHJL.png">
+<meta property="og:image" content="https://i.imgur.com/QnPpNie.png">
+<meta property="og:updated_time" content="2019-01-29T08:11:09.129Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git">
+<meta name="twitter:description" content="####git命令行操作 #####本地库初始化  初始化： git init 命令：git add 效果： 注意: .git目录中存放的是本地库相关的子目录和文件，不需要删除和修改。  #####设置签名  形式： 用户名： Tom Email地址： goodMorning@qq.com  作用： 区别不同开发人员的身份  辨析： 这里设置的签名和登录远程库（代码托管中心）的账号密码没有任何关系">
+<meta name="twitter:image" content="https://i.imgur.com/TE9pjop.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>32</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>28</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/git/index.html" class="article-date">
+  <time class="post-time" datetime="2019-01-29T08:07:50.000Z" itemprop="datePublished">
+    <span class="post-month">1月</span><br/>
+    <span class="post-day">29</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>####git命令行操作</p>
+<p>#####本地库初始化</p>
+<ul>
+<li>初始化： git init</li>
+<li>命令：git add</li>
+<li>效果：<img src="https://i.imgur.com/TE9pjop.png" alt=""></li>
+<li>注意: .git目录中存放的是本地库相关的子目录和文件，不需要删除和修改。</li>
+</ul>
+<p>#####设置签名</p>
+<ul>
+<li>形式：</li>
+<li>用户名： Tom</li>
+<li>Email地址： <a href="mailto:goodMorning@qq.com" target="_blank" rel="noopener">goodMorning@qq.com</a> </li>
+<li>作用： 区别不同开发人员的身份 </li>
+<li>辨析： 这里设置的签名和登录远程库（代码托管中心）的账号密码没有任何关系</li>
+<li><p>命令：</p>
+<ul>
+<li>项目级别/仓库级别：仅在当前本地库范围有效 <ul>
+<li>git config user.name tom_pro</li>
+<li>git config user.email <a href="mailto:goodmoring@qq.com" target="_blank" rel="noopener">goodmoring@qq.com</a> </li>
+<li>信息保存的位置 ./.git.config文件中<br><img src="https://i.imgur.com/uKfikf5.png" alt=""></li>
+</ul>
+</li>
+<li>系统用户级别 ：登录当前操作系统的用户范围 <ul>
+<li>git config –global  user.name tom_glb</li>
+<li>git config –global user.email <a href="mailto:goodmoring@qq.com" target="_blank" rel="noopener">goodmoring@qq.com</a></li>
+<li>信息保存的位置 cd ~ 到home目录下的.git.config 文件中<br><img src="https://i.imgur.com/bOZQDZI.png" alt=""></li>
+</ul>
+</li>
+<li>级别优先级<ul>
+<li>就近原则：项目级别优先于系统用户级别，二者都有时采用项目级别的签名</li>
+<li>如果只有系统用户级别的签名，就以系统用户级别的签名为准</li>
+<li>二者都没有不允许<br>####命令汇总</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>状态查看 获取当前状态</p>
+<ul>
+<li>git satus </li>
+<li>可以查看工作区.暂存区的工作状态</li>
+</ul>
+</li>
+<li>添加操作 将文件提交到暂存区<ul>
+<li>git add xxx文件 </li>
+<li>将工作区的新建/修改添加到暂存区</li>
+</ul>
+</li>
+<li>提交操作<ul>
+<li>git commit -m “commit message” 文件名 </li>
+<li>将暂存区的内容提交到本地库</li>
+</ul>
+</li>
+<li>查看日志<ul>
+<li>git log 查看你的提交日志<br><img src="https://i.imgur.com/WvqlOOQ.png" alt=""><ul>
+<li>多屏显示方式：<ul>
+<li>空格向下翻页</li>
+<li>b向上翻页</li>
+<li>q退出 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>git log –pretty=oneline 每个提交记录只占一行<br><img src="https://i.imgur.com/5rE2oRE.png" alt=""></li>
+<li>git log –oneline 将hash值只显示一部分占一行<br><img src="https://i.imgur.com/SEvSLrJ.png" alt=""></li>
+<li>git reflog 能显示版本之间需要移动指针的次数<br><img src="https://i.imgur.com/sbHCHY5.png" alt=""></li>
+</ul>
+</li>
+<li>git rm –cached xxx文件 将文件从暂存区移出变成未追踪的文件</li>
+</ul>
+<p>######分支的前进后退</p>
+<ul>
+<li>基于索引值操作（推荐）<ul>
+<li>git reset –hard [局部索引值]</li>
+<li>git reset –hard 79c7a63  </li>
+</ul>
+</li>
+<li>使用^符号：只能往后退有几个 ^就代表后退几个版本<ul>
+<li>git reset –hard HEAD^</li>
+</ul>
+</li>
+<li>使用~符号 波浪线后的n代表后退几个版本<ul>
+<li>git reset –hard HEAD~n </li>
+</ul>
+</li>
+</ul>
+<p>######reset 命令的三个参数对比</p>
+<ul>
+<li>–soft 参数<ul>
+<li>仅仅在本地库移动指针</li>
+</ul>
+</li>
+<li>–mixed参数<ul>
+<li>在本地库移动HEAD指针</li>
+<li>重置暂存区</li>
+</ul>
+</li>
+<li>–hard 参数<ul>
+<li>在本地库移动head指针</li>
+<li>重置暂存区</li>
+<li>重置工作区</li>
+</ul>
+</li>
+</ul>
+<p>####删除文件</p>
+<ul>
+<li>能找回删除的文件的前提是：删除前，文件存在的状态提交到了本地库</li>
+<li>操作：git reset –hard[指针位置]<ul>
+<li>删除操作已经提交到本地库：指针位置指向历史记录</li>
+<li>删除操作尚未提交到本地库：指针位置使用HEAD</li>
+</ul>
+</li>
+</ul>
+<p>####比较文件</p>
+<ul>
+<li>git diff [文件名]<ul>
+<li>将工作区中的文件和暂存区进行比较</li>
+</ul>
+</li>
+<li>git diff [本地库中的历史版本] [文件名] <ul>
+<li>将工作区的文件和本地库历史记录比较</li>
+</ul>
+</li>
+</ul>
+<p>####分支的操作</p>
+<ul>
+<li>查看所有分支 git branch -v</li>
+<li>创建一个分支 git branch [分支名]</li>
+<li>切换分支git checkout [分支名]</li>
+<li>合并分支<ul>
+<li>第一步：切换到接受修改的分支上（被合并的，增加新内容） git checkout [被合并的分支名]</li>
+<li>第二步：执行 git merge [有新内容的分支名]</li>
+</ul>
+</li>
+<li>解决冲突</li>
+<li>冲突的表现<br><img src="https://i.imgur.com/dcL8Tb9.png" alt=""><ul>
+<li>1.先使用git marge[分支名] 如果有冲突会提示你手动合并</li>
+<li>2.使用vim编辑文件删除特殊符号解决冲突问题</li>
+<li>3.使用git add [文件名] 提交</li>
+<li>4.使用git commit -m “xxx” 提交 注意不要后面不要加上文件名</li>
+</ul>
+</li>
+</ul>
+<p>####为常用操作起别名<br>查看所有存在的别名</p>
+<ul>
+<li><p>git remote -v<br>如将远程库的地址取别名为origin：</p>
+</li>
+<li><p>git remote add origin <a href="https://github.com/diedline/huashan.git" target="_blank" rel="noopener">https://github.com/diedline/huashan.git</a></p>
+</li>
+</ul>
+<p>####推送和克隆</p>
+<p>#####推送</p>
+<p>将本地的资源推送到远程</p>
+<p>git push [别名][分支名]<br><img src="https://i.imgur.com/aB8CiTj.png" alt=""></p>
+<p>#####克隆</p>
+<ul>
+<li>命令 git clone[远程地址]<br><img src="https://i.imgur.com/gdPDrlk.png" alt=""></li>
+<li>完整的将远程库资源下载到本地</li>
+<li>创建oragin远程地址别名</li>
+<li>初始化本地库<ul>
+<li>效果</li>
+<li>完整的把远程库克隆到本地</li>
+<li>创建oragin远程地址别名</li>
+<li>初始化本地 </li>
+</ul>
+</li>
+</ul>
+<p>如果远程库需要多人协作的话可以在库的settings中选择Collaborators 将添加邀请发给另外一个人</p>
+<p>如果你需要登录其他人的GitHub可以将windows凭据管理器中GitHub的凭据删除</p>
+<p>#####远程库修改的拉取<br>如果觉得不会产生冲突的话直接使用<br>git pull origin master</p>
+<p>如果是为了保险可以先fetch看一看，如果没有问题再合并分支</p>
+<ul>
+<li>pull 相当于fetch + merge</li>
+<li>git fetch [远程库地址别名][远程分支名]  使用 git checkout [远程地址别名/远程分支名] 切换到那个分支然后cat 看文件</li>
+<li>git merge [远程地址别名/远程分支名]</li>
+</ul>
+<p>####协同开发冲突的解决</p>
+<p>如果当你push时远程库和本地库冲突了，可以先将远程库pull拉取下来获取最新版本的文件，然后手动修改冲突的文件然后git add git commit （注意commit 后面不需要加文件名）提交到本地库最后push</p>
+<p>####跨团队协作</p>
+<ul>
+<li>先fork获取分支</li>
+</ul>
+<p><img src="https://i.imgur.com/rWogqdj.png" alt=""></p>
+<ul>
+<li>然后再将项目克隆到本地修改上传到自己的远程库</li>
+<li>然后使用Pull requests 将自己的修改提交给别人<br><img src="https://i.imgur.com/3dy0wCL.png" alt=""> </li>
+</ul>
+<p>####使用SSH登录免除每次push都需要输入密码的麻烦</p>
+<p>cd ~ 进入用户家目录</p>
+<p>rm -r .ssh/ 删除以前存在的ssh</p>
+<p>ssh-keygen -t rsa -C 邮箱地址    生成ssh密匙目录</p>
+<p>cd .ssh/    进入.ssh目录查看文件列表</p>
+<p>ll</p>
+<p>cat id_rsa.pub    查看id_rsa.pub内容</p>
+<p>然后将id_rsa.pub中的内容复制到github上<br><img src="https://i.imgur.com/DsHroJU.png" alt=""></p>
+<p>回到gitbash 创建远程地址别名 注意是ssh的地址<br><img src="https://i.imgur.com/bycMjBl.png" alt=""></p>
+<p>然后就可以愉快的push 文件了</p>
+<p>####IDEA操作</p>
+<p>#####工程初始化为本地库<br>选择create git Repository<br><img src="https://i.imgur.com/bFquSLM.png" alt=""></p>
+<p>#####将项目提交到本地的git<br>先add<br><img src="https://i.imgur.com/XFCNwok.png" alt=""></p>
+<p>然后commit Directory</p>
+<p>然后在github 上创建一个仓库<br><img src="https://i.imgur.com/MN3kSDi.png" alt=""></p>
+<p>然后通过ssh提交或者直接使用IDEA自带的push直接提交 提交成功后GitHub就能直接看到提交的文件了<br><img src="https://i.imgur.com/S0zhtuV.png" alt=""></p>
+<p>复制ssh地址<br><img src="https://i.imgur.com/dbU4XBP.png" alt=""></p>
+<p>在本地项目目录使用gitbash 为shh地址取别名<br><img src="https://i.imgur.com/MWBC0h2.png" alt=""></p>
+<p>然后直接push 这个分支吧</p>
+<p><img src="https://i.imgur.com/iYxohhF.png" alt=""></p>
+<p>成功上传<br><img src="https://i.imgur.com/eJNQHJL.png" alt=""></p>
+<p>#####克隆项目</p>
+<p>选择git<br><img src="https://i.imgur.com/QnPpNie.png" alt=""></p>
+<p>然后输入GitHub项目的url就能成功克隆到本地</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/git/index.html" data-id="cjrhhgji000669gqienjqbga8" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>32</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>28</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
