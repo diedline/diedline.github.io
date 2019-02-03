@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CAS算法 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#####内存可见性问题 当多个线程操作共享数据时，彼此不可见 Volatile 关键字: 保证多个线程进行操作共享数据时，可以保证内存中数据可见  1.Volatile 不具有互斥性； 2.Volatile 不能保证变量的原子性  package com.diedline.juc;  /**  * Volatile 关键字: 保证多个线程进行操作共享数据时，可以保证内存中数据可见  *">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CAS算法">
+<meta property="og:url" content="https://diedline.github.io/CAS算法/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="#####内存可见性问题 当多个线程操作共享数据时，彼此不可见 Volatile 关键字: 保证多个线程进行操作共享数据时，可以保证内存中数据可见  1.Volatile 不具有互斥性； 2.Volatile 不能保证变量的原子性  package com.diedline.juc;  /**  * Volatile 关键字: 保证多个线程进行操作共享数据时，可以保证内存中数据可见  *">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-03T10:10:29.214Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CAS算法">
+<meta name="twitter:description" content="#####内存可见性问题 当多个线程操作共享数据时，彼此不可见 Volatile 关键字: 保证多个线程进行操作共享数据时，可以保证内存中数据可见  1.Volatile 不具有互斥性； 2.Volatile 不能保证变量的原子性  package com.diedline.juc;  /**  * Volatile 关键字: 保证多个线程进行操作共享数据时，可以保证内存中数据可见  *">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>33</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>28</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/CAS算法/index.html" class="article-date">
+  <time class="post-time" datetime="2019-02-03T10:01:29.000Z" itemprop="datePublished">
+    <span class="post-month">2月</span><br/>
+    <span class="post-day">03</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CAS算法
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#####内存可见性问题</p>
+<p>当多个线程操作共享数据时，彼此不可见</p>
+<p>Volatile 关键字: 保证多个线程进行操作共享数据时，可以保证内存中数据可见</p>
+<ul>
+<li>1.Volatile 不具有互斥性；</li>
+<li>2.Volatile 不能保证变量的原子性</li>
+</ul>
+<pre><code>package com.diedline.juc;
+
+/**
+ * Volatile 关键字: 保证多个线程进行操作共享数据时，可以保证内存中数据可见
+ *      相较于synchronized 是一种较为轻量级的同步策略
+ *
+ * 注意：
+ *      1.Volatile 不具有互斥性；
+ *      2.Volatile 不能保证变量的原子性
+ *
+ */
+public class TestVolatile {
+    public static void main(String[] args) {
+        ThreadDemo td = new ThreadDemo();
+        new Thread(td).start();
+        while (true){
+                if (td.isFlag()) {
+                    System.out.println(&quot;--------------------&quot;);
+                    break;
+                }
+        }
+    }
+}
+
+
+
+class ThreadDemo implements Runnable{
+    private volatile boolean flag = false;
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        flag = true;
+        System.out.println(&quot;flag = &quot; + isFlag());
+    }
+}
+</code></pre><p>####CAS算法 和原子变量的使用<br>在这个包下查询     使用原子变量能解决内存可见性的问题和原子性的问题并且效率比同步锁要高</p>
+<p>java.util,concurrent.atomic</p>
+<pre><code>package com.diedline.juc;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ *  一. i++的原子性问题  i++ 的操作实际分为三个步骤“读，改，写”
+ *          int i =10;
+ *          i = i++;    //10
+ *
+ * 底层
+ *          int temp=i;
+ *          i = i + 1;
+ *          i = temp;
+ *
+ *
+ * 二： 原子变量： jdk java.util,concurrent.atomic 包下提供了常用的原子变量
+ *              1.Volatile 保证内存可见性
+ *              2.使用 CAS （Compare-And-Swap）算法保证数据的原子性
+ *                 CAS算法 是硬件对于并发操作共享数据的支持
+ *                 CAS 包含三个操作数
+ *                 内存值 V
+ *                 预估值 A
+ *                 更新值 B
+ *                 当且仅当 V == A 时 V = B.否则将不做任何操作
+ *                 当多个线程同时修改时只有一个会成功  如果其他的不成功不会释放资源 继续尝试 所以效率比同步锁高
+ *
+ */
+
+public class TestAtomicDemo {
+    public static void main(String[] args) {
+        ATomicDemo atd = new ATomicDemo();
+
+        for (int i = 0; i &lt; 10; i++) {
+            new Thread(atd).start();
+        }
+    }
+
+
+}
+
+class ATomicDemo implements Runnable{
+    //使用原子变量 跟Integer 这种包装类很相像
+    private AtomicInteger serialNumber = new AtomicInteger();
+
+
+    public int getSerialNumber() {
+        return serialNumber.getAndIncrement();
+    }
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(  getSerialNumber());
+    }
+}
+</code></pre><p>#####模拟CAS算法</p>
+<pre><code>package com.diedline.juc;
+
+public class TestCompareAndSwap {
+    /**
+     *  模拟CAS算法
+     *  
+     * @param args
+     */
+    public static void main(String[] args) {
+        final CompareAndSwap cas = new CompareAndSwap();
+        for (int i = 0; i &lt;10 ; i++) {
+            new Thread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            int expectedValue = cas.get();
+                            boolean b = cas.compareAndSet(expectedValue,(int)(Math.random()*101));
+                            System.out.println(b);
+                        }
+                    }
+            ).start();
+        }
+    }
+}
+
+class CompareAndSwap{
+    private int value;
+
+    //获取内存值
+    public synchronized int get(){
+        return value;
+    }
+
+    //比较
+    public synchronized int compareAndSwap(int expectValue,int newValue){
+        int oldValue = value;
+
+        if(oldValue == expectValue){
+            this.value = newValue;
+        }
+
+        return oldValue;
+    }
+
+    //设置值
+    public synchronized boolean compareAndSet(int expectedValue, int newValue){
+        return expectedValue ==compareAndSwap(expectedValue,newValue);
+    }
+
+
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/CAS算法/index.html" data-id="cjroqzqnv0001q8qi1h5o96is" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>33</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>28</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

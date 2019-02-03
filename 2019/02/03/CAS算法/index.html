@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>简单的socket网络通信的实现p2 | Died line 的博客</title>
+  <title>CAS算法 | Died line 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
-<meta name="keywords" content="python,网络,文件传输">
+  <meta name="description" content="read more">
+<meta name="keywords" content="java,多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单的socket网络通信的实现p2">
-<meta property="og:url" content="https://diedline.github.io/2018/10/02/简单的socket网络通信的实现p2/index.html">
+<meta property="og:title" content="CAS算法">
+<meta property="og:url" content="https://diedline.github.io/2019/02/03/CAS算法/index.html">
 <meta property="og:site_name" content="Died line 的博客">
-<meta property="og:description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
+<meta property="og:description" content="read more">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-02T13:49:13.700Z">
+<meta property="og:updated_time" content="2019-02-03T10:11:43.556Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简单的socket网络通信的实现p2">
-<meta name="twitter:description" content="1.实现简单的ssh服务端客户端输入 命令行命令，服务器端返回数据传送到客户端。 2.ftp server步骤1.读取文件名2.检测文件是否存在3.打开文件4.检测文件大小5.发送文件大小给客户端6.等客户端确认（防止粘包）7.开始边读边发数据8.发送 Md5值  实现文件的传输，通过md5值校对来判断文件是否丢包 read more">
+<meta name="twitter:title" content="CAS算法">
+<meta name="twitter:description" content="read more">
   
     <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
   
@@ -69,12 +69,12 @@
   </div>
 </div>
 
-        <section id="main"><article id="post-简单的socket网络通信的实现p2" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-CAS算法" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/10/02/简单的socket网络通信的实现p2/" class="article-date">
-  <time class="post-time" datetime="2018-10-02T13:43:27.000Z" itemprop="datePublished">
-    <span class="post-month">10月</span><br/>
-    <span class="post-day">02</span>
+    <a href="/2019/02/03/CAS算法/" class="article-date">
+  <time class="post-time" datetime="2019-02-03T09:52:26.000Z" itemprop="datePublished">
+    <span class="post-month">2月</span><br/>
+    <span class="post-day">03</span>
   </time>
 </a>
    
@@ -86,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      简单的socket网络通信的实现p2
+      CAS算法
     </h1>
   
 
@@ -101,18 +101,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1.实现简单的ssh服务端<br>客户端输入 命令行命令，服务器端返回数据传送到客户端。</p>
-<p>2.ftp server<br>步骤<br>1.读取文件名<br>2.检测文件是否存在<br>3.打开文件<br>4.检测文件大小<br>5.发送文件大小给客户端<br>6.等客户端确认（防止粘包）<br>7.开始边读边发数据<br>8.发送 Md5值 </p>
-<p>实现文件的传输，通过md5值校对来判断文件是否丢包</p>
-<p><a href="https://diedline.github.io/简单的socket网络通信的实现p2">read more</a></p>
+        <p><a href="https://diedline.github.io/CAS算法">read more</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/02/简单的socket网络通信的实现p2/" data-id="cjroqzqw8004yq8qigkvzhg0g" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/02/03/CAS算法/" data-id="cjroqzqnn0000q8qipzhfaf85" class="article-share-link">分享</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件传输/">文件传输</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
 
     </footer>
   </div>
@@ -120,19 +117,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/10/01/简单的socket网络通信的实现p1/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/01/29/git/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">简单的socket网络通信的实现p1</div>
+      <div class="article-nav-title">git</div>
     </a>
   
 </nav>
