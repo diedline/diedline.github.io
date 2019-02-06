@@ -38,9 +38,9 @@
     <h2 class="author">Died line</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>33</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
       <a href="/categories"><div><strong>9</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>28</strong><br>标签</div></a>
+      <a href="/tags"><div><strong>29</strong><br>标签</div></a>
     </div>
     <ul class="blog-link">
      
@@ -65,6 +65,61 @@
 </div>
 
         <section id="main">
+  
+    <article id="post-使用协程实现简单爬虫和事件驱动与异步ioの处理" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/13/使用协程实现简单爬虫和事件驱动与异步ioの处理/" class="article-date">
+  <time class="post-time" datetime="2018-10-13T08:32:00.000Z" itemprop="datePublished">
+    <span class="post-month">10月</span><br/>
+    <span class="post-day">13</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/13/使用协程实现简单爬虫和事件驱动与异步ioの处理/">使用协程实现简单爬虫和事件驱动与异步ioの处理</a>
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>,<a class="article-category-link" href="/categories/技术/操作系统/">操作系统</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>协程（微线程）<br>一种用户态的轻量线程。<br>拥有自己的寄存器和上下文栈。协程调度切换的时候，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器的上下文和栈。因此协程能调用上一次调用时的状态（即所有的一个局部状态的一个特定组合），每次过程重入时，相当于进入上一次调用的状态，就是进入上一次离开所处的逻辑流的位置。<br>协程的好处<br>1.无需线程上下文切换的开销<br>2.无需原子操作锁定及切换的开销<br>3.方便切换控制流，简化编程模型<br>4.高并发+高扩展性+低成本：一个cpu支持上万的协程都没有问题，所以很适用与高并发处理。<br>事件驱动与异步io<br><img src="\img\20161012022913536.jpg" alt=""><br><a href="https://diedline.github.io/使用协程实现简单爬虫和事件驱动与异步ioの处理">read more</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/2018/10/13/使用协程实现简单爬虫和事件驱动与异步ioの处理/" data-id="cjrtbg6ve00277sqiza5hehoa" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/协程/">协程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-多进程queue·pipe·manager·进程锁" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -107,7 +162,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/12/多进程queue·pipe·manager·进程锁/" data-id="cjroqzqrs001wq8qi4hm4yxje" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/10/12/多进程queue·pipe·manager·进程锁/" data-id="cjrtbg733003h7sqi5tucax4i" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/进程/">进程</a></li></ul>
@@ -162,7 +217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/09/互联网公司的七大定律（浪潮之巅）/" data-id="cjroqzqqe0012q8qiyyzrjnje" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/10/09/互联网公司的七大定律（浪潮之巅）/" data-id="cjrtbg6p7001b7sqilu58txvx" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT/">IT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/定律/">定律</a></li></ul>
@@ -217,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/08/线程中线程锁递归锁和信号量和Event（事件）的简单使用/" data-id="cjroqzqs50027q8qifpg2ccfr" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/10/08/线程中线程锁递归锁和信号量和Event（事件）的简单使用/" data-id="cjrtbg72p003d7sqiufi2z60e" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
@@ -276,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/07/多线程的概念简单多线程的实现和守护进程和全局解释器锁/" data-id="cjroqzqvz004wq8qiz5nhnpzg" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/10/07/多线程的概念简单多线程的实现和守护进程和全局解释器锁/" data-id="cjrtbg6tz00237sqiuah7gbrk" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
@@ -332,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" data-id="cjroqzqr0001kq8qi18u4j4iw" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/10/06/paramiko连接远程服务器实现ssh客户端和使用秘钥无密码登录/" data-id="cjrtbg727003a7sqirebc1qs0" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
@@ -386,7 +441,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/02/简单的socket网络通信的实现p2/" data-id="cjroqzqw8004yq8qigkvzhg0g" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/10/02/简单的socket网络通信的实现p2/" data-id="cjrtbg7fm00677sqir4xnhfbx" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件传输/">文件传输</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
@@ -441,7 +496,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/10/01/简单的socket网络通信的实现p1/" data-id="cjroqzqro001tq8qirvt8msn5" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/10/01/简单的socket网络通信的实现p1/" data-id="cjrtbg700002x7sqisqu4hrs2" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/socket/">socket</a></li></ul>
@@ -492,7 +547,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/09/30/反射和异常处理机制断言的使用/" data-id="cjroqzqvs004tq8qijaif0rvm" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/09/30/反射和异常处理机制断言的使用/" data-id="cjrtbg6t1001x7sqiskjkaxf4" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反射/">反射</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/异常处理/">异常处理</a></li></ul>
@@ -547,67 +602,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/09/29/面向对象p2/" data-id="cjroqzqsl002dq8qiwevbc1ny" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/09/29/面向对象p2/" data-id="cjrtbg73p003l7sqiqirukfja" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面向对象方法/">面向对象方法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-面向对象p1" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/29/面向对象p1/" class="article-date">
-  <time class="post-time" datetime="2018-09-28T16:04:01.000Z" itemprop="datePublished">
-    <span class="post-month">9月</span><br/>
-    <span class="post-day">29</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/29/面向对象p1/">面向对象p1</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>,<a class="article-category-link" href="/categories/技术/python/">python</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>面向对象介绍（它是编程的日常，特别重要）<br>世界万物，皆可分类。<br>世界万物，皆为对象。<br>只要是对象就肯定属于某种类。<br>只要是对象就肯定有属性。<br>存在三种编程范式，面向过程，面向对象，函数式编程<br>特性<br>Class类<br>对一组相同属性对象的抽象，定义了共同的属性和方法。<br>Object对象</p>
-<p>1.封装:把一些功能的实现细节不对外暴露<br>2.继承：代码的重用<br>3.多态:<br>一种接口多种实现，允许子类指针赋值给父类，为了实现接口的重用，</p>
-<p>语法<br>1.属性<br>      实例变量<br>类变量：<br>类变量用途：大家共用的属性，节省开销<br>私有属性： __var<br>2.方法:<br>构造方法<br>析构函数<br>3.构造函数：在实例化时做一些初始化的工作。<br>4.析构函数：在实例释放销毁的时候执行的，通常用于做一些收尾工作，如关闭一些数据库链接打开的临时文件<br>5.私有方法，私有属性  都是前面加两个下划线，外部不可直接访问，必须通过内部调用<br>7.实例变量<br>8.单继承，多继承<br>9.静态方法：<br>只是名义上归类管理，实际上在静态方法里访问<br><a href="https://diedline.github.io/面向对象p1">read more</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/09/29/面向对象p1/" data-id="cjroqzqs80029q8qiwl3ecbex" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后端/">后端</a></li></ul>
 
     </footer>
   </div>
@@ -662,9 +660,9 @@
     <h2 class="author">Died line</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>33</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
       <a href="/categories"><div><strong>9</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>28</strong><br>标签</div></a>
+      <a href="/tags"><div><strong>29</strong><br>标签</div></a>
     </div>
 
 

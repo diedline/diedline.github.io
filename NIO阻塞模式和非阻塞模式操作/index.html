@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NIO阻塞模式和非阻塞模式操作 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="####使用阻塞式的NIO的操作 package com.diedline.juc.nio;  import org.junit.jupiter.api.Test;  import java.io.IOException; import java.net.InetSocketAddress; import java.net.ServerSocket; import java.nio.ByteBuf">
+<meta property="og:type" content="website">
+<meta property="og:title" content="NIO阻塞模式和非阻塞模式操作">
+<meta property="og:url" content="https://diedline.github.io/NIO阻塞模式和非阻塞模式操作/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="####使用阻塞式的NIO的操作 package com.diedline.juc.nio;  import org.junit.jupiter.api.Test;  import java.io.IOException; import java.net.InetSocketAddress; import java.net.ServerSocket; import java.nio.ByteBuf">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-06T14:56:01.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NIO阻塞模式和非阻塞模式操作">
+<meta name="twitter:description" content="####使用阻塞式的NIO的操作 package com.diedline.juc.nio;  import org.junit.jupiter.api.Test;  import java.io.IOException; import java.net.InetSocketAddress; import java.net.ServerSocket; import java.nio.ByteBuf">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>29</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/NIO阻塞模式和非阻塞模式操作/index.html" class="article-date">
+  <time class="post-time" datetime="2019-02-06T14:53:01.000Z" itemprop="datePublished">
+    <span class="post-month">2月</span><br/>
+    <span class="post-day">06</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NIO阻塞模式和非阻塞模式操作
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>####使用阻塞式的NIO的操作</p>
+<pre><code>package com.diedline.juc.nio;
+
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+/**
+ * 使用   NIO完成网络通信的三个核心
+ *  1. 通道channel : 负责连接
+ *      java.nio.Channel    接口
+ *          | --   SelectableChannel
+ *                  |   -- SocketChannel
+ *                  |   -- ServerSocketChannel
+ *                  |   -- DatagramChannel
+ *
+ *                  |   -- Pipe.SinkChannel
+ *                  |   -- Pipe.SourceChannel
+ *
+ *  2.  缓冲区： 负责数据的存取
+ *
+ *  3.  选择器Selector 是SelectableChannel 的多路复用器，用于监控SelectableChannel 的IO状况
+ *
+ */
+public class TestBlockingNIO {
+    //客户端
+    @Test
+    public void  client(){
+        try {
+            //获取通道
+            SocketChannel socketChannel =  SocketChannel.open(new InetSocketAddress(&quot;127.0.0.1&quot;,9898));
+
+            //使用缓存区存取数据
+            ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+
+            //先从本地读取文件并发送到服务端
+            FileChannel fileChannel = FileChannel.open(Paths.get(&quot;1.jpg&quot;), StandardOpenOption.READ);
+
+            while (fileChannel.read(byteBuffer) != -1){
+                //先将缓冲区切换成读数据模式
+                byteBuffer.flip();
+                socketChannel.write(byteBuffer);
+                byteBuffer.clear();
+            }
+            socketChannel.close();
+            fileChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void server(){
+        try {
+            //获取通道
+            ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+            //创建一个FileChannel
+            FileChannel fileChannel = FileChannel.open(Paths.get(&quot;2.jpg&quot;),StandardOpenOption.WRITE,StandardOpenOption.CREATE);
+            //绑定端口号
+            serverSocketChannel.bind(new InetSocketAddress(9898));
+
+            //获取客户端的连接的通道
+            SocketChannel socketChannel =  serverSocketChannel.accept();
+
+            //创建一个缓存区
+            ByteBuffer bf = ByteBuffer.allocate(1024);
+
+            //接收客户端的数据并保存到本地
+            while (socketChannel.read(bf) != -1){
+                   bf.flip();
+                   fileChannel.write(bf);
+                   bf.clear();
+            }
+
+            //关闭对应的通道
+            fileChannel.close();
+            serverSocketChannel.close();
+            socketChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre><p>TestNIO</p>
+<pre><code>package com.diedline.juc.nio;
+
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+public class TestBlockingNIO2 {
+
+    //客户端
+    @Test
+    public void client(){
+        try {
+            SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(&quot;127.0.0.1&quot;,9898));
+
+            FileChannel fileChannel = FileChannel.open(Paths.get(&quot;1.jpg&quot;), StandardOpenOption.READ);
+            //创建一个缓存
+            ByteBuffer buf = ByteBuffer.allocate(1024);
+            //发送数据
+            while (fileChannel.read(buf) != -1 ){
+                buf.flip();
+                socketChannel.write(buf);
+                buf.clear();
+            }
+            //关闭连接进行写入 不关闭通道
+            socketChannel.shutdownOutput();
+            //接收服务端的反馈
+            int len = 0;
+            while ((len = socketChannel.read(buf)) != -1 ){
+                buf.flip();
+                System.out.println(new String(buf.array(),0, len));
+                buf.clear();
+            }
+            socketChannel.close();
+            fileChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //服务端
+    @Test
+    public void server(){
+        try {
+            ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+            serverSocketChannel.bind(new InetSocketAddress(9898));
+            SocketChannel channel =  serverSocketChannel.accept();
+            ByteBuffer bf = ByteBuffer.allocate(1024);
+            FileChannel fileChannel = FileChannel.open(Paths.get(&quot;2.png&quot;),StandardOpenOption.WRITE,StandardOpenOption.CREATE);
+            while (channel.read(bf) != -1){
+                bf.flip();
+                fileChannel.write(bf);
+                bf.clear();
+            }
+            //发送反馈给客户端
+            bf.put(&quot;服务端接受客户端的数据成功&quot;.getBytes());
+            bf.flip();
+            channel.write(bf);
+
+            serverSocketChannel.close();
+            channel.close();
+            fileChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre><p>####使用非阻塞模式的TcpNIO 如果还需要实现聊天可以使用多线程</p>
+<pre><code>package com.diedline.juc.nio;
+
+import org.junit.jupiter.api.Test;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.*;
+import java.util.Date;
+import java.util.Iterator;
+
+/**
+ *
+ /**
+ * 使用   NIO完成网络通信的三个核心
+ *  1. 通道channel : 负责连接
+ *      java.nio.Channel    接口
+ *          | --   SelectableChannel
+ *                  |   -- SocketChannel
+ *                  |   -- ServerSocketChannel
+ *                  |   -- DatagramChannel
+ *
+ *                  |   -- Pipe.SinkChannel
+ *                  |   -- Pipe.SourceChannel
+ *
+ *  2.  缓冲区： 负责数据的存取
+ *
+ *  3.  选择器Selector 是SelectableChannel 的多路复用器，用于监控SelectableChannel 的IO状况
+ */
+public class TestNonBlockingNIO {
+    //客户端
+    @Test
+    public void client(){
+        try {
+            //获取通道
+            SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(&quot;127.0.0.1&quot;,9898));
+            //切换成非阻塞模式
+            socketChannel.configureBlocking(false);
+
+            //分配指定大小的缓存区
+            ByteBuffer bf = ByteBuffer.allocate(1024);
+            //发送数据给服务器
+            bf.put(new Date().toString().getBytes());
+            bf.flip();
+            socketChannel.write(bf);
+            bf.clear();
+
+            //关闭通道
+            socketChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //服务端
+    @Test
+    public void server() throws IOException {
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+
+        //切换成非阻塞模式
+        serverSocketChannel.configureBlocking(false);
+
+        //绑定端口号
+        serverSocketChannel.bind(new InetSocketAddress(9898));
+
+        //获取选择器
+        Selector selector =  Selector.open();
+
+        //将通道注册到选择器中,并且指定监听事件
+        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+
+        //轮询的获取选择器上已经就绪的事件  当大于0就代表有就绪的事件了
+        while (selector.select() &gt;0){
+            //获取当前选择器中所有注册的选择键（已注册的监听事件）
+            Iterator&lt;SelectionKey&gt; it = selector.selectedKeys().iterator();
+            while (it.hasNext()){
+                //迭代获取 SelectionKey(准备就绪的事件)
+                SelectionKey selectionKey = it.next();
+                //判断具体是什么事件准备就绪
+                if(selectionKey.isAcceptable()){
+                    //获取serverSocketChannel 所得的SocketChannel
+                    SocketChannel socketChannel = serverSocketChannel.accept();
+                    //切换非阻塞模式
+                    socketChannel.configureBlocking(false);
+                    //将该通道注册到选择器上
+                    socketChannel.register(selector,SelectionKey.OP_READ);
+                }else if(selectionKey.isReadable()){
+                    //获取当前选择器上读就绪状态的通道  因为默认是selectorChannel 所以要强转
+                    SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
+
+                    //读取数据
+                    ByteBuffer buf = ByteBuffer.allocate(1024);
+                    int len = 0;
+                    //如果有数据
+                    while ((len = socketChannel.read(buf)) &gt; 0){
+                        buf.flip();
+                        System.out.println(new String(buf.array(),0,len));
+                        buf.clear();
+                    }
+                }
+                //取消选择键SelectionKey
+                it.remove();
+            }
+        }
+
+    }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/NIO阻塞模式和非阻塞模式操作/index.html" data-id="cjrtbg63100007sqi2vstituu" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+
+  <div id="comments" class="comments">
+    <div id="uyan_frame"></div>
+  </div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=MTAyMC80MDYzOC8xNzE2NQ=="></script>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>29</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
