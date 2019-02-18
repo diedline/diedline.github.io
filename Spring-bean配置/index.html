@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Spring-bean配置 | Died line 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="####xml bean的自动装配需要做的是在的autowire属性里指定自动装配的模式  byType    根据类型自动装配    如果IOC容器中存在多个于目标bean类型一致的bean,这种情况下Spring无法判断，所以无法执行自动装配 byName    根据名称自动装配    必须将目标bean的名称和属性名设置的完全相同 conStructor 通过构造器自动装配 当bean中存在">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Spring-bean配置">
+<meta property="og:url" content="https://diedline.github.io/Spring-bean配置/index.html">
+<meta property="og:site_name" content="Died line 的博客">
+<meta property="og:description" content="####xml bean的自动装配需要做的是在的autowire属性里指定自动装配的模式  byType    根据类型自动装配    如果IOC容器中存在多个于目标bean类型一致的bean,这种情况下Spring无法判断，所以无法执行自动装配 byName    根据名称自动装配    必须将目标bean的名称和属性名设置的完全相同 conStructor 通过构造器自动装配 当bean中存在">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-18T13:53:59.344Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring-bean配置">
+<meta name="twitter:description" content="####xml bean的自动装配需要做的是在的autowire属性里指定自动装配的模式  byType    根据类型自动装配    如果IOC容器中存在多个于目标bean类型一致的bean,这种情况下Spring无法判断，所以无法执行自动装配 byName    根据名称自动装配    必须将目标bean的名称和属性名设置的完全相同 conStructor 通过构造器自动装配 当bean中存在">
+  
+    <link rel="alternate" href="/atom.xml" title="Died line 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>35</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>30</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="page-" class="wow slideInRight article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Spring-bean配置/index.html" class="article-date">
+  <time class="post-time" datetime="2019-02-18T13:48:35.000Z" itemprop="datePublished">
+    <span class="post-month">2月</span><br/>
+    <span class="post-day">18</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring-bean配置
+    </h1>
+  
+
+        <div>
+          
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>####xml bean的自动装配<br>需要做的是在<bean>的autowire属性里指定自动装配的模式</bean></p>
+<ul>
+<li>byType    根据类型自动装配    如果IOC容器中存在多个于目标bean类型一致的bean,这种情况下Spring无法判断，所以无法执行自动装配</li>
+<li>byName    根据名称自动装配    必须将目标bean的名称和属性名设置的完全相同</li>
+<li>conStructor 通过构造器自动装配 当bean中存在多个构造器时，这种方式会很复杂，所以不推荐使用</li>
+</ul>
+<p>xml文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;address&quot; class=&quot;com.diedline.spring.beans.autowire.Address&quot; p:city=&quot;杭州&quot; p:street=&quot;HuiLong&quot;&gt;&lt;/bean&gt;
+    &lt;bean id=&quot;car&quot; class=&quot;com.diedline.spring.beans.autowire.Car&quot; p:brand=&quot;Audi&quot; p:price=&quot;300000&quot;&gt;&lt;/bean&gt;
+    &lt;!-- 可以使用autowire 属性指定自动装配的方式，
+    byName 根据bean的名字和当前bean的setter风格进行自动装配 若有匹配则自动装配没有则不装配
+    byType 根据当前bean的类型和当前bean的属性进行自动装配  byType有一个问题当存在多个匹配的类型时无法装配上因为不是唯一
+     --&gt;
+    &lt;bean id=&quot;person&quot; class=&quot;com.diedline.spring.beans.autowire.Person&quot; p:name=&quot;Tom&quot; autowire=&quot;byType&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p>####bean的继承</p>
+<p>使用 parent来继承上级的bean 如果存在不需要class的bean 那么那个bean一定是模板bean<br>abstract=”true” 只能被其他的bean继承如果使用depends-on 就代表必须这个bean必须存在这个依赖的对象。</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;!--使用abstract 为true的bean无法实例化 只能被继承
+     当abstract 为true时甚至不需要获取类名
+     --&gt;
+    &lt;bean id=&quot;address&quot; p:city=&quot;北京&quot; p:street=&quot;五道口&quot; abstract=&quot;true&quot;&gt;&lt;/bean&gt;
+    &lt;!-- 使用bean的parent 属性继承上面的bean的配置 --&gt;
+    &lt;bean id=&quot;address2&quot;   class=&quot;com.diedline.spring.beans.autowire.Address&quot; p:city=&quot;北京&quot; parent=&quot;address&quot;
+    p:street=&quot;DaZhongSi&quot;&gt;&lt;/bean&gt;
+
+    &lt;bean id=&quot;car&quot; class=&quot;com.diedline.spring.beans.autowire.Car&quot; p:brand=&quot;AuDi&quot; p:price=&quot;3000000&quot;&gt;&lt;/bean&gt;
+
+    &lt;!-- 要求在配置person这个bean的时候必须依赖于car 这个bean --&gt;
+    &lt;bean id=&quot;person&quot; class=&quot;com.diedline.spring.beans.autowire.Person&quot; p:name=&quot;Tom&quot; p:address-ref=&quot;address2&quot;
+    depends-on=&quot;car&quot;&gt;
+
+    &lt;/bean&gt;
+
+&lt;/beans&gt;
+</code></pre><p>####bean的作用域<br>默认bean是单例模式的每次初始化一个对象都是同一个对象 因为在ioc容器创建的时候对象就创建了<br>你可以使用scope=”prototype” 来将每次创建对象的时候变成实例化的时候，每次实例化都创建一个新的对象</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;!-- 使用bean 的scope属性来配置bean的作用域
+        默认是singleton  容器初始化值创建bean实例 在容器的生命周期内只创建这一个bean 即单例的
+        prototype 原型的 容器初始化时不创建bean的实例而在每次请求时都创建一个新的bean实例并返回
+    --&gt;
+    &lt;bean id=&quot;car&quot; class=&quot;com.diedline.spring.beans.autowire.Car&quot; p:brand=&quot;AuDi&quot;
+          scope=&quot;prototype&quot; p:price=&quot;300000&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p>####使用外部配置文件结合bean加载配置数据源<br>注意需要引入c3p0包</p>
+<p>xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+&quot;&gt;
+    &lt;!--
+        导入属性文件
+    --&gt;
+    &lt;context:property-placeholder location=&quot;classpath:db.properties&quot;/&gt;
+
+    &lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
+        &lt;property name=&quot;user&quot; value=&quot;${user}&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;password&quot; value=&quot;${password}&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;driverClass&quot; value=&quot;${driverClass}&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;jdbcUrl&quot; value=&quot;${jdbcUrl}&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p>db.properties 文件    </p>
+<pre><code>user=root
+password=dljyxx225
+driverClass=com.mysql.cj.jdbc.Driver
+jdbcUrl=jdbc:mysql://localhost:3306/myfirstdb?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false
+</code></pre><p>####Spring SPEL学习</p>
+<p>使用spel 语法 格式 #｛｝   它能为bean赋字面值，引用其他bean 引用其他bean的属性使用java类中的静态方法  还能使用三元运算符进行操作  </p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+
+    &lt;!--使用spel为属性赋一个字面值--&gt;
+    &lt;bean id=&quot;address&quot; class=&quot;com.diedline.spring.beans.spel.Address&quot;
+          p:street=&quot;WuDaoKou&quot; p:city=&quot;#{&apos;北京&apos;}&quot;&gt;&lt;/bean&gt;
+
+    &lt;!--使用spel 引用类的静态方法 --&gt;
+    &lt;bean id=&quot;car&quot; class=&quot;com.diedline.spring.beans.spel.Car&quot; p:price=&quot;300000&quot;
+    p:brand=&quot;AoDi&quot; p:tyrePerimeter=&quot;#{T(java.lang.Math).PI * 80}&quot;&gt;&lt;/bean&gt;
+
+    &lt;!--使用spel来引用 其他bean 和其他bean的属性 还有三元运算符 --&gt;
+    &lt;bean id=&quot;person&quot; class=&quot;com.diedline.spring.beans.spel.Person&quot; p:name=&quot;张三&quot; p:car=&quot;#{car}&quot; p:city=&quot;#{address.city}&quot;
+    p:info=&quot;#{car.price &gt;300000 ?  &apos;金领&apos;:&apos;白领&apos;}&quot;
+
+    &gt;&lt;/bean&gt;
+&lt;/beans&gt; 
+</code></pre><p>####配置bean的后置处理器<br>xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;car&quot; class=&quot;com.diedline.spring.beans.cycle.Car&quot; p:brand=&quot;AuDi&quot; init-method=&quot;init&quot; destroy-method=&quot;destroy&quot;&gt;&lt;/bean&gt;
+
+    &lt;!--
+            配置bean的后置处理器 不需要配置id bean自动识别 是一个beanPostProcessor 
+        需要实现BeanPostProcessor接口 并具体提供两个方法的实现
+        postProcessBeforeInitialization(Object o, String s)： init Method 之前被调用
+        postProcessAfterInitialization(Object o, String s)  init Method 之后被调用
+        bean(o) 实例本身
+        beanName(s)    IOC容器配置bean的名字
+        返回值  是实际上返回给用户的bean，注意  可以在以上两个方法中修改返回的bean甚至返回一个新的bean
+    --&gt;
+    &lt;bean class=&quot;com.diedline.spring.beans.cycle.MyBeanProcessor&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p>实现的BeanPostProcessor接口</p>
+<pre><code>package com.diedline.spring.beans.cycle;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+
+public class MyBeanProcessor implements BeanPostProcessor {
+
+    @Override
+    public Object postProcessBeforeInitialization(Object o, String s) throws BeansException {
+        System.out.println(&quot;postProcessBeforeInitialization&quot;+ o + &quot;,&quot; + s);
+        return o;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object o, String s) throws BeansException {
+        System.out.println(&quot;postProcessAfterInitialization&quot; + o + &quot;,&quot;+ s);
+        Car car = new Car();
+        car.setBrand(&quot;Ford&quot;);
+        return car;
+    }
+}
+</code></pre><p>####使用工厂方法配置bean</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+        &lt;!-- 通过静态方法来配置bean 注意不是配置静态工厂方法实例，而是配置bean实例 --&gt;
+        &lt;!--
+            class属性：指向静态方法的全类名
+            factory-method属性： 指向静态方法工厂方法的名字
+            constructor-arg属性：如果工厂方法需要传入参数 则使用constructor-arg配置
+            --&gt;
+    &lt;bean id=&quot;car&quot; class=&quot;com.diedline.spring.beans.factory.StaticCarFactory&quot; factory-method=&quot;getCar&quot;&gt;
+        &lt;constructor-arg value=&quot;AuDi&quot;&gt;&lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+    &lt;!-- 配置工厂的实例--&gt;
+    &lt;bean id=&quot;carFactory&quot; class=&quot;com.diedline.spring.beans.factory.InstanceCarFactory&quot;&gt;
+    &lt;/bean&gt;
+    &lt;!--通过实例工厂方法来配置bean --&gt;
+    &lt;bean id=&quot;car2&quot; factory-bean=&quot;carFactory&quot; factory-method=&quot;getCar&quot;&gt;
+        &lt;constructor-arg&gt;
+            &lt;value&gt;AuDi&lt;/value&gt;
+        &lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p>InstanceCarFactory</p>
+<pre><code>package com.diedline.spring.beans.factory;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 实例工厂的方法： 即先需要创建工厂本身再创建工厂方法来返回bean的实例
+ *
+ */
+public class InstanceCarFactory {
+    private Map&lt;String,Car&gt; cars = null;
+
+    public InstanceCarFactory() {
+        cars = new HashMap&lt;&gt;();
+        cars.put(&quot;AuDi&quot;,new Car(&quot;Audi&quot;,300000));
+        cars.put(&quot;Ford&quot;,new Car(&quot;Ford&quot;,400000));
+    }
+    public Car getCar(String brand){
+        return cars.get(brand);
+    }
+}
+</code></pre><p>StaticCarFactory    </p>
+<pre><code>package com.diedline.spring.beans.factory;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 静态工厂方法：直接调用某一个类的静态方法就可以返回bean的实例
+ *
+ */
+public class StaticCarFactory {
+
+    private static Map&lt;String, Car&gt; cars = new HashMap&lt;&gt;();
+    static {
+        cars.put(&quot;AuDi&quot;,new Car(&quot;AuDi&quot;,300000));
+        cars.put(&quot;Ford&quot;,new Car(&quot;AuDi&quot;,400000));
+    }
+
+    public static Car getCar(String name){
+
+        return cars.get(name);
+    }
+}
+</code></pre><p>####实现自定义factorybean（需要先去实现FactoryBean接口）</p>
+<pre><code>package com.diedline.spring.beans.factorybean;
+
+import org.springframework.beans.factory.FactoryBean;
+
+//自定义factorybean需要实现 FactoryBean接口
+public class CarFactoryBean implements FactoryBean&lt;Car&gt; {
+    private String brand;
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    //返回bean的对象
+    @Override
+    public Car getObject() throws Exception {
+        return new Car(brand,500000);
+    }
+
+
+    /**
+     * 返回bean的类型
+     * @return
+     */
+    @Override
+    public Class&lt;?&gt; getObjectType() {
+        return Car.class;
+    }
+
+
+    @Override
+    public boolean isSingleton() {
+        return true;
+    }
+}
+</code></pre><p>xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;!--
+        通过factoryBean来配置bean的实例
+        class 指向factoryBean的全类名
+        property 配置的是factoryBean的属性 但实际返回的实例却是factorybean类的getObj 方法返回的实例
+    --&gt;
+    &lt;bean id=&quot;car&quot; class=&quot;com.diedline.spring.beans.factorybean.CarFactoryBean&quot;&gt;
+        &lt;property name=&quot;brand&quot; value=&quot;BMN&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p>####通过注解来配置bean</p>
+<p>@Repository        持久层</p>
+<p>@Controller        表现层</p>
+<p>@Service        业务层</p>
+<p>xml文件<br>通过xml文件配置指定的Spring加载的资源</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+    &lt;!-- 指定SpringIOC容器扫描的包 --&gt;
+    &lt;!-- 可以通过resource-pattern 指定扫描的资源  --&gt;
+    &lt;!--
+    &lt;context:component-scan base-package=&quot;com.diedline.spring.beans.annotation&quot; resource-pattern=&quot;repository/*.class&quot;&gt;&lt;/context:component-scan&gt;
+    --&gt;
+
+    &lt;!-- context:exclude-filter 子节点指定排除那些指定表达式的组件
+        使用assignable 是指定排除的具体的接口
+    --&gt;
+    &lt;!-- context:include-filter 子节点指定包含哪些表达式的组件 需要使用use-default-filters来配合 --&gt;
+    &lt;context:component-scan base-package=&quot;com.diedline.spring.beans.annotation&quot;
+    &gt;
+        &lt;!--
+        &lt;context:exclude-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Repository&quot;&gt;&lt;/context:exclude-filter&gt;
+        --&gt;
+        &lt;!--
+        &lt;context:include-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Repository&quot;&gt;&lt;/context:include-filter&gt;
+        --&gt;
+        &lt;!--
+        &lt;context:exclude-filter type=&quot;assignable&quot; expression=&quot;com.diedline.spring.beans.annotation.repository.UserRepository&quot;&gt;&lt;/context:exclude-filter&gt;
+        --&gt;
+        &lt;!--
+        &lt;context:include-filter type=&quot;assignable&quot; expression=&quot;com.diedline.spring.beans.annotation.repository.UserRepository&quot;&gt;&lt;/context:include-filter&gt;
+        --&gt;
+    &lt;/context:component-scan&gt;
+
+&lt;/beans&gt;
+</code></pre><p>UserController.class</p>
+<pre><code>package com.diedline.spring.beans.annotation.controller;
+
+import com.diedline.spring.beans.annotation.service.UserService;
+import org.springframework.stereotype.Controller;
+
+/**
+ * 模拟表现层
+ */
+@Controller
+public class UserController {
+    private UserService userService;
+
+    public void execute(){
+        System.out.println(&quot;UserController Execute ......&quot;);
+        userService.add();
+    }
+}
+</code></pre><p>UserRepository interface</p>
+<pre><code>package com.diedline.spring.beans.annotation.repository;
+
+public interface UserRepository {
+    void save();
+}
+</code></pre><p>UserRepositoryimpl.class</p>
+<pre><code>package com.diedline.spring.beans.annotation.repository;
+
+import org.springframework.stereotype.Repository;
+
+/**
+ * 模拟持久层
+ */
+
+@Repository(&quot;userRepository&quot;)
+public class UserRepositoryimpl implements UserRepository {
+    @Override
+    public void save() {
+        System.out.println(&quot;UserRepositoryimpl....&quot;);
+    }
+}
+</code></pre><p>UserService.class</p>
+<pre><code>package com.diedline.spring.beans.annotation.service;
+
+import com.diedline.spring.beans.annotation.repository.UserRepository;
+import org.springframework.stereotype.Service;
+
+/**
+ * 模拟业务层
+ */
+@Service
+public class UserService {
+    private UserRepository  userRepository;
+    public void add(){
+        System.out.println(&quot;User Service add .....&quot;);
+        userRepository.save();
+    }
+}
+</code></pre><p>TestObject</p>
+<pre><code>package com.diedline.spring.beans.annotation;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class TestObject {
+}
+</code></pre><p>Main.java</p>
+<pre><code>package com.diedline.spring.beans.annotation;
+
+import com.diedline.spring.beans.annotation.controller.UserController;
+import com.diedline.spring.beans.annotation.repository.UserRepository;
+import com.diedline.spring.beans.annotation.service.UserService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+    public static void main(String[] args) {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;beans-annotation.xml&quot;);
+//        TestObject testObject = (TestObject) applicationContext.getBean(&quot;testObject&quot;);
+//        System.out.println(testObject);
+
+        UserController userController = (UserController) applicationContext.getBean(&quot;userController&quot;);
+        System.out.println(userController);
+        userController.execute();
+//        UserService userService = (UserService) applicationContext.getBean(&quot;userService&quot;);
+//        System.out.println(userService);
+//
+//        UserRepository userRepository = (UserRepository)applicationContext.getBean(&quot;userRepository&quot;);
+//        System.out.println(userRepository);
+
+    }
+}
+</code></pre><p>使用AutoWired实现自动装配</p>
+<p>如在属性上面自动装配</p>
+<pre><code>@Controller
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    public void execute(){
+        System.out.println(&quot;UserController Execute ......&quot;);
+        userService.add();
+    }
+}
+</code></pre><p>在方法上面自动装配（因为testObject为空对象所以指定required=false）</p>
+<pre><code>@Repository
+public class UserRepositoryimpl implements UserRepository {
+    private TestObject testObject;
+    @Autowired(required=false)
+    public void setTestObject(TestObject testObject) {
+        this.testObject = testObject;
+    }
+
+    @Override
+    public void save() {
+        System.out.println(&quot;UserRepositoryimpl....&quot;);
+    }
+}
+</code></pre><p>值得注意的是如果存在多个相同的bean时并且自动装配会抛异常<br>一种解决方式是在自动引用的地方写上你要引用的bean的名字<br>另一种是在自动引用的下面使用@Qualifier写上你要引用的bean的名字也可以将@Qualifier写在set方法输入参数之前也是一样的。</p>
+<pre><code>//这样也OK
+    @Autowired
+    @Qualifier(&quot;userRepositoryimpl&quot;)
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+</code></pre><p>泛型依赖自动注入</p>
+<p>定义一个BaseRepository<t>类</t></p>
+<pre><code>package com.diedline.spring.beans.generic.di;
+
+public class BaseRepository&lt;T&gt; {
+}
+</code></pre><p>BaseService类在使用AutoWired自动装配的时候会自动使用定义的BaseRepository<t>中自带的泛型</t></p>
+<pre><code>package com.diedline.spring.beans.generic.di;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+public class BaseService&lt;T&gt; {
+    @Autowired
+    protected BaseRepository  repository;
+
+    public void add(){
+        System.out.println(&quot;add.....&quot;);
+        System.out.println(repository);
+    }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/Spring-bean配置/index.html" data-id="cjsaeipk800010sqitd5kg70z" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+
+  <div id="comments" class="comments">
+    <div id="uyan_frame"></div>
+  </div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=MTAyMC80MDYzOC8xNzE2NQ=="></script>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">Died line 的博客</h1>
+    <h2 class="blog-subtitle">努力学习的小白,   联系QQ1019348254，可以在博客左侧发表评论。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="/我的头像.jpg">
+    <h2 class="author">Died line</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>35</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>9</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>30</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="https://github.com/diedline" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://diedline.github.io/关于我" target="_blank" title="我的介绍">
+          我的介绍
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 Died line<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Shana</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/xxxxxxxxx" title="" class="menuItem">xxx</a>
+          
+            <a href="/xxxxxxx" title="" class="menuItem">xxxx</a>
+          
+        </div>
+        
+          <audio id="audio" src="plugin/galmenu/wulusai.mp3"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

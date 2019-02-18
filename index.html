@@ -38,9 +38,9 @@
     <h2 class="author">Died line</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>35</strong><br>文章</div></a>
       <a href="/categories"><div><strong>9</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>29</strong><br>标签</div></a>
+      <a href="/tags"><div><strong>30</strong><br>标签</div></a>
     </div>
     <ul class="blog-link">
      
@@ -65,6 +65,76 @@
 </div>
 
         <section id="main">
+  
+    <article id="post-Spring-bean配置" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/18/Spring-bean配置/" class="article-date">
+  <time class="post-time" datetime="2019-02-18T13:48:17.000Z" itemprop="datePublished">
+    <span class="post-month">2月</span><br/>
+    <span class="post-day">18</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/18/Spring-bean配置/">Spring-bean配置</a>
+    </h1>
+  
+
+        <div>
+          
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>####xml bean的自动装配<br>需要做的是在<bean>的autowire属性里指定自动装配的模式</bean></p>
+<ul>
+<li>byType    根据类型自动装配    如果IOC容器中存在多个于目标bean类型一致的bean,这种情况下Spring无法判断，所以无法执行自动装配</li>
+<li>byName    根据名称自动装配    必须将目标bean的名称和属性名设置的完全相同</li>
+<li>conStructor 通过构造器自动装配 当bean中存在多个构造器时，这种方式会很复杂，所以不推荐使用</li>
+</ul>
+<p>xml文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;address&quot; class=&quot;com.diedline.spring.beans.autowire.Address&quot; p:city=&quot;杭州&quot; p:street=&quot;HuiLong&quot;&gt;&lt;/bean&gt;
+    &lt;bean id=&quot;car&quot; class=&quot;com.diedline.spring.beans.autowire.Car&quot; p:brand=&quot;Audi&quot; p:price=&quot;300000&quot;&gt;&lt;/bean&gt;
+    &lt;!-- 可以使用autowire 属性指定自动装配的方式，
+    byName 根据bean的名字和当前bean的setter风格进行自动装配 若有匹配则自动装配没有则不装配
+    byType 根据当前bean的类型和当前bean的属性进行自动装配  byType有一个问题当存在多个匹配的类型时无法装配上因为不是唯一
+     --&gt;
+    &lt;bean id=&quot;person&quot; class=&quot;com.diedline.spring.beans.autowire.Person&quot; p:name=&quot;Tom&quot; autowire=&quot;byType&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p><a href="https://diedline.github.io/Spring-bean配置">read more</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://diedline.github.io/2019/02/18/Spring-bean配置/" data-id="cjsaeipld00050sqidtlwgjih" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-NIO阻塞模式和非阻塞模式操作" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -103,7 +173,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2019/02/06/NIO阻塞模式和非阻塞模式操作/" data-id="cjrtbg6d400047sqis4tjzmj7" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/02/06/NIO阻塞模式和非阻塞模式操作/" data-id="cjsaeipkb00020sqisbxln6x6" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NIO/">NIO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -154,7 +224,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2019/02/03/CAS算法/" data-id="cjrtbg6ay00027sqiweetn5ps" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/02/03/CAS算法/" data-id="cjsaeipi500000sqirjf2st8n" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
@@ -207,7 +277,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2019/01/29/git/" data-id="cjrtbg6g7000c7sqi04rxnqqa" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/01/29/git/" data-id="cjsaeipm8000a0sqiy1f613x7" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git-github/">git&&github</a></li></ul>
@@ -258,7 +328,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2019/01/22/java8-Lambda/" data-id="cjrtbg6iv000l7sqi7xpdky11" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/01/22/java8-Lambda/" data-id="cjsaeipnb000d0sqik0rivz92" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -309,7 +379,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2019/01/04/pl-sql-语法-游标-异常处理-存储函数存储过程-触发器/" data-id="cjrtbg6nl00137sqin08mok2k" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/01/04/pl-sql-语法-游标-异常处理-存储函数存储过程-触发器/" data-id="cjsaeiq1e001p0sqizlxgy5uj" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pl-sql/">pl/sql</a></li></ul>
@@ -360,7 +430,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2019/01/02/oracle-权限控制-SET-高级子查询/" data-id="cjrtbg6l6000w7sqimpuogdrr" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/01/02/oracle-权限控制-SET-高级子查询/" data-id="cjsaeipzc001c0sqii9vwbluz" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
@@ -411,7 +481,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2019/01/02/oracle-约束-视图-索引-同义词/" data-id="cjrtbg6m600107sqi7mdgzf8y" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/01/02/oracle-约束-视图-索引-同义词/" data-id="cjsaeiq12001l0sqixaalczru" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
@@ -462,7 +532,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2019/01/02/子查询-更新操作/" data-id="cjrtbg6w3002d7sqijdmzmjde" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2019/01/02/子查询-更新操作/" data-id="cjsaeiq6y002l0sqikom88o7e" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
@@ -517,61 +587,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/12/20/oracle-单行函数-通用函数-多表查询使用/" data-id="cjrtbg6je000o7sqiuhmduf15" class="article-share-link">分享</a>
+      <a data-url="https://diedline.github.io/2018/12/20/oracle-单行函数-通用函数-多表查询使用/" data-id="cjsaeipyz00190sqixn84piza" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-javaJDBC的一系列操作" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/15/javaJDBC的一系列操作/" class="article-date">
-  <time class="post-time" datetime="2018-12-15T08:15:19.000Z" itemprop="datePublished">
-    <span class="post-month">12月</span><br/>
-    <span class="post-day">15</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/15/javaJDBC的一系列操作/">javaJDBC的一系列操作</a>
-    </h1>
-  
-
-        <div>
-          
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://diedline.github.io/javaJDBC的一系列操作">read more</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://diedline.github.io/2018/12/15/javaJDBC的一系列操作/" data-id="cjrtbg6h4000h7sqikhfv1sv5" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
     </footer>
   </div>
@@ -626,9 +645,9 @@
     <h2 class="author">Died line</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>35</strong><br>文章</div></a>
       <a href="/categories"><div><strong>9</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>29</strong><br>标签</div></a>
+      <a href="/tags"><div><strong>30</strong><br>标签</div></a>
     </div>
 
 
